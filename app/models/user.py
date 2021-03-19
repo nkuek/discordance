@@ -19,6 +19,8 @@ class User(db.Model, UserMixin):
             db.DateTime, nullable=False, default=datetime.utcnow()
         )
 
+    server_admin = db.relationship('Server', back_populates='users')
+
     @property
     def password(self):
         return self.hashed_password
