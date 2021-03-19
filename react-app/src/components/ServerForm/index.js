@@ -1,14 +1,26 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createServer } from "../../store/server";
 
 function ServerForm() {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [public, setPublic] = useState(False);
+  const [isPublic, setIsPublic] = useState(false);
   const [image, setImage] = useState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(name, description, isPublic, image);
+    const newServer = await dispatch(
+      createServer({ name, description, isPublic, image })
+    );
+    console.log(newServer);
+  };
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={(e) => onSubmit(e)}>
         <div>
           <label htmlFor="name">Name</label>
           <input
@@ -30,8 +42,8 @@ function ServerForm() {
           <input
             type="checkbox"
             name="public"
-            value={public}
-            onChange={(e) => setPublic(e.target.value)}
+            value={isPublic}
+            onChange={(e) => setIsPublic(e.target.value)}
           ></input>
           <label htmlFor="image">Image</label>
           <input
@@ -41,6 +53,7 @@ function ServerForm() {
             value={image}
             onChange={(e) => setImage(e.target.value)}
           ></input>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
