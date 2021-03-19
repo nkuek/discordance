@@ -21,5 +21,9 @@ def seed_users():
 
 
 def undo_users():
+    db.session.execute('TRUNCATE servers;')
+    db.session.execute('TRUNCATE channels;')
     db.session.execute('TRUNCATE users;')
+    db.session.execute('TRUNCATE server_users;')
+    db.session.execute('TRUNCATE messages;')
     db.session.commit()

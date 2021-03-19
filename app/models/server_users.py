@@ -31,8 +31,11 @@ class User(db.Model, UserMixin):
             db.DateTime, nullable=False, default=datetime.utcnow()
         )
 
-    server_admin = db.relationship('Server', back_populates='users')
-    messages = db.relationship('Message', back_populates='users')
+    server_admin = db.relationship('Server', back_populates='admin')
+    messages = db.relationship('Message', back_populates='user')
+    servers = db.relationship(
+        'Server', secondary=server_users, back_populates='users'
+        )
 
     @property
     def password(self):
@@ -69,5 +72,8 @@ class Server(db.Model):
             db.DateTime, nullable=False, default=datetime.utcnow()
             )
 
-    admin = db.relationship('User', back_populates='servers')
+    admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship('Channel', back_populates='servers')
+    users = db.relationship(
+        'User', secondary=server_users, back_populates='servers'
+        )
