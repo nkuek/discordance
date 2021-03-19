@@ -1,17 +1,18 @@
-const ADD_SERVER = "server/addServer";
+const ADD_SERVER = 'server/addServer';
 
 const addServer = () => ({
-  type: ADD_SERVER,
+    type: ADD_SERVER,
 });
 
 //add a server
 export const createServer = (serverFormInput) => async (dispatch) => {
-  const { name, description, isPublic, image } = serverFormInput;
-  const response = await fetch(`/api/servers`, {
-    method: "POST",
-    body: JSON.stringify({ name, description, isPublic, image }),
-  });
-  const data = await response.json();
-  // dispatch(addServer())
-  console.log(data);
+    const { admin_id, name, description, isPublic, image } = serverFormInput;
+    const response = await fetch(`/api/servers/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ admin_id, name, description, isPublic, image }),
+    });
+    // dispatch(addServer());
 };
