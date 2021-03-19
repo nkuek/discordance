@@ -18,3 +18,4 @@ class Channel(db.Model):
             )
 
     servers = db.relationship('Server', back_populates='channels')
+    messages = db.relationship('Message', back_populates='channels')
