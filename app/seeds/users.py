@@ -22,5 +22,8 @@ def seed_users():
 
 def undo_users():
     db.session.execute('TRUNCATE users CASCADE;')
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/first_copy
     db.session.commit()
