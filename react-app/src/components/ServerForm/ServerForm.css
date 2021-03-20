@@ -1,13 +1,14 @@
 .serverModalWrapper {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    top: 0;
+    left: 0;
     position: fixed;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.7);
-    transition: 500ms all ease-in-out;
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .serverModalContainer{
@@ -17,7 +18,6 @@
     border-radius: 10px;
     box-sizing: border-box;
     padding: 20px;
-    transition: 500ms all ease-in-out
 }
 
 .serverModalFormTitleContainer {
@@ -28,12 +28,26 @@
 }
 
 .serverModalInputContainer {
-    border: 1px solid rgb(170, 170, 170);
     border-radius: 3px;
     padding: 10px;
-    margin: 10px;
     display: flex;
+    box-sizing: border-box;
     flex-direction: column;
+}
+
+.serverModalInputContainer label {
+    margin-bottom: 10px;
+}
+
+.serverModalInputContainer input,
+.serverModalInputContainer select {
+    font: inherit;
+    padding: 5px;
+    border: 1px solid rgb(170, 170, 170);
+}
+
+.serverModalInputContainer select {
+    background-color: inherit;
 }
 
 .serverModalSubmit {
@@ -42,4 +56,10 @@
     border: none;
     color: white;
     padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.serverModalSubmit:hover {
+    background-color: #6476b9;
 }
