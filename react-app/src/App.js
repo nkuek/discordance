@@ -19,6 +19,9 @@ import User from "./components/User";
 import { authenticate } from "./services/auth";
 import ServerForm from "./components/ServerForm";
 import Server from "./components/Server";
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
 
 function App() {
@@ -43,10 +46,9 @@ function App() {
     <BrowserRouter>
       <NavBar authenticated={authenticated} setAuthenticated={setAuthenticated} />
       <Switch>
-<<<<<<< HEAD
         <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
           <UsersList/>
-=======
+        </ProtectedRoute>
         <Route path="/logins" exact={true}>
           <LoginFormModal />
         </Route>
@@ -68,7 +70,6 @@ function App() {
           authenticated={authenticated}
         >
           <UsersList />
->>>>>>> main
         </ProtectedRoute>
         <ProtectedRoute
           path="/users/:userId"
