@@ -48,7 +48,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 </div>
                 <form className="serverModalForm" onSubmit={(e) => onSubmit(e)}>
                     <div className="serverModalInputContainer">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Server Name</label>
                         <input
                             type="text"
                             name="name"
@@ -84,7 +84,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             onChange={(e) => setImage(e.target.value)}
                         ></input>
                     </div>
-                    <button type="submit">Submit</button>
+                    <div className="serverModalButtonContainer">
+                        <button className="serverModalSubmit" type="submit">
+                            Create
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

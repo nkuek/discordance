@@ -2,19 +2,22 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: fixed;
     justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    transition: 500ms all ease-in-out;
 }
 
 .serverModalContainer{
     width: 400px;
-    height: 800px;
+    height: fit-content;
     background-color: #fff;
     border-radius: 10px;
     box-sizing: border-box;
     padding: 20px;
+    transition: 500ms all ease-in-out
 }
 
 .serverModalFormTitleContainer {
@@ -22,4 +25,21 @@
     justify-content: center;
     margin-bottom: 15px;
     font-size: 2em;
+}
+
+.serverModalInputContainer {
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.serverModalSubmit {
+    font: inherit;
+    background-color: #7289da;
+    border: none;
+    color: white;
+    padding: 10px;
 }
