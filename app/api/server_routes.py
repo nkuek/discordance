@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, session, redirect, request
+from flask import Blueprint, jsonify, session, redirect, request, make_response
 from app.models import Server, db
 from app.forms import ServerForm
 
@@ -10,7 +10,7 @@ def add_server():
     response = request.json
     print(response)
     new_server = Server(
-        admin_id=2,
+        admin_id=1,
         name=response['name'],
         description=response['description'],
         public=bool(response['isPublic']),
@@ -18,5 +18,11 @@ def add_server():
     )
     db.session.add(new_server)
     db.session.commit()
-    print(new_server)
-    return 'please'
+    # return make_response(jsonify(new_server))
+    
+    print(jsonify(new_server))
+    # response2=json.dumps(new_server)
+    # return response2
+    return jsonify(new_server)
+    # print(new_server)
+    # return 'please'
