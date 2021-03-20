@@ -10,10 +10,12 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const history = useHistory();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [isPublic, setIsPublic] = useState(false);
+    const [isPublic, setIsPublic] = useState('Public');
     const [image, setImage] = useState('');
     const serverModalRef = useRef();
 
+    // close modal when clicking anywhere else
+    // does not seem to work when clicking on navbar yet
     const closeServerModal = (e) => {
         if (serverModalRef.current === e.target) {
             setShowServerModal(false);
@@ -23,14 +25,27 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const onSubmit = async (e) => {
         e.preventDefault();
         const newServer = await dispatch(
-            createServer({ admin_id: 1, name, description, isPublic, image })
+            createServer({
+                admin_id: 1,
+                name,
+                description,
+                isPublic: isPublic === 'Public',
+                image,
+            })
         );
         history.push(`/servers/${newServer.id}`);
     };
 
     return showServerModal ? (
-        <div className="serverModalWrapper">
+        <div
+            className="serverModalWrapper"
+            ref={serverModalRef}
+            onClick={closeServerModal}
+        >
             <div className="serverModalContainer">
+                <div className="serverModalFormTitleContainer">
+                    <div className="serverModalFormTitle">Create a Server</div>
+                </div>
                 <form className="serverModalForm" onSubmit={(e) => onSubmit(e)}>
                     <div className="serverModalInputContainer">
                         <label htmlFor="name">Name</label>
@@ -53,13 +68,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                         ></input>
                     </div>
                     <div className="serverModalInputContainer">
-                        <label htmlFor="public">Public</label>
-                        <input
-                            type="checkbox"
-                            name="public"
-                            value={isPublic}
-                            onChange={(e) => setIsPublic(e.target.value)}
-                        ></input>
+                        <label htmlFor="public">Privacy</label>
+                        <select onChange={(e) => setIsPublic(e.target.value)}>
+                            <option value="Public">Public</option>
+                            <option value="Private">Private</option>
+                        </select>
                     </div>
                     <div className="serverModalInputContainer">
                         <label htmlFor="image">Image</label>
