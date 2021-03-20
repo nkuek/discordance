@@ -9,6 +9,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
 import ServerForm from "./components/ServerForm";
+import Server from "./components/Server";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -64,8 +65,11 @@ function App() {
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
           <h1>My Home Page</h1>
         </ProtectedRoute>
-        <Route path="/servers/new">
+        <Route exact path="/servers/new">
           <ServerForm />
+        </Route>
+        <Route path="/servers/:serverId">
+          <Server />
         </Route>
       </Switch>
     </BrowserRouter>
