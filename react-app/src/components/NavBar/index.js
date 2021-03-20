@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import LogoutButton from '../auth/LogoutButton/index';
 import LoginForm from '../auth/LoginForm/index';
 import SignUpForm from '../auth/SignUpForm/index';
+import ServerForm from '../ServerForm';
 
 const customStyles = {
     content: {
