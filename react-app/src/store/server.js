@@ -15,10 +15,19 @@ export const createServer = (serverFormInput) => async (dispatch) => {
     },
     body: JSON.stringify({ admin_id, name, description, isPublic, image }),
   });
-  //   console.log()
-  //   console.log(typeof response);
-  //   console.log(await response.json());
-  //   const data = await response.json();
-  //   console.log(data);
-  //   dispatch(addServer());
+  const data = await response.json();
+  dispatch(addServer(data));
+  return data;
 };
+
+const initialState = {};
+const serverReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_SERVER:
+      return action.newServer;
+    default:
+      return state;
+  }
+};
+
+export default serverReducer;

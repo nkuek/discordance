@@ -77,3 +77,13 @@ class Server(db.Model):
     users = db.relationship(
         'User', secondary=server_users, back_populates='servers'
         )
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "admin_id": self.admin_id,
+            "name": self.name,
+            "description": self.description,
+            "public": self.public,
+            "image_url": self.image_url
+        }

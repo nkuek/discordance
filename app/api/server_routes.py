@@ -18,11 +18,5 @@ def add_server():
     )
     db.session.add(new_server)
     db.session.commit()
-    # return make_response(jsonify(new_server))
-    
-    print(jsonify(new_server))
-    # response2=json.dumps(new_server)
-    # return response2
-    return jsonify(new_server)
-    # print(new_server)
-    # return 'please'
+    return new_server.to_dict()
+
