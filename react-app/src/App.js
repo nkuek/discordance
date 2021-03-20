@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LoginForm from './components/auth/LoginForm';
-import LoginFormModal from './components/LoginFormModal';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -33,9 +32,6 @@ function App() {
         <BrowserRouter>
             <NavBar setAuthenticated={setAuthenticated} />
             <Switch>
-                <Route path="/logins" exact={true}>
-                    <LoginFormModal />
-                </Route>
                 <Route path="/login" exact={true}>
                     <LoginForm
                         authenticated={authenticated}
