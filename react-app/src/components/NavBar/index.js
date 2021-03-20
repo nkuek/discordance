@@ -20,6 +20,11 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
     var subtitle;
     const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
     const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
+    const [showServerModal, setShowServerModal] = useState(false);
+
+    const openServerModal = () => {
+        setShowServerModal((prev) => !prev);
+    };
     function openModalLogin() {
         setIsOpenLogin(true);
     }
@@ -86,11 +91,17 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                         />
                     </Modal>
                 </div>
-                <button onClick={openServerModal}>Create a Server</button>
-                <ServerForm
-                    showServerModal={showServerModal}
-                    setShowServerModal={setShowServerModal}
-                />
+                {authenticated === true && (
+                    <div className="serverFormNavBar">
+                        <button onClick={openServerModal}>
+                            Create a Server
+                        </button>
+                        <ServerForm
+                            showServerModal={showServerModal}
+                            setShowServerModal={setShowServerModal}
+                        />
+                    </div>
+                )}
                 <div>
                     {authenticated === false ? (
                         ''
