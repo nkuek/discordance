@@ -1,5 +1,4 @@
 {
-    "python.pythonPath": "/home/nick/appAcademy/module-6/discordance/.venv/bin/python3.9",
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
     "python.linting.pycodestyleEnabled": true

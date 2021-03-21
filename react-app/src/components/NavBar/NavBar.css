@@ -1,5 +1,25 @@
 .mainNavBar {
-    width: auto;
-    background-color: black;
+    background-color: #292b2f;
+}
+
+.navbarContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
     padding: 10px;
+}
+
+.LoginModalSubmit, .SignUpModalSubmit {
+    font: inherit;
+    background-color: #7289da;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.LoginModalSubmit:hover, .SignUpModalSubmit:hover {
+    background-color: #6476b9;
 }
