@@ -6,9 +6,10 @@ import { createServer } from '../../store/server';
 import './ServerForm.css';
 
 function ServerForm({ showServerModal, setShowServerModal }) {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     const dispatch = useDispatch();
     const history = useHistory();
-    const [name, setName] = useState('');
+    const [name, setName] = useState(`${loggedInUser.username}'s server`);
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('Public');
     const [image, setImage] = useState('');
@@ -25,7 +26,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // close modal when pressing escape key
     const keyPress = useCallback(
         (e) => {
-            if (e.key == 'Escape' && showServerModal) {
+            if (e.key === 'Escape' && showServerModal) {
                 setShowServerModal(false);
             }
         },

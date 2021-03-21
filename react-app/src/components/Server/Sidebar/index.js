@@ -13,12 +13,12 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useSelector } from 'react-redux';
 
-function Sidebar() {
+function Sidebar({ server }) {
     const [channels, setChannels] = useState([]);
     return (
         <div className="sidebar">
             <div className="sidebar__top">
-                <h3>Hussein Server</h3>
+                <h3>{server.name}</h3>
                 <ExpandMoreIcon />
             </div>
 

@@ -16,8 +16,9 @@ const customStyles = {
     },
 };
 
+Modal.setAppElement('#root');
+
 const NavBar = ({ authenticated, setAuthenticated }) => {
-    var subtitle;
     const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
     const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
     const [showServerModal, setShowServerModal] = useState(false);
@@ -56,15 +57,14 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                         <button onClick={openModalLogin}>Login</button>
                     )}
                     <Modal
-                        isOpen={
-                            authenticated === true ? false : modalIsOpenLogin
-                        }
+                        isOpen={modalIsOpenLogin}
                         onAfterOpen={afterOpenModal}
                         onRequestClose={closeModalLogin}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
                         <LoginForm
+                            setIsOpenLogin={setIsOpenLogin}
                             authenticated={authenticated}
                             setAuthenticated={setAuthenticated}
                         />

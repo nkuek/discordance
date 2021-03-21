@@ -7,7 +7,6 @@ import ProtectedRoute from './components/auth/ProtectedRoute/index';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/auth';
-import ServerForm from './components/ServerForm';
 import Server from './components/Server';
 
 function App() {
