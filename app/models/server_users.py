@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     server_admin = db.relationship('Server', back_populates='admin')
     messages = db.relationship('Message', back_populates='user')
     servers = db.relationship(
-        'Server', secondary=server_users, back_populates='users'
+        'Server', secondary=server_users, back_populates='users', lazy='dynamic'
         )
 
     @property
@@ -75,7 +75,8 @@ class Server(db.Model):
     admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship('Channel', back_populates='servers')
     users = db.relationship(
-        'User', secondary=server_users, back_populates='servers'
+        'User', secondary=server_users, back_populates='servers',
+        lazy='dynamic'
         )
 
     def to_dict(self):

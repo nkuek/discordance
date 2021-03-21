@@ -56,13 +56,15 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
 
     return (
         <nav className="mainNavBar">
-            <div>
+            <div className="navbarContainer">
                 <div>
                     {authenticated === true ? (
                         ''
                     ) : (
-                        <button onClick={openModalLogin}>Login</button>
+                        <button className="LoginModalSubmit" onClick={openModalLogin}>Login</button>
                     )}
+                </div>    
+                <div>
                     <Modal
                         isOpen={modalIsOpenLogin}
                         onAfterOpen={afterOpenModal}
@@ -83,8 +85,10 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                     {authenticated === true ? (
                         ''
                     ) : (
-                        <button onClick={openModalSignUp}>Sign Up</button>
+                        <button className="SignUpModalSubmit" onClick={openModalSignUp}>Sign Up</button>
                     )}
+                </div>
+                <div>    
                     <Modal
                         isOpen={
                             authenticated === true ? false : modalIsOpenSignUp
