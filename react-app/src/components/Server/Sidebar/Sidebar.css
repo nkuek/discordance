@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     flex: 0.25;
-    height: 100vh;
+    height: calc(100vh - 44px);
     background-color: #2f3135;
 }
 

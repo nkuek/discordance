@@ -56,9 +56,6 @@ function App() {
                 >
                     <h1>My Home Page</h1>
                 </ProtectedRoute>
-                {/* <Route exact path="/servers/new">
-          <ServerForm />
-        </Route> */}
                 <Route path="/servers/:serverId">
                     <Server />
                 </Route>
