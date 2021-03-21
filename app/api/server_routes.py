@@ -25,7 +25,8 @@ def find_server():
     serverId = request.json
     serverSearch = Server.query.filter(Server.id == serverId).first()
     server = Server(
-        admin_id=serverSearch.id,
+        id=serverSearch.id,
+        admin_id=serverSearch.admin_id,
         name=serverSearch.name,
         description=serverSearch.description,
         public=serverSearch.public,
