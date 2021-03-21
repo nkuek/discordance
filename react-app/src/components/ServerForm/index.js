@@ -9,7 +9,9 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     const dispatch = useDispatch();
     const history = useHistory();
-    const [name, setName] = useState(`${loggedInUser.username}'s server`);
+    const [name, setName] = useState(
+        loggedInUser && `${loggedInUser.username}'s server`
+    );
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('Public');
     const [image, setImage] = useState('');

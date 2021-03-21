@@ -13,6 +13,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
         if (password === repeatPassword) {
             const user = await signUp(username, email, password);
             if (!user.errors) {
+                localStorage.setItem('loggedInUser', JSON.stringify(user));
                 setAuthenticated(true);
             }
         }
