@@ -29,7 +29,7 @@ function ServerSidebar() {
 
     return (
         <div className="ServerSidebar">
-            <list>
+            <li>
                 <Tooltip
                     title="Home"
                     key="home"
@@ -65,7 +65,7 @@ function ServerSidebar() {
                         </div>
                     )}
                 </Tooltip>
-            </list>
+            </li>
         </div>
     );
 }

@@ -13,4 +13,6 @@ export const fetchUserServers = (userId) => async (dispatch) => {
         },
         body: JSON.stringify(userId),
     });
+    const data = await response.json();
+    console.log(data);
 };

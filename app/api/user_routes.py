@@ -18,6 +18,7 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
+
 @user_routes.route('/servers/', methods=['PUT'])
 def userServers():
     userId = request.json
@@ -25,7 +26,7 @@ def userServers():
     print('================')
     print(userId)
     print('================')
-    servers = User.query.filter(User.id == userId).join(Server, User.servers)
+    servers = User.query.join(Server.users).filter(User.id == 1).first()
     print('================')
-    print(servers)
+    print(servers.servers)
     print('================')
