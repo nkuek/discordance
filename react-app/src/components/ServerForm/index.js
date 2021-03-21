@@ -14,7 +14,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     );
 
     const [description, setDescription] = useState('');
-    const [isPublic, setIsPublic] = useState(true);
+    const [isPublic, setIsPublic] = useState('true');
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
@@ -58,6 +58,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 image,
             })
         );
+        setName(loggedInUser && `${loggedInUser.username}'s server`);
+        setDescription('');
+        setIsPublic('true');
+        setImage('');
+        setErrors('');
         setShowServerModal(false);
         history.push(`/servers/${newServer.id}`);
     };
@@ -114,8 +119,8 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             <select
                                 onChange={(e) => setIsPublic(e.target.value)}
                             >
-                                <option value={true}>Public</option>
-                                <option value={false}>Private</option>
+                                <option value="true">Public</option>
+                                <option value="">Private</option>
                             </select>
                         </div>
                         <div className="serverModalInputContainer">
