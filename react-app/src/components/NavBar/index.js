@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import { useSpring, animated } from 'react-spring';
 import Modal from 'react-modal';
 import LogoutButton from '../auth/LogoutButton/index';
 import LoginForm from '../auth/LoginForm/index';
 import SignUpForm from '../auth/SignUpForm/index';
-import ServerForm from '../ServerForm';
 import './NavBar.css';
 
 const customStyles = {
     overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
     },
     content: {
         position: 'absolute',
@@ -34,11 +32,7 @@ Modal.setAppElement('#root');
 const NavBar = ({ authenticated, setAuthenticated }) => {
     const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
     const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
-    const [showServerModal, setShowServerModal] = useState(false);
 
-    const openServerModal = () => {
-        setShowServerModal((prev) => !prev);
-    };
     function openModalLogin() {
         setIsOpenLogin(true);
     }
@@ -105,21 +99,10 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                             setAuthenticated={setAuthenticated}
                             closeModalSignUp={closeModalSignUp}
                             openModalLogin={openModalLogin}
-
                         />
                     </Modal>
                 </div>
-                {authenticated === true && (
-                    <div className="serverFormNavBar">
-                        <button onClick={openServerModal}>
-                            Create a Server
-                        </button>
-                        <ServerForm
-                            showServerModal={showServerModal}
-                            setShowServerModal={setShowServerModal}
-                        />
-                    </div>
-                )}
+
                 <div>
                     {authenticated === false ? (
                         ''
