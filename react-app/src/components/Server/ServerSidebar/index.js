@@ -14,7 +14,7 @@ function ServerSidebar() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
     useEffect(() => {
-        dispatch(fetchUserServers(loggedInUser.id));
+        if (loggedInUser) dispatch(fetchUserServers(loggedInUser.id));
     }, [dispatch]);
     const history = useHistory();
 
@@ -44,13 +44,13 @@ function ServerSidebar() {
 
                 {/* This is where we will map over the servers for that user and render their pictures */}
 
-                <Tooltip
-                    title="Create Server"
-                    key="create-server"
-                    placement="right"
-                    className="tooltip"
-                >
-                    {loggedInUser && (
+                {loggedInUser && (
+                    <Tooltip
+                        title="Create Server"
+                        key="create-server"
+                        placement="right"
+                        className="tooltip"
+                    >
                         <div>
                             <IconButton
                                 className="server-icon"
@@ -63,8 +63,8 @@ function ServerSidebar() {
                                 <AddCircleOutlineIcon />
                             </IconButton>
                         </div>
-                    )}
-                </Tooltip>
+                    </Tooltip>
+                )}
             </li>
         </div>
     );
