@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
+import { useSpring, animated } from 'react-spring';
 import Modal from 'react-modal';
 import LogoutButton from '../auth/LogoutButton/index';
 import LoginForm from '../auth/LoginForm/index';
 import SignUpForm from '../auth/SignUpForm/index';
 import ServerForm from '../ServerForm';
+import './NavBar.css';
 
 const customStyles = {
+    overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+    },
     content: {
+        position: 'absolute',
         top: '50%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
+        borderRadius: '10px',
+        padding: '20px',
     },
 };
 
@@ -67,6 +80,8 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                             setIsOpenLogin={setIsOpenLogin}
                             authenticated={authenticated}
                             setAuthenticated={setAuthenticated}
+                            openModalSignUp={openModalSignUp}
+                            closeModalLogin={closeModalLogin}
                         />
                     </Modal>
                 </div>
@@ -88,6 +103,9 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                         <SignUpForm
                             authenticated={authenticated}
                             setAuthenticated={setAuthenticated}
+                            closeModalSignUp={closeModalSignUp}
+                            openModalLogin={openModalLogin}
+
                         />
                     </Modal>
                 </div>
