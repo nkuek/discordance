@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import CircleLoader from 'react-spinners/CircleLoader';
 import './Server.css';
 import Sidebar from './Sidebar';
 import Chat from './Chat';
@@ -21,7 +20,7 @@ function Server() {
     }, [dispatch]);
 
     return isLoading || !server ? (
-        <CircleLoader size={500} />
+        <h1>Loading...</h1>
     ) : (
         <div className="serverContainer">
             <Sidebar server={server} />

@@ -5,18 +5,21 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import GroupWorkRoundedIcon from '@material-ui/icons/GroupWorkRounded';
 import ServerForm from '../../ServerForm';
 import './ServerSidebar.css';
 import { fetchUserServers } from '../../../store/userInfo';
 
 function ServerSidebar() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    const userServers = useSelector((state) => state.userServers);
 
     useEffect(() => {
         if (loggedInUser) dispatch(fetchUserServers(loggedInUser.id));
     }, [dispatch]);
-    const history = useHistory();
 
     function homeButton() {
         history.push('/');
@@ -25,6 +28,10 @@ function ServerSidebar() {
 
     const openServerModal = () => {
         setShowServerModal((prev) => !prev);
+    };
+
+    const handleServerClick = (e) => {
+        history.push(`/servers/${e.target.id}`);
     };
 
     return (
@@ -43,7 +50,33 @@ function ServerSidebar() {
                 <div className="menu-seperator" />
 
                 {/* This is where we will map over the servers for that user and render their pictures */}
-
+                <div className="userServersList">
+                    {Object.keys(userServers).length > 0 &&
+                        userServers.map((userServer) => (
+                            <Tooltip
+                                title={userServer.name}
+                                key={userServer.id}
+                                placement="right"
+                                className="tooltip"
+                            >
+                                <IconButton
+                                    id={userServer.id}
+                                    onClick={handleServerClick}
+                                    className="server-icon"
+                                >
+                                    {!userServer.image_url ? (
+                                        <GroupWorkRoundedIcon
+                                            id={userServer.id}
+                                        />
+                                    ) : (
+                                        <div className="server-icon">
+                                            <img src={userServer.image_url} />
+                                        </div>
+                                    )}
+                                </IconButton>
+                            </Tooltip>
+                        ))}
+                </div>
                 {loggedInUser && (
                     <Tooltip
                         title="Create Server"
