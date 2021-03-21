@@ -12,12 +12,14 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const [name, setName] = useState(
         loggedInUser && `${loggedInUser.username}'s server`
     );
+
     const [description, setDescription] = useState('');
-    const [isPublic, setIsPublic] = useState('Public');
+    const [isPublic, setIsPublic] = useState(true);
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
+    console.log(isPublic);
     // close modal when clicking anywhere else
     const closeServerModal = (e) => {
         if (serverModalRef.current === e.target) {
@@ -49,10 +51,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         }
         const newServer = await dispatch(
             createServer({
-                admin_id: 1,
+                admin_id: loggedInUser.id,
                 name,
                 description,
-                isPublic: isPublic === 'Public',
+                isPublic,
                 image,
             })
         );
@@ -112,8 +114,8 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             <select
                                 onChange={(e) => setIsPublic(e.target.value)}
                             >
-                                <option value="Public">Public</option>
-                                <option value="Private">Private</option>
+                                <option value={true}>Public</option>
+                                <option value={false}>Private</option>
                             </select>
                         </div>
                         <div className="serverModalInputContainer">

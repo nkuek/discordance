@@ -7,11 +7,11 @@ server_users = db.Table(
     'server_users',
     db.Column(
         "user_id", db.Integer, db.ForeignKey('users.id'),
-        nullable=False, primary_key=True
+        nullable=False
         ),
     db.Column(
         'server_id', db.Integer, db.ForeignKey('servers.id'),
-        nullable=False, primary_key=True
+        nullable=False
         )
 )
 

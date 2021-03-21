@@ -38,7 +38,7 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    font-size: .8em;
+    font-size: 1em;
 }
 
 .serverModalInputContainer label {
@@ -51,7 +51,7 @@
     font: inherit;
     padding: 5px;
     border: 1px solid rgb(170, 170, 170);
-    font-size: .8em;
+    font-size: 1em;
 }
 
 .serverModalInputContainer select {
@@ -66,10 +66,14 @@
     padding: 10px;
     margin-left: 10px;
     cursor: pointer;
-    font-size: .8em;
+    font-size: 1em;
     border-radius: 5px;
 }
 
 .serverModalSubmit:hover {
     background-color: #6476b9;
+}
+
+.serverModalButtonContainer {
+    display: flex;
 }

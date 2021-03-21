@@ -7,12 +7,14 @@ server_routes = Blueprint('servers', __name__)
 @server_routes.route('/', methods=['POST'])
 def add_server():
     response = request.json
-    print(response)
+    print('================')
+    print(response['isPublic'])
+    print('================')
     new_server = Server(
         admin_id=1,
         name=response['name'],
         description=response['description'],
-        public=bool(response['isPublic']),
+        public=(bool(response['isPublic'])),
         image_url=response['image'],
     )
     db.session.add(new_server)

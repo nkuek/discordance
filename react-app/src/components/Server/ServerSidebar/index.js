@@ -56,12 +56,12 @@ function ServerSidebar() {
                                 className="server-icon"
                                 onClick={openServerModal}
                             >
-                                <ServerForm
-                                    showServerModal={showServerModal}
-                                    setShowServerModal={setShowServerModal}
-                                />
                                 <AddCircleOutlineIcon />
                             </IconButton>
+                            <ServerForm
+                                showServerModal={showServerModal}
+                                setShowServerModal={setShowServerModal}
+                            />
                         </div>
                     </Tooltip>
                 )}
