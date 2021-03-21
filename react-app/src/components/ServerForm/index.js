@@ -6,12 +6,16 @@ import { createServer } from '../../store/server';
 import './ServerForm.css';
 
 function ServerForm({ showServerModal, setShowServerModal }) {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     const dispatch = useDispatch();
     const history = useHistory();
-    const [name, setName] = useState('');
+    const [name, setName] = useState(
+        loggedInUser && `${loggedInUser.username}'s server`
+    );
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('Public');
     const [image, setImage] = useState('');
+    const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
     // close modal when clicking anywhere else
@@ -24,7 +28,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // close modal when pressing escape key
     const keyPress = useCallback(
         (e) => {
-            if (e.key == 'Escape' && showServerModal) {
+            if (e.key === 'Escape' && showServerModal) {
                 setShowServerModal(false);
             }
         },
@@ -38,6 +42,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        if (!name) {
+            setErrors('Server name cannot be empty!');
+            return;
+        }
         const newServer = await dispatch(
             createServer({
                 admin_id: 1,
@@ -73,6 +82,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             Create a Server
                         </div>
                     </div>
+                    {errors && <div className="serverFormErrors">{errors}</div>}
                     <form
                         className="serverModalForm"
                         onSubmit={(e) => onSubmit(e)}

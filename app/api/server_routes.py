@@ -1,6 +1,5 @@
-from flask import Blueprint, jsonify, session, redirect, request, make_response
+from flask import Blueprint, json, request, jsonify
 from app.models import Server, db
-from app.forms import ServerForm
 
 server_routes = Blueprint('servers', __name__)
 
@@ -20,3 +19,16 @@ def add_server():
     db.session.commit()
     return new_server.to_dict()
 
+
+@server_routes.route('/', methods=['PUT'])
+def find_server():
+    serverId = request.json
+    serverSearch = Server.query.filter(Server.id == serverId).first()
+    server = Server(
+        admin_id=serverSearch.id,
+        name=serverSearch.name,
+        description=serverSearch.description,
+        public=serverSearch.public,
+        image_url=serverSearch.image_url
+    )
+    return server.to_dict()

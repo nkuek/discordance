@@ -3,6 +3,8 @@
     padding: 0;
 }
 
-.app {
+.serverContainer {
     display: flex;
+    width: 100%;
+
 }
