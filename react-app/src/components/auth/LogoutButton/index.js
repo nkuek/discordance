@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../../store/auth';
+import './LogoutButton.css';
 
 const LogoutButton = ({ setAuthenticated }) => {
     const history = useHistory();
@@ -11,7 +12,7 @@ const LogoutButton = ({ setAuthenticated }) => {
         history.push('/');
     };
 
-    return <button onClick={onLogout}>Logout</button>;
+    return <button className="LogoutModalSubmit" onClick={onLogout}>Logout</button>;
 };
 
 export default LogoutButton;
