@@ -12,6 +12,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('Public');
     const [image, setImage] = useState('');
+    const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
     // close modal when clicking anywhere else
@@ -38,6 +39,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        if (!name) {
+            setErrors('Server name cannot be empty!');
+            return;
+        }
         const newServer = await dispatch(
             createServer({
                 admin_id: 1,
@@ -73,6 +79,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             Create a Server
                         </div>
                     </div>
+                    {errors && <div className="serverFormErrors">{errors}</div>}
                     <form
                         className="serverModalForm"
                         onSubmit={(e) => onSubmit(e)}
