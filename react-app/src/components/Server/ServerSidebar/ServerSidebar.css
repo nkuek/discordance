@@ -1,0 +1,43 @@
+.ServerSidebar {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100vh - 44px);
+    text-align: center;
+    background: #292b2f;
+    flex: 0.06;
+}
+
+.server-icon svg {
+    width: 42px;
+    height: 42px;
+    color: white;
+}
+
+.home-icon svg {
+    width: 42px;
+    height: 37px;
+    color: white;
+}
+
+.menu-seperator {
+    border-top: 2px solid #2f3136;
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.home-icon::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    border-bottom: 2px solid grey;
+    width: 80%;
+}
+
+.tooltip {
+    font-size: 14px;
+    background: black;
+}
