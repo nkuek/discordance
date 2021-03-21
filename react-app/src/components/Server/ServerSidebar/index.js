@@ -32,6 +32,7 @@ function ServerSidebar() {
 
     const handleServerClick = (e) => {
         history.push(`/servers/${e.target.id}`);
+        window.location.reload();
     };
 
     return (
