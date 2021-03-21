@@ -23,10 +23,9 @@ def user(id):
 def userServers():
     userId = request.json
 
-    print('================')
-    print(userId)
-    print('================')
-    servers = User.query.join(Server.users).filter(User.id == 1).first()
-    print('================')
-    print(servers.servers)
-    print('================')
+    servers = User.query.get(userId).servers.all()
+    serverList = []
+    for server in servers:
+        serverList.append(server.to_dict())
+
+    return jsonify(serverList)

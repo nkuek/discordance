@@ -1,5 +1,5 @@
 from flask import Blueprint, json, request, jsonify
-from app.models import Server, db
+from app.models import Server, db, User
 
 server_routes = Blueprint('servers', __name__)
 
@@ -7,16 +7,16 @@ server_routes = Blueprint('servers', __name__)
 @server_routes.route('/', methods=['POST'])
 def add_server():
     response = request.json
-    print('================')
-    print(response['isPublic'])
-    print('================')
     new_server = Server(
-        admin_id=1,
+        admin_id=response['admin_id'],
         name=response['name'],
         description=response['description'],
         public=(bool(response['isPublic'])),
         image_url=response['image'],
     )
+
+    user = User.query.get(response['admin_id'])
+    user.servers.append(new_server)
     db.session.add(new_server)
     db.session.commit()
     return new_server.to_dict()

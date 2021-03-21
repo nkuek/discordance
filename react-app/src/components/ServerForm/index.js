@@ -19,7 +19,6 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
-    console.log(isPublic);
     // close modal when clicking anywhere else
     const closeServerModal = (e) => {
         if (serverModalRef.current === e.target) {

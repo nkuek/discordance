@@ -9,10 +9,21 @@ export const fetchUserServers = (userId) => async (dispatch) => {
     const response = await fetch('/api/users/servers/', {
         method: 'PUT',
         headers: {
-            ContentType: 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(userId),
     });
-    const data = await response.json();
-    console.log(data);
+    const userServers = await response.json();
+    dispatch(findUserServers(userServers));
 };
+
+const userInfoReducer = (state = {}, action) => {
+    switch (action.type) {
+        case FIND_USER_SERVERS:
+            return action.userServers;
+        default:
+            return state;
+    }
+};
+
+export default userInfoReducer;
