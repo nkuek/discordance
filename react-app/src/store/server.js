@@ -39,6 +39,8 @@ export const findExistingServer = (serverId) => async (dispatch) => {
     dispatch(findServer(server));
 };
 
+// Grabs all the servers that the logged in user has joined from the database
+
 const initialState = {};
 const serverReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -8,6 +8,7 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/auth';
 import Server from './components/Server';
+import ServerSidebar from './components/Server/ServerSidebar';
 
 function App() {
     const [authenticated, setAuthenticated] = useState(false);
@@ -31,32 +32,35 @@ function App() {
                 authenticated={authenticated}
                 setAuthenticated={setAuthenticated}
             />
-            <Switch>
-                <ProtectedRoute
-                    path="/users"
-                    exact={true}
-                    authenticated={authenticated}
-                >
-                    <UsersList />
-                </ProtectedRoute>
-                <ProtectedRoute
-                    path="/users/:userId"
-                    exact={true}
-                    authenticated={authenticated}
-                >
-                    <User />
-                </ProtectedRoute>
-                <ProtectedRoute
-                    path="/"
-                    exact={true}
-                    authenticated={authenticated}
-                >
-                    <h1>My Home Page</h1>
-                </ProtectedRoute>
-                <Route path="/servers/:serverId">
-                    <Server />
-                </Route>
-            </Switch>
+            <div className="mainContent">
+                <ServerSidebar />
+                <Switch>
+                    <ProtectedRoute
+                        path="/users"
+                        exact={true}
+                        authenticated={authenticated}
+                    >
+                        <UsersList />
+                    </ProtectedRoute>
+                    <ProtectedRoute
+                        path="/users/:userId"
+                        exact={true}
+                        authenticated={authenticated}
+                    >
+                        <User />
+                    </ProtectedRoute>
+                    <ProtectedRoute
+                        path="/"
+                        exact={true}
+                        authenticated={authenticated}
+                    >
+                        <h1>My Home Page</h1>
+                    </ProtectedRoute>
+                    <Route path="/servers/:serverId">
+                        <Server />
+                    </Route>
+                </Switch>
+            </div>
         </BrowserRouter>
     );
 }

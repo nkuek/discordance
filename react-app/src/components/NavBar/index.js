@@ -55,7 +55,7 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
     }
 
     return (
-        <nav>
+        <nav className="mainNavBar">
             <div>
                 <div>
                     {authenticated === true ? (

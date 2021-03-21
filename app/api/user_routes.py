@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User
+from app.models import User, Server
 
 user_routes = Blueprint('users', __name__)
 
@@ -17,3 +17,15 @@ def users():
 def user(id):
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/servers/', methods=['PUT'])
+def userServers():
+    userId = request.json
+
+    print('================')
+    print(userId)
+    print('================')
+    servers = User.query.filter(User.id == userId).join(Server, User.servers)
+    print('================')
+    print(servers)
+    print('================')

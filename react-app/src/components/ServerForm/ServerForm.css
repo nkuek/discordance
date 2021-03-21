@@ -29,7 +29,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .serverModalInputContainer {
@@ -38,6 +38,7 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
+    font-size: .8em;
 }
 
 .serverModalInputContainer label {
@@ -49,6 +50,7 @@
     font: inherit;
     padding: 5px;
     border: 1px solid rgb(170, 170, 170);
+    font-size: .8em;
 }
 
 .serverModalInputContainer select {
@@ -63,6 +65,7 @@
     padding: 10px;
     margin-left: 10px;
     cursor: pointer;
+    font-size: .8em;
 }
 
 .serverModalSubmit:hover {
