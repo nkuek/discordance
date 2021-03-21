@@ -51,7 +51,9 @@
     color: white;
     padding: 10px;
     margin-left: 10px;
+    margin-bottom: 5px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .LoginModalSubmit:hover {
