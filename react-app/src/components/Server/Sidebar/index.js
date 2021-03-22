@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Sidebar.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -7,21 +7,84 @@ import SidebarChannel from './SidebarChannel';
 import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CallIcon from '@material-ui/icons/Call';
-import { Avatar } from '@material-ui/core';
+import {
+    Avatar,
+    IconButton,
+    MenuItem,
+    Popper,
+    Paper,
+    MenuList,
+    ClickAwayListener,
+} from '@material-ui/core';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteExistingServer } from '../../../store/server';
 
-function Sidebar({ server }) {
+function Sidebar() {
     const [channels, setChannels] = useState([]);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
+
+    const server = useSelector((state) => state.server);
+
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    const handleDeleteServer = (serverId) => {
+        dispatch(deleteExistingServer(serverId));
+        history.push('/');
+    };
+
     return (
         <div className="sidebar">
             <div className="sidebar__top">
                 <h3>{server.name}</h3>
-                <ExpandMoreIcon />
+                {/* <ExpandMoreIcon /> */}
+                <IconButton
+                    aria-label="more"
+                    aria-controls="long-menu"
+                    aria-haspopup="true"
+                    onClick={handleToggle}
+                    ref={anchorRef}
+                >
+                    <ExpandMoreIcon style={{ color: 'white' }} />
+                </IconButton>
+                <Popper
+                    open={open}
+                    anchorEl={anchorRef.current}
+                    role={undefined}
+                    transition
+                    disablePortal
+                >
+                    <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                            <MenuList>
+                                <MenuItem
+                                    onClick={() =>
+                                        handleDeleteServer(server.id)
+                                    }
+                                >
+                                    Delete
+                                </MenuItem>
+                            </MenuList>
+                        </ClickAwayListener>
+                    </Paper>
+                </Popper>
             </div>
-
+            <div className="sidebar__description">{server.description}</div>
             <div className="sidebar__channels">
                 <div className="sidebar__channelsHeader">
                     <div className="sidebar__header">

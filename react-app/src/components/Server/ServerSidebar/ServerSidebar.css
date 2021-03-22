@@ -8,10 +8,16 @@
     flex: 0.06;
 }
 
-.server-icon svg {
+
+.server-icon svg,
+.server-icon img {
     width: 42px;
     height: 42px;
     color: white;
+}
+
+.server-icon img {
+    border-radius: 100%;
 }
 
 .home-icon svg {
@@ -52,4 +58,8 @@
     width: 42px;
     height: 37px;
     color: white;
+}
+
+.active {
+    border-left: 5px solid white;
 }
