@@ -5,24 +5,6 @@ import * as sessionActions from "../../../store/session";
 import { useDispatch } from "react-redux";
 import "./LoginForm.css";
 
-// const [credential, setCredential] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [errors, setErrors] = useState([]);
-
-//   const email1 = "demouser@gmail.com";
-//   const userPw1 = "Demouser123!@#";
-//   const email2 = "demo@user.io";
-//   const userPw2 = "password";
-
-//   const demoUser = (email, password) => {
-//     setCredential(email);
-//     setPassword(password);
-//   };
-
-// const handleSubmit = (e) => {
-//     e.preventDefault();
-  
-
 const LoginForm = ({
   authenticated,
   setAuthenticated,
@@ -43,31 +25,22 @@ const LoginForm = ({
 
   const onLogin = async (e) => {
     e.preventDefault();
-      return dispatch(sessionActions.login({ email, password })).catch(
-        async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        }
-      );
-  
-    // const user = await login(email, password);
-    // if (!user.errors) {
-    //   localStorage.setItem("loggedInUser", JSON.stringify(user));
-    //   setIsOpenLogin(false);
-    //   setAuthenticated(true);
-    //   return <Redirect to="/" />;
-    // } else {
-    //   setErrors(user.errors);
-    // }
+    const user = await dispatch(sessionActions.login({ email, password }));
+    if (!user.payload.errors) {
+      setIsOpenLogin(false);
+      setAuthenticated(true);
+      return <Redirect to="/" />;
+    } else {
+      setErrors(user.payload.errors);
+    }
   };
 
-  const handleDemoUser = async (e) => {
-    e.preventDefault();
-    const user = await login("demo@aa.io", "password");
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    setIsOpenLogin(false);
-    setAuthenticated(true);
-    return <Redirect to="/" />;
+  const email1 = "demo@aa.io";
+  const password1 = "password";
+
+  const demoUser = (email, password) => {
+    setEmail(email);
+    setPassword(password);
   };
 
   const updateEmail = (e) => {
@@ -78,6 +51,7 @@ const LoginForm = ({
     setPassword(e.target.value);
   };
 
+  console.log(authenticated);
   if (authenticated) {
     return <Redirect to="/" />;
   }
@@ -102,6 +76,7 @@ const LoginForm = ({
               placeholder="Email"
               value={email}
               onChange={updateEmail}
+              require
             />
           </div>
           <div className="LoginModalInputContainer">
@@ -112,6 +87,7 @@ const LoginForm = ({
               placeholder="Password"
               value={password}
               onChange={updatePassword}
+              require
             />
           </div>
           <div className="LoginModalButtonContainer">
@@ -121,7 +97,7 @@ const LoginForm = ({
           </div>
           <div className="LoginModalButtonContainer">
             <button
-              onClick={handleDemoUser}
+              onClick={() => demoUser(email1, password1)}
               className="LoginModalSubmit"
               type="submit"
             >
