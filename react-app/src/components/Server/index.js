@@ -8,22 +8,9 @@ import Message from './Message';
 import { findExistingServer } from '../../store/server';
 
 function Server() {
-    const { serverId } = useParams();
-    const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const server = useSelector((state) => state.server);
-
-    useEffect(() => {
-        dispatch(findExistingServer(serverId));
-        setIsLoading(false);
-    }, [dispatch]);
-
-    return isLoading || !server ? (
-        <h1>Loading...</h1>
-    ) : (
+    return (
         <div className="serverContainer">
-            <Sidebar server={server} />
+            <Sidebar />
             <Chat />
             <Message />
         </div>
