@@ -23,14 +23,13 @@ function ServerSidebar() {
 
     const userServers = useSelector((state) => state.userServers);
     const loggedInUser = useSelector((state) => state.session.user);
-    console.log(loggedInUser);
 
     useEffect(() => {
         if (serverId) dispatch(findExistingServer(serverId));
     }, [serverId]);
 
     useEffect(() => {
-        dispatch(fetchUserServers(loggedInUser.id));
+        dispatch(fetchUserServers(loggedInUser?.id));
     }, [server]);
 
     function homeButton() {

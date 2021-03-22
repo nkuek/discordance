@@ -17,7 +17,7 @@ const removeUser = () => {
 // signup
 export const signup = (user) => async (dispatch) => {
     const { username, email, password } = user;
-    const response = await fetch('/api/auth/signup', {
+    const response = await fetch('/api/auth/signup/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const signup = (user) => async (dispatch) => {
 // login
 export const login = (user) => async (dispatch) => {
     const { email, password } = user;
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/api/auth/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,8 +53,7 @@ export const login = (user) => async (dispatch) => {
 
 // logout
 export const logout = () => async (dispatch) => {
-    const response = await fetch('/api/auth/logout'
-    );
+    const response = await fetch('/api/auth/logout/');
     return dispatch(removeUser());
 };
 

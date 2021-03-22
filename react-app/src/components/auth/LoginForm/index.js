@@ -41,7 +41,7 @@ const LoginForm = ({
     const demoUser = (e) => {
         setEmail(email1);
         setPassword(password1);
-        dispatch(sessionActions.login(email1, password1));
+        dispatch(sessionActions.login({ email: email1, password: password1 }));
     };
 
     const updateEmail = (e) => {
