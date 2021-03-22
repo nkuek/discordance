@@ -35,3 +35,11 @@ def find_server():
         image_url=serverSearch.image_url
     )
     return server.to_dict()
+
+
+@server_routes.route('/', methods=['DELETE'])
+def delete_server():
+    serverId = request.json
+    server = Server.query.get(serverId)
+    db.session.delete(server)
+    db.session.commit()

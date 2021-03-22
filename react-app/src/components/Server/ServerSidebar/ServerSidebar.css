@@ -8,11 +8,6 @@
     flex: 0.06;
 }
 
-.server-icon {
-    width: 42px;
-    height: 42px;
-    padding: 18px;
-}
 
 .server-icon svg,
 .server-icon img {

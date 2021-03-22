@@ -1,5 +1,6 @@
 const ADD_SERVER = 'server/addServer';
 const FIND_SERVER = 'server/findServer';
+const DELETE_SERVER = 'server/deleteServer';
 
 const addServer = (newServer) => ({
     type: ADD_SERVER,
@@ -9,6 +10,10 @@ const addServer = (newServer) => ({
 const findServer = (server) => ({
     type: FIND_SERVER,
     server,
+});
+
+const deleteServer = () => ({
+    type: DELETE_SERVER,
 });
 
 //add a server
@@ -39,6 +44,18 @@ export const findExistingServer = (serverId) => async (dispatch) => {
     dispatch(findServer(server));
 };
 
+// Delete existing server
+export const deleteExistingServer = (serverId) => async (dispatch) => {
+    await fetch('/api/servers/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(serverId),
+    });
+    dispatch(deleteServer());
+};
+
 // Grabs all the servers that the logged in user has joined from the database
 
 const initialState = {};
@@ -48,6 +65,9 @@ const serverReducer = (state = initialState, action) => {
             return action.newServer;
         case FIND_SERVER:
             return action.server;
+        case DELETE_SERVER:
+            state = {};
+            return state;
         default:
             return state;
     }
