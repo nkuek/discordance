@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
 import NavBar from './components/NavBar/index';
@@ -18,6 +18,7 @@ function App() {
 
     const [authenticated, setAuthenticated] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const [loggedInUser, setLoggedInUser] = useState('');
 
     useEffect(async () => {
         const user = await authenticate();
@@ -26,6 +27,7 @@ function App() {
             setAuthenticated(true);
         }
         setLoaded(true);
+        setLoggedInUser(user);
     }, [dispatch]);
 
     if (!loaded) {
