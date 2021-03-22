@@ -36,6 +36,17 @@ def find_server():
     )
     return server.to_dict()
 
+# find public servers
+
+
+@server_routes.route("/public", methods=['GET'])
+def find_public_servers():
+    serverSearch = Server.query.filter(Server.public == True).all()
+    serverList = []
+    for server in serverSearch:
+        serverList.append(server.to_dict())
+    return jsonify(serverList)
+
 
 @server_routes.route('/', methods=['DELETE'])
 def delete_server():
