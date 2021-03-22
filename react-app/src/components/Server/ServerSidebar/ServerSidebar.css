@@ -8,6 +8,12 @@
     flex: 0.06;
 }
 
+.server-icon {
+    width: 42px;
+    height: 42px;
+    padding: 18px;
+}
+
 .server-icon svg,
 .server-icon img {
     width: 42px;
@@ -16,7 +22,7 @@
 }
 
 .server-icon img {
-    border-radius: 100%
+    border-radius: 100%;
 }
 
 .home-icon svg {
