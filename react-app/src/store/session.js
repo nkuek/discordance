@@ -32,11 +32,11 @@ export const signup = (user) => async (dispatch) => {
 
 // login
 export const login = (user) => async (dispatch) => {
-  const { credential, password } = user;
+  const { email, password } = user;
   const response = await fetch("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({
-      credential,
+      email,
       password,
     }),
   });

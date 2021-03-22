@@ -1,7 +1,27 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { login } from "../../../store/auth";
+import * as sessionActions from "../../../store/session";
+import { useDispatch } from "react-redux";
 import "./LoginForm.css";
+
+// const [credential, setCredential] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [errors, setErrors] = useState([]);
+
+//   const email1 = "demouser@gmail.com";
+//   const userPw1 = "Demouser123!@#";
+//   const email2 = "demo@user.io";
+//   const userPw2 = "password";
+
+//   const demoUser = (email, password) => {
+//     setCredential(email);
+//     setPassword(password);
+//   };
+
+// const handleSubmit = (e) => {
+//     e.preventDefault();
+  
 
 const LoginForm = ({
   authenticated,
@@ -10,6 +30,7 @@ const LoginForm = ({
   openModalSignUp,
   closeModalLogin,
 }) => {
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,15 +43,22 @@ const LoginForm = ({
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const user = await login(email, password);
-    if (!user.errors) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      setIsOpenLogin(false);
-      setAuthenticated(true);
-      return <Redirect to="/" />;
-    } else {
-      setErrors(user.errors);
-    }
+      return dispatch(sessionActions.login({ email, password })).catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+      );
+  
+    // const user = await login(email, password);
+    // if (!user.errors) {
+    //   localStorage.setItem("loggedInUser", JSON.stringify(user));
+    //   setIsOpenLogin(false);
+    //   setAuthenticated(true);
+    //   return <Redirect to="/" />;
+    // } else {
+    //   setErrors(user.errors);
+    // }
   };
 
   const handleDemoUser = async (e) => {
