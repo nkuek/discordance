@@ -59,3 +59,7 @@
     height: 37px;
     color: white;
 }
+
+.active {
+    border-left: 5px solid white;
+}

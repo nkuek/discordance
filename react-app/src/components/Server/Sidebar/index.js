@@ -84,7 +84,7 @@ function Sidebar() {
                     </Paper>
                 </Popper>
             </div>
-
+            <div className="sidebar__description">{server.description}</div>
             <div className="sidebar__channels">
                 <div className="sidebar__channelsHeader">
                     <div className="sidebar__header">

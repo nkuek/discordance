@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -44,7 +44,8 @@ function ServerSidebar() {
         setShowServerModal((prev) => !prev);
     };
 
-    const handleServerClick = (serverId) => {
+    const handleServerClick = (e, serverId) => {
+        e.preventDefault();
         setServerId(serverId);
         history.push(`/servers/${serverId}`);
     };
@@ -68,27 +69,34 @@ function ServerSidebar() {
                 <div className="userServersList">
                     {Object.keys(userServers).length > 0 &&
                         userServers.map((userServer) => (
-                            <Tooltip
-                                title={userServer.name}
+                            <NavLink
                                 key={userServer.id}
-                                placement="right"
-                                className="tooltip"
+                                to={`/servers/${userServer.id}`}
                             >
-                                <IconButton
-                                    onClick={() =>
-                                        handleServerClick(userServer.id)
-                                    }
-                                    className="server-icon"
+                                <Tooltip
+                                    title={userServer.name}
+                                    key={userServer.id}
+                                    placement="right"
+                                    className="tooltip"
                                 >
-                                    {!userServer.image_url ? (
-                                        <BlurCircularRoundedIcon />
-                                    ) : (
-                                        <div className="server-icon">
-                                            <img src={userServer.image_url} />
-                                        </div>
-                                    )}
-                                </IconButton>
-                            </Tooltip>
+                                    <IconButton
+                                        onClick={(e) =>
+                                            handleServerClick(e, userServer.id)
+                                        }
+                                        className="server-icon"
+                                    >
+                                        {!userServer.image_url ? (
+                                            <BlurCircularRoundedIcon />
+                                        ) : (
+                                            <div className="server-icon">
+                                                <img
+                                                    src={userServer.image_url}
+                                                />
+                                            </div>
+                                        )}
+                                    </IconButton>
+                                </Tooltip>
+                            </NavLink>
                         ))}
                 </div>
                 {loggedInUser && (

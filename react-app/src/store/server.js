@@ -1,6 +1,7 @@
 const ADD_SERVER = 'server/addServer';
 const FIND_SERVER = 'server/findServer';
 const DELETE_SERVER = 'server/deleteServer';
+const EDIT_SERVER = 'server/editServer';
 
 const addServer = (newServer) => ({
     type: ADD_SERVER,
@@ -14,6 +15,11 @@ const findServer = (server) => ({
 
 const deleteServer = () => ({
     type: DELETE_SERVER,
+});
+
+const editServer = (updatedServer) => ({
+    type: EDIT_SERVER,
+    updatedServer,
 });
 
 //add a server
