@@ -31,6 +31,7 @@ function ServerSidebar() {
     };
 
     const handleServerClick = (e) => {
+        e.stopPropagation();
         history.push(`/servers/${e.target.id}`);
         window.location.reload();
     };
@@ -70,7 +71,10 @@ function ServerSidebar() {
                                             id={userServer.id}
                                         />
                                     ) : (
-                                        <div className="server-icon">
+                                        <div
+                                            id={userServer.id}
+                                            className="server-icon"
+                                        >
                                             <img src={userServer.image_url} />
                                         </div>
                                     )}
