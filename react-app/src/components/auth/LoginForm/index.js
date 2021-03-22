@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { login } from '../../../store/auth';
+import { fetchUserServers } from '../../../store/userInfo';
 import * as sessionActions from '../../../store/session';
 import { useDispatch } from 'react-redux';
 import './LoginForm.css';
@@ -26,9 +26,11 @@ const LoginForm = ({
     const onLogin = async (e) => {
         e.preventDefault();
         const user = await dispatch(sessionActions.login({ email, password }));
+        console.log(user);
         if (!user.payload.errors) {
             setIsOpenLogin(false);
             setAuthenticated(true);
+            dispatch(fetchUserServers(user.payload.id));
             return <Redirect to="/" />;
         } else {
             setErrors(user.payload.errors);

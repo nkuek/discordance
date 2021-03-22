@@ -18,6 +18,7 @@ function ServerSidebar() {
 
     const [showServerModal, setShowServerModal] = useState(false);
     const [serverId, setServerId] = useState('');
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const server = useSelector((state) => state.server);
 
@@ -30,6 +31,7 @@ function ServerSidebar() {
 
     useEffect(() => {
         dispatch(fetchUserServers(loggedInUser?.id));
+        setIsLoaded(true);
     }, [server]);
 
     function homeButton() {
@@ -47,77 +49,84 @@ function ServerSidebar() {
     };
 
     return (
-        <div className="ServerSidebar">
-            <li>
-                <Tooltip
-                    title="Home"
-                    key="home"
-                    placement="right"
-                    className="tooltip"
-                >
-                    <IconButton className="home-icon" onClick={homeButton}>
-                        <HomeIcon />
-                    </IconButton>
-                </Tooltip>
-                <div className="menu-seperator" />
-
-                {/* This is where we will map over the servers for that user and render their pictures */}
-                <div className="userServersList">
-                    {Object.keys(userServers).length > 0 &&
-                        userServers.map((userServer) => (
-                            <NavLink
-                                key={userServer.id}
-                                to={`/servers/${userServer.id}`}
-                            >
-                                <Tooltip
-                                    title={userServer.name}
-                                    key={userServer.id}
-                                    placement="right"
-                                    className="tooltip"
-                                >
-                                    <IconButton
-                                        onClick={(e) =>
-                                            handleServerClick(e, userServer.id)
-                                        }
-                                        className="server-icon"
-                                    >
-                                        {!userServer.image_url ? (
-                                            <BlurCircularRoundedIcon />
-                                        ) : (
-                                            <div className="server-icon">
-                                                <img
-                                                    src={userServer.image_url}
-                                                />
-                                            </div>
-                                        )}
-                                    </IconButton>
-                                </Tooltip>
-                            </NavLink>
-                        ))}
-                </div>
-                {loggedInUser && (
+        isLoaded && (
+            <div className="ServerSidebar">
+                <li>
                     <Tooltip
-                        title="Create Server"
-                        key="create-server"
+                        title="Home"
+                        key="home"
                         placement="right"
                         className="tooltip"
                     >
-                        <div>
-                            <IconButton
-                                className="server-icon"
-                                onClick={openServerModal}
-                            >
-                                <AddCircleOutlineIcon />
-                            </IconButton>
-                            <ServerForm
-                                showServerModal={showServerModal}
-                                setShowServerModal={setShowServerModal}
-                            />
-                        </div>
+                        <IconButton className="home-icon" onClick={homeButton}>
+                            <HomeIcon />
+                        </IconButton>
                     </Tooltip>
-                )}
-            </li>
-        </div>
+                    <div className="menu-seperator" />
+
+                    {/* This is where we will map over the servers for that user and render their pictures */}
+                    <div className="userServersList">
+                        {Object.keys(userServers).length > 0 &&
+                            userServers.map((userServer) => (
+                                <NavLink
+                                    key={userServer.id}
+                                    to={`/servers/${userServer.id}`}
+                                >
+                                    <Tooltip
+                                        title={userServer.name}
+                                        key={userServer.id}
+                                        placement="right"
+                                        className="tooltip"
+                                    >
+                                        <IconButton
+                                            onClick={(e) =>
+                                                handleServerClick(
+                                                    e,
+                                                    userServer.id
+                                                )
+                                            }
+                                            className="server-icon"
+                                        >
+                                            {!userServer.image_url ? (
+                                                <BlurCircularRoundedIcon />
+                                            ) : (
+                                                <div className="server-icon">
+                                                    <img
+                                                        src={
+                                                            userServer.image_url
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                        </IconButton>
+                                    </Tooltip>
+                                </NavLink>
+                            ))}
+                    </div>
+                    {loggedInUser && (
+                        <Tooltip
+                            title="Create Server"
+                            key="create-server"
+                            placement="right"
+                            className="tooltip"
+                        >
+                            <div>
+                                <IconButton
+                                    className="server-icon"
+                                    onClick={openServerModal}
+                                >
+                                    <AddCircleOutlineIcon />
+                                </IconButton>
+                                <ServerForm
+                                    showServerModal={showServerModal}
+                                    setShowServerModal={setShowServerModal}
+                                />
+                            </div>
+                        </Tooltip>
+                    )}
+                </li>
+            </div>
+        )
     );
 }
 

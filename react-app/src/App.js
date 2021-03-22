@@ -10,6 +10,7 @@ import User from './components/User';
 import { authenticate } from './store/auth';
 import Server from './components/Server';
 import ServerSidebar from './components/Server/ServerSidebar';
+import { fetchUserServers } from './store/userInfo';
 
 import * as sessionActions from './store/session';
 
@@ -18,16 +19,15 @@ function App() {
 
     const [authenticated, setAuthenticated] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const [loggedInUser, setLoggedInUser] = useState('');
 
     useEffect(async () => {
         const user = await authenticate();
         if (!user.errors) {
             dispatch(sessionActions.restoreUser());
             setAuthenticated(true);
+            dispatch(fetchUserServers(user.id));
         }
         setLoaded(true);
-        setLoggedInUser(user);
     }, [dispatch]);
 
     if (!loaded) {
