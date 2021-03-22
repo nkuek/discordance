@@ -17,9 +17,6 @@ function ServerSidebar() {
     const userServers = useSelector((state) => state.userServers);
     const loggedInUser = useSelector((state) => state.session.user);
     console.log(loggedInUser);
-    useEffect(() => {
-        if (loggedInUser) dispatch(fetchUserServers(loggedInUser.id));
-    }, [dispatch]);
 
     function homeButton() {
         history.push('/');
