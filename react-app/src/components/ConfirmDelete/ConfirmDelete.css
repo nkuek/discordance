@@ -1,19 +1,17 @@
 .deleteModalHeader {
     font-size: 1.2em;
     color: black;
+    text-align: center;
 }
 
 .deleteModalContainer {
     background-color: white;
     width: 500px;
-    height: 250px;
     background-color: #fff;
     border-radius: 10px;
     box-sizing: border-box;
     padding: 20px;
     color: black;
-    display: flex;
-    justify-content: center;
 }
 
 .confirmDeleteModalButtonYes {
@@ -24,6 +22,12 @@
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
+    transition: 250ms transform
+}
+
+.confirmDeleteModalButtonYes:hover {
+    background-color: #4fd197;
+    transform: scale(1.03)
 }
 
 .confirmDeleteModalButtonNo {
@@ -33,6 +37,12 @@
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
+    transition: 250ms transform
+}
+
+.confirmDeleteModalButtonNo:hover {
+    background-color: #ff7979;
+    transform: scale(1.03)
 }
 
 .deleteModalButtons {

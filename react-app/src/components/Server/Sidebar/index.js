@@ -21,10 +21,7 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useSelector, useDispatch } from 'react-redux';
 import EditServerForm from '../../EditServerForm';
-import {
-    deleteExistingServer,
-    updateExistingServer,
-} from '../../../store/server';
+import { updateExistingServer } from '../../../store/server';
 import ConfirmDelete from '../../ConfirmDelete';
 
 function Sidebar() {
@@ -58,11 +55,6 @@ function Sidebar() {
         }
 
         setOpen(false);
-    };
-
-    const handleDeleteServer = (serverId) => {
-        dispatch(deleteExistingServer(serverId));
-        history.push('/');
     };
 
     const handleEditServer = (serverId) => {

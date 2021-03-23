@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { deleteExistingServer } from '../../store/server';
 import './ConfirmDelete.css';
 
 function ConfirmDelete({ showDeleteModal, setShowDeleteModal }) {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const deleteModalRef = useRef();
     // close modal when clicking anywhere else
@@ -41,6 +43,11 @@ function ConfirmDelete({ showDeleteModal, setShowDeleteModal }) {
         transform: showDeleteModal ? `scale(1)` : `scale(0.8)`,
     });
 
+    const handleDeleteServer = (serverId) => {
+        dispatch(deleteExistingServer(serverId));
+        history.push('/');
+    };
+
     return showDeleteModal ? (
         <div
             className="serverModalWrapper"
@@ -53,10 +60,16 @@ function ConfirmDelete({ showDeleteModal, setShowDeleteModal }) {
                         {`Are you sure you want to delete ${server.name}?`}
                     </div>
                     <div className="deleteModalButtons">
-                        <button className="confirmDeleteModalButtonYes">
+                        <button
+                            onClick={() => handleDeleteServer(server.id)}
+                            className="confirmDeleteModalButtonYes"
+                        >
                             Yes
                         </button>
-                        <button className="confirmDeleteModalButtonNo">
+                        <button
+                            onClick={() => setShowDeleteModal(false)}
+                            className="confirmDeleteModalButtonNo"
+                        >
                             No
                         </button>
                     </div>
