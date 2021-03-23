@@ -25,7 +25,7 @@ import {
     deleteExistingServer,
     updateExistingServer,
 } from '../../../store/server';
-// import ConfirmDelete from '../../ConfirmDelete';
+import ConfirmDelete from '../../ConfirmDelete';
 
 function Sidebar() {
     const [channels, setChannels] = useState([]);
@@ -40,10 +40,12 @@ function Sidebar() {
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
+        setOpen(false);
     };
 
     const openServerModal = () => {
         setShowServerModal((prev) => !prev);
+        setOpen(false);
     };
 
     const handleToggle = () => {
@@ -101,7 +103,10 @@ function Sidebar() {
                         </ClickAwayListener>
                     </Paper>
                 </Popper>
-                {/* <ConfirmDelete showDeleteModal={showDeleteModal} setShowS/> */}
+                <ConfirmDelete
+                    showDeleteModal={showDeleteModal}
+                    setShowDeleteModal={setShowDeleteModal}
+                />
                 <EditServerForm
                     server={server}
                     showServerModal={showServerModal}
