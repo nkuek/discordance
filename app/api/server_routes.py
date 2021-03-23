@@ -11,6 +11,7 @@ def add_server():
         admin_id=response['admin_id'],
         name=response['name'],
         description=response['description'],
+        category=response['serverCategory'],
         public=(bool(response['isPublic'])),
         image_url=response['image'],
     )
@@ -31,6 +32,7 @@ def find_server():
         admin_id=serverSearch.admin_id,
         name=serverSearch.name,
         description=serverSearch.description,
+        category=serverSearch.category,
         public=serverSearch.public,
         image_url=serverSearch.image_url
     )
@@ -64,5 +66,6 @@ def edit_server():
     matched_server.description = server['description']
     matched_server.public = bool(server['isPublic'])
     matched_server.image_url = server['image']
+    matched_server.category = server['serverCategory']
     db.session.commit()
     return matched_server.to_dict()

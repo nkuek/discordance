@@ -53,6 +53,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
             createServer({
                 admin_id: loggedInUser.id,
                 name,
+                serverCategory,
                 description,
                 isPublic,
                 image,

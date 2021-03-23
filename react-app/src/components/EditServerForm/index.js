@@ -22,22 +22,27 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
+    console.log(server.category);
+
     useEffect(() => {
         dispatch(findExistingServer(serverId));
         setIsLoaded(true);
     }, [dispatch]);
 
+    // Yassine
     useEffect(() => {
-        setName(server.name);
-        setDescription(server.description);
-        setIsPublic(server.public === true ? 'true' : '');
-        setImage(server.image_url);
+        setName(server?.name);
+        setDescription(server?.description);
+        setServerCategory(server?.category);
+        setIsPublic(server?.public === true ? 'true' : '');
+        setImage(server?.image_url);
     }, [server]);
     // close modal when clicking anywhere else
     const closeServerModal = (e) => {
         if (serverModalRef.current === e.target) {
             setShowServerModal(false);
             setName(server.name);
+            setServerCategory(server.category);
             setDescription(server.description);
             setIsPublic(server.public === true ? 'true' : '');
             setImage(server.image_url);
@@ -52,6 +57,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                 setName(server.name);
                 setDescription(server.description);
                 setIsPublic(server.public === true ? 'true' : '');
+                setServerCategory(server.category);
                 setImage(server.image_url);
             }
         },
@@ -75,6 +81,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                 id: server.id,
                 admin_id: loggedInUser.id,
                 name,
+                serverCategory,
                 description,
                 isPublic,
                 image,
@@ -148,6 +155,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                         <div className="serverModalInputContainer">
                             <label htmlFor="serverCategory">Category</label>
                             <select
+                                value={serverCategory}
                                 onChange={(e) =>
                                     setServerCategory(e.target.value)
                                 }

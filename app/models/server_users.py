@@ -87,6 +87,7 @@ class Server(db.Model):
             "admin_id": self.admin_id,
             "name": self.name,
             "description": self.description,
+            "category": self.category,
             "public": self.public,
             "image_url": self.image_url
         }
