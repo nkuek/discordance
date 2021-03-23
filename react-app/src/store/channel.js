@@ -27,21 +27,6 @@ const channelReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CHANNEL:
       return action.newChannel;
-    // case FIND_SERVER:
-    //   return action.server;
-
-    // case FIND_PUBLIC_SERVER:
-    //   return action.servers;
-    // case DELETE_SERVER:
-    //   state = {};
-    //   return state;
-
-    // case DELETE_SERVER:
-    //   state = {};
-    //   return state;
-    // case EDIT_SERVER:
-    //   return action.updatedServer;
-
     default:
       return state;
   }

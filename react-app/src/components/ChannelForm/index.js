@@ -9,6 +9,7 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [channelName, setChannelName] = useState("");
+  const [serverId, setServerId] = useState("");
   const [errors, setErrors] = useState("");
 
   const channelModalRef = useRef();
@@ -56,6 +57,7 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
     setErrors("");
     setChannelName("");
     setShowChannelModal(false);
+    setServerId(serverId);
 
     const newChannel = await dispatch(createChannel(name, serverId));
     history.push(`/servers/${server.id}/${newChannel.id}`);

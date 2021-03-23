@@ -36,7 +36,13 @@ def find_server():
         public=serverSearch.public,
         image_url=serverSearch.image_url
     )
-    return server.to_dict()
+    data = server.to_dict()
+    channels = Channel.query.filter(
+        Channel.server_id == server.id).all()
+    newList = [channel.to_dict() for channel in channels]
+    data['channels'] = newList
+    return data
+
 
 # @server_routes.route("/", methods=['GET'])
 # def find_server():
@@ -88,11 +94,11 @@ def add_channel():
         name=channel['name'],
         server_id=channel['serverId'],
     )
-    print("==================")
-    print(channel)
-    print("==================")
     server = Server.query.get(channel['serverId'])
-    server.channels.append(new_channel)
+    # channels.server.append(new_channel)
+    # print("==================")
+    # print(server.channels)
+    # print("==================")
     db.session.add(new_channel)
     db.session.commit()
     return new_channel.to_dict()
