@@ -11,6 +11,7 @@ const removeUserServers = () => ({
 });
 
 export const fetchUserServers = (userId) => async (dispatch) => {
+    if (!userId) return;
     const response = await fetch('/api/users/servers/', {
         method: 'PUT',
         headers: {
@@ -19,7 +20,7 @@ export const fetchUserServers = (userId) => async (dispatch) => {
         body: JSON.stringify(userId),
     });
     const userServers = await response.json();
-    dispatch(findUserServers(userServers));
+    return dispatch(findUserServers(userServers));
 };
 
 export const resetUserServers = () => async (dispatch) => {
