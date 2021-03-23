@@ -96,6 +96,10 @@
     padding: 10px;
 }
 
+.MuiList-root {
+    padding: 10px;
+}
+
 .descriptionContent {
     font-size: .9em;
 }

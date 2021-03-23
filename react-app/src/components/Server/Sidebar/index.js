@@ -16,6 +16,8 @@ import {
     MenuList,
     ClickAwayListener,
 } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,6 +30,28 @@ import EditServerForm from '../../EditServerForm';
 import { updateExistingServer } from '../../../store/server';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
+
+const CustomMenuList = withStyles({
+    root: {
+        width: '150px',
+        boxShadow: '3px 3px 3px #28292E',
+        backgroundColor: '#18191C',
+        borderRadius: '5px',
+    },
+})(MenuList);
+
+const CustomMenuItem = withStyles({
+    root: {
+        '&:hover': {
+            backgroundColor: '#7289DA',
+            borderRadius: '5px',
+        },
+        padding: '5px 10px',
+        margin: '0px 6px',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+})(MenuItem);
 
 const SimpleAccordion = withStyles({
     root: {
@@ -45,7 +69,6 @@ const SimpleAccordion = withStyles({
             margin: 'auto',
         },
     },
-    expanded: {},
 })(Accordion);
 
 const SimpleAccordionSummary = withStyles({
@@ -150,14 +173,20 @@ function Sidebar() {
                         }}
                     >
                         <ClickAwayListener onClickAway={handleClose}>
-                            <MenuList style={{ color: 'white' }}>
-                                <MenuItem onClick={openServerModal}>
-                                    Edit
-                                </MenuItem>
-                                <MenuItem onClick={openDeleteModal}>
-                                    Delete
-                                </MenuItem>
-                            </MenuList>
+                            <CustomMenuList style={{ color: 'white' }}>
+                                <CustomMenuItem onClick={openServerModal}>
+                                    <div className="serverModalCategory">
+                                        Edit
+                                    </div>
+                                    <EditIcon style={{ color: 'white' }} />
+                                </CustomMenuItem>
+                                <CustomMenuItem onClick={openDeleteModal}>
+                                    <div className="serverModalCategory">
+                                        Delete
+                                    </div>
+                                    <DeleteIcon style={{ color: 'white' }} />
+                                </CustomMenuItem>
+                            </CustomMenuList>
                         </ClickAwayListener>
                     </Paper>
                 </Popper>
