@@ -65,6 +65,6 @@
     color: white;
 }
 
-.active {
+.userServersListLink.active {
     border-left: 5px solid white;
 }

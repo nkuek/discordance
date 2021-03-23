@@ -20,7 +20,9 @@ def add_server():
     user.servers.append(new_server)
     db.session.add(new_server)
     db.session.commit()
-    return new_server.to_dict()
+    data = new_server.to_dict()
+    data['channels'] = []
+    return data
 
 
 @server_routes.route('/', methods=['PUT'])
@@ -83,7 +85,12 @@ def edit_server():
     matched_server.image_url = server['image']
     matched_server.category = server['serverCategory']
     db.session.commit()
-    return matched_server.to_dict()
+    data = matched_server.to_dict()
+    channels = Channel.query.filter(
+        Channel.server_id == matched_server.id).all()
+    newList = [channel.to_dict() for channel in channels]
+    data['channels'] = newList
+    return data
 
 
 # CHANNELS

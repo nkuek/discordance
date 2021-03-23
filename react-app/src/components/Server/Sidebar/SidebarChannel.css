@@ -1,9 +1,15 @@
-.sidebarChannel:hover>h4 {
+.sidebarChannelLink:hover {
     color: white;
-    background-color: #40464b;
+    background-color: rgba(64, 70, 75, 0.4);
 }
 
-.sidebarChannel>div {
+.sidebarChannelLink.active {
+    color: white;
+    background-color:  #40464b;
+}
+
+
+.sidebarChannel a {
     display: flex;
     padding-left: 15px;
     align-items: center;
@@ -15,4 +21,5 @@
 .sidebarChannel__hash {
     font-size: 30px;
     padding: 8px;
+    font-style: italic;
 }

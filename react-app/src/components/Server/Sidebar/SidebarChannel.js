@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { findExistingServer } from "../../../store/server";
-import "./SidebarChannel.css";
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { findExistingServer } from '../../../store/server';
+import './SidebarChannel.css';
 
 function SidebarChannel() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  // const [serverId, setServerId] = useState('')
-  const server = useSelector((state) => state.server);
+    const dispatch = useDispatch();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const server = useSelector((state) => state.server);
+    const channel = useSelector((state) => state.channel);
 
-  useEffect(() => {
-    dispatch(findExistingServer(server?.id));
-  }, [dispatch]);
+    useEffect(() => {
+        if (Object.keys(server).length > 0)
+            dispatch(findExistingServer(server?.id));
+    }, [dispatch, channel]);
 
-  useEffect(() => {
-    if (Object.keys(server).length > 0) setIsLoaded(true);
-  }, [server]);
+    useEffect(() => {
+        if (Object.keys(server).length > 0) setIsLoaded(true);
+    }, [server]);
 
-  return isLoaded ? (
-    <>
-      {server.channels.map((channel) => (
-        <div key={channel.id} className="sidebarChannel">
-          <h4>
-            <span className="sidebarChannel__hash">#</span>
-            {channel.name}
-          </h4>
-        </div>
-      ))}
-    </>
-  ) : null;
+    return isLoaded ? (
+        <>
+            {server?.channels.map((channel) => (
+                <div key={channel.id} className="sidebarChannel">
+                    <NavLink
+                        className="sidebarChannelLink"
+                        to={`/servers/${server.id}/${channel.id}`}
+                    >
+                        <span className="sidebarChannel__hash">#</span>
+                        {channel.name}
+                    </NavLink>
+                </div>
+            ))}
+        </>
+    ) : null;
 }
 
 export default SidebarChannel;
