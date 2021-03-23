@@ -25,16 +25,22 @@ import {
     deleteExistingServer,
     updateExistingServer,
 } from '../../../store/server';
+// import ConfirmDelete from '../../ConfirmDelete';
 
 function Sidebar() {
     const [channels, setChannels] = useState([]);
     const [showServerModal, setShowServerModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
+
+    const openDeleteModal = () => {
+        setShowDeleteModal((prev) => !prev);
+    };
 
     const openServerModal = () => {
         setShowServerModal((prev) => !prev);
@@ -85,20 +91,17 @@ function Sidebar() {
                     <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                             <MenuList>
-                                <MenuItem
-                                    onClick={() =>
-                                        handleDeleteServer(server.id)
-                                    }
-                                >
-                                    Delete
-                                </MenuItem>
                                 <MenuItem onClick={openServerModal}>
                                     Edit
+                                </MenuItem>
+                                <MenuItem onClick={openDeleteModal}>
+                                    Delete
                                 </MenuItem>
                             </MenuList>
                         </ClickAwayListener>
                     </Paper>
                 </Popper>
+                {/* <ConfirmDelete showDeleteModal={showDeleteModal} setShowS/> */}
                 <EditServerForm
                     server={server}
                     showServerModal={showServerModal}
