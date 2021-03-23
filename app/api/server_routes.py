@@ -54,3 +54,13 @@ def delete_server():
     server = Server.query.get(serverId)
     db.session.delete(server)
     db.session.commit()
+
+
+@server_routes.route('/edit/', methods=['PUT'])
+def edit_server():
+    print('==================')
+    serverId = request.json
+    print(serverId)
+    server = Server.query.get(serverId)
+    print(server)
+    print('==================')

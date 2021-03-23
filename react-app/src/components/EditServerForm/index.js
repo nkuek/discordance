@@ -1,24 +1,29 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { createServer } from "../../store/server";
-import "./ServerForm.css";
+import { updateExistingServer, findExistingServer } from "../../store/server";
+import "./EditServerForm.css";
 
-function ServerForm({ showServerModal, setShowServerModal }) {
+function EditServerForm({ showServerModal, setShowServerModal, server }) {
   const loggedInUser = useSelector((state) => state.session.user);
 
+  const { serverId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [name, setName] = useState(
-    loggedInUser && `${loggedInUser.username}'s server`
-  );
-
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState("true");
   const [image, setImage] = useState("");
   const [errors, setErrors] = useState("");
+  //   const [isLoaded, setIsLoaded] = useState(false);
   const serverModalRef = useRef();
+
+  //   useEffect(() => {
+  //     dispatch(findExistingServer(serverId));
+  //     setIsLoaded(true);
+  //   }, [dispatch]);
 
   // close modal when clicking anywhere else
   const closeServerModal = (e) => {
@@ -50,7 +55,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
       return;
     }
     const newServer = await dispatch(
-      createServer({
+      updateExistingServer({
         admin_id: loggedInUser.id,
         name,
         description,
@@ -76,6 +81,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     transform: showServerModal ? `scale(1)` : `scale(0.8)`,
   });
 
+  //conditional render with isLoaded
   return showServerModal ? (
     <div
       className="serverModalWrapper"
@@ -85,7 +91,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
       <animated.div style={animation}>
         <div className="serverModalContainer">
           <div className="serverModalFormTitleContainer">
-            <div className="serverModalFormTitle">Create a Server</div>
+            <div className="serverModalFormTitle">Edit Server</div>
           </div>
           {errors && <div className="serverFormErrors">{errors}</div>}
           <form className="serverModalForm" onSubmit={(e) => onSubmit(e)}>
@@ -95,7 +101,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 type="text"
                 name="name"
                 placeholder="Name"
-                value={name}
+                value={server.name}
                 onChange={(e) => setName(e.target.value)}
               ></input>
             </div>
@@ -105,7 +111,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 type="text"
                 name="description"
                 placeholder="Description"
-                value={description}
+                value={server.description}
                 onChange={(e) => setDescription(e.target.value)}
               ></input>
             </div>
@@ -122,7 +128,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 type="text"
                 name="image"
                 placeholder="Image Url"
-                value={image}
+                value={server.image}
                 onChange={(e) => setImage(e.target.value)}
               ></input>
             </div>
@@ -138,4 +144,4 @@ function ServerForm({ showServerModal, setShowServerModal }) {
   ) : null;
 }
 
-export default ServerForm;
+export default EditServerForm;
