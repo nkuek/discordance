@@ -13,14 +13,47 @@ function HomePage() {
   }, [dispatch]);
 
   const publicServers = useSelector((state) => state?.server);
-
-  console.log(publicServers[0]?.name);
+  let searchCategories;
+  let filteredCategories;
+  let categories = [
+    "gaming",
+    "music",
+    "education",
+    "science",
+    "tech",
+    "entertainment",
+    "movies",
+    "games",
+  ];
+  let filter = [];
+  const publicSer = Object.values(publicServers);
+  console.log(publicSer);
 
   return (
     <>
+      <h1 className="discover-title"> Discover </h1>
+
+      {/* here is where we are able to find public servers categories*/}
+      {/* I think is a better idea to add a column of categories for the servers */}
+      {/* {
+        (filteredCategories = publicSer.filter((server) => {
+          categories.map((cat) => {
+            searchCategories =
+              server.name.toLowerCase().includes(cat) ||
+              server.description.toLowerCase().includes(cat);
+            filter = [searchCategories, server];
+            if (searchCategories == true) {
+              console.log(filter[1].name);
+              return <h1 className="discover-title"> Discover </h1>;
+            }
+          });
+        }))
+      } */}
+      {/* this is work in progress */}
+
       <div className="homePage-div__container">
         <div className="banner-div__container">
-          <img src="https://image.freepik.com/free-psd/furniture-facebook-cover-page-template_237398-164.jpg" />
+          <img src="https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg" />
           <div className="banner-text__container">
             <SearchBar />
             <h1>Find your community on Discordance</h1>
@@ -29,20 +62,22 @@ function HomePage() {
         </div>
         <div className="main-servers__container">
           <h1>Featured communities</h1>
-          {Object.values(publicServers).map((el) => (
-            <div className="server-div__container" key={el?.id}>
-              <NavLink to={`servers/${el?.id}`}>
-                <div className="img-div__container">
-                  <img src={`${el?.image_url}`} />
-                </div>
-                <div className="server-div__name"> {el?.name}</div>
-                <div className="server-div__description">
-                  {" "}
-                  {el?.description}
-                </div>
-              </NavLink>
-            </div>
-          ))}
+          <div className="servers-containers">
+            {Object.values(publicServers).map((el) => (
+              <div className="server-div__container" key={el?.id}>
+                <NavLink to={`servers/${el?.id}`}>
+                  <div className="img-div__container">
+                    <img src={`${el?.image_url}`} />
+                  </div>
+                  <div className="server-div__name"> {el?.name}</div>
+                  <div className="server-div__description">
+                    {" "}
+                    {el?.description}
+                  </div>
+                </NavLink>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
