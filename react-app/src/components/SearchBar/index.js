@@ -14,7 +14,7 @@ function SearchBar() {
 
   let filter = [];
   let searchTitles;
-  //   let searchPrize;
+  let searchResult;
   let filteredServers;
   let res;
   let res1 = {};
@@ -29,22 +29,21 @@ function SearchBar() {
             server.description.toLowerCase().includes(searchString);
 
           filter = [searchTitles, server];
-          console.log(filter);
+          // console.log(filter);
 
-          let searchResultPro;
-          const searchResult = filter.map((real) => {
+          searchResult = filter.map((real) => {
             // console.log(deal, true);
-
+            // console.log(real);
             if (searchTitles === true) {
               let deal = real?.name;
-              let description = real?.description;
-              console.log(deal);
+              // let description = real?.description;
+              // console.log(deal);
               res = (
                 <>
                   <div className="dropdown__search-bar" id="serverSearch">
                     <li id="searchText">
                       {/* {deal.map((mapped) => {
-                        console.log(mapped);
+                        if (mapped) console.log(mapped);
                       })} */}
                       {[
                         <NavLink
@@ -69,6 +68,7 @@ function SearchBar() {
       }
     });
   };
+  // if (use) console.log(use);
 
   return (
     <>
@@ -80,7 +80,10 @@ function SearchBar() {
             placeholder="Explore Communities"
             onChange={(e) => {
               let value = e.target.value.length;
-              if (value > 3) {
+
+              if (value < 3) {
+                setUse([]);
+              } else {
                 setUse(searchBar(use));
               }
             }}
@@ -88,10 +91,7 @@ function SearchBar() {
           <div className="search-bar" id="search">
             <div className="search-input">
               <div className="autocom-box">
-                <ul id="serversList">
-                  {use}
-                  {console.log(use)}
-                </ul>
+                <ul id="serversList">{use}</ul>
               </div>
             </div>
           </div>
