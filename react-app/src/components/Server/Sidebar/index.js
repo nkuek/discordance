@@ -100,7 +100,7 @@ function Sidebar() {
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showChannelModal, setShowChannelModal] = useState(false);
-    const [showDescription, setShowDescription] = useState(false);
+    const [showDescription, setShowDescription] = useState(true);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
