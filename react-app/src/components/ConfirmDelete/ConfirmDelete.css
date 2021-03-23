@@ -1,0 +1,52 @@
+.deleteModalHeader {
+    font-size: 1.2em;
+    color: black;
+    text-align: center;
+}
+
+.deleteModalContainer {
+    background-color: white;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    color: black;
+}
+
+.confirmDeleteModalButtonYes {
+    font: inherit;
+    border: none;
+    background-color: #43B581;
+    padding: 20px 40px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 250ms transform
+}
+
+.confirmDeleteModalButtonYes:hover {
+    background-color: #4fd197;
+    transform: scale(1.03)
+}
+
+.confirmDeleteModalButtonNo {
+    border: none;
+    padding: 20px 40px;
+    background-color: #F04747;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 250ms transform
+}
+
+.confirmDeleteModalButtonNo:hover {
+    background-color: #ff7979;
+    transform: scale(1.03)
+}
+
+.deleteModalButtons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}

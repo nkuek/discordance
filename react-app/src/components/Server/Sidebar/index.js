@@ -21,11 +21,8 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useSelector, useDispatch } from 'react-redux';
 import EditServerForm from '../../EditServerForm';
-import {
-    deleteExistingServer,
-    updateExistingServer,
-} from '../../../store/server';
-// import ConfirmDelete from '../../ConfirmDelete';
+import { updateExistingServer } from '../../../store/server';
+import ConfirmDelete from '../../ConfirmDelete';
 
 function Sidebar() {
     const [channels, setChannels] = useState([]);
@@ -40,10 +37,12 @@ function Sidebar() {
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
+        setOpen(false);
     };
 
     const openServerModal = () => {
         setShowServerModal((prev) => !prev);
+        setOpen(false);
     };
 
     const handleToggle = () => {
@@ -56,11 +55,6 @@ function Sidebar() {
         }
 
         setOpen(false);
-    };
-
-    const handleDeleteServer = (serverId) => {
-        dispatch(deleteExistingServer(serverId));
-        history.push('/');
     };
 
     const handleEditServer = (serverId) => {
@@ -101,7 +95,10 @@ function Sidebar() {
                         </ClickAwayListener>
                     </Paper>
                 </Popper>
-                {/* <ConfirmDelete showDeleteModal={showDeleteModal} setShowS/> */}
+                <ConfirmDelete
+                    showDeleteModal={showDeleteModal}
+                    setShowDeleteModal={setShowDeleteModal}
+                />
                 <EditServerForm
                     server={server}
                     showServerModal={showServerModal}
