@@ -13,10 +13,16 @@
     width: 42px;
     height: 42px;
     color: white;
+    transition: 150ms border-radius
 }
 
 .server-icon img {
     border-radius: 100%;
+}
+
+.server-icon svg:hover,
+.server-icon img:hover {
+    border-radius: 7px;
 }
 
 .home-icon svg {
