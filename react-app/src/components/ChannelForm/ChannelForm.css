@@ -1,0 +1,81 @@
+.channelModalWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    /* position: fixed; */
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+}
+
+.channelFormErrors {
+    margin-left: 10px;
+    color: red;
+}
+
+.channelModalContainer {
+    width: 400px;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    color: black;
+}
+
+.channelModalFormTitleContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.channelModalInputContainer {
+    border-radius: 3px;
+    padding: 10px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-size: 1em;
+}
+
+.channelModalInputContainer label {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.channelModalInputContainer input,
+.channelModalInputContainer select {
+    font: inherit;
+    padding: 5px;
+    border: 1px solid rgb(170, 170, 170);
+    font-size: 1em;
+}
+
+.channelModalInputContainer select {
+    background-color: inherit;
+}
+
+.channelModalSubmit {
+    font: inherit;
+    background-color: #7289da;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+.channelModalSubmit:hover {
+    background-color: #6476b9;
+}
+
+.channelModalButtonContainer {
+    display: flex;
+}

@@ -1,5 +1,5 @@
 from flask import Blueprint, json, request, jsonify
-from app.models import Server, db, User
+from app.models import Server, db, User, Channel
 
 server_routes = Blueprint('servers', __name__)
 
@@ -78,3 +78,21 @@ def edit_server():
     matched_server.category = server['serverCategory']
     db.session.commit()
     return matched_server.to_dict()
+
+
+# CHANNELS
+@server_routes.route('/:id/:channel_id/', methods=['POST'])
+def add_channel():
+    channel = request.json
+    new_channel = Channel(
+        name=channel['name'],
+        server_id=channel['serverId'],
+    )
+    print("==================")
+    print(channel)
+    print("==================")
+    server = Server.query.get(channel['serverId'])
+    server.channels.append(new_channel)
+    db.session.add(new_channel)
+    db.session.commit()
+    return new_channel.to_dict()
