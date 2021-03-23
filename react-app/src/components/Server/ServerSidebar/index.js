@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
-
 import ExploreIcon from '@material-ui/icons/Explore';
-
+import { withStyles } from '@material-ui/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import GroupWorkRoundedIcon from '@material-ui/icons/GroupWorkRounded';
 import BlurCircularRoundedIcon from '@material-ui/icons/BlurCircularRounded';
@@ -14,6 +13,18 @@ import ServerForm from '../../ServerForm';
 import './ServerSidebar.css';
 import { fetchUserServers } from '../../../store/userInfo';
 import { findExistingServer } from '../../../store/server';
+
+const CustomBlurCircularRoundedIcon = withStyles({
+    root: {
+        borderRadius: '100%',
+        backgroundColor: 'black',
+        padding: '5px 2px',
+        color: 'gray',
+        '&:hover': {
+            borderRadius: '7px',
+        },
+    },
+})(BlurCircularRoundedIcon);
 
 function ServerSidebar() {
     const dispatch = useDispatch();
@@ -111,7 +122,7 @@ function ServerSidebar() {
                                             className="server-icon"
                                         >
                                             {!userServer.image_url ? (
-                                                <BlurCircularRoundedIcon />
+                                                <CustomBlurCircularRoundedIcon />
                                             ) : (
                                                 <div className="server-icon">
                                                     <img

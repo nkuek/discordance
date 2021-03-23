@@ -3,6 +3,30 @@
     background-color: rgba(64, 70, 75, 0.4);
 }
 
+.sidebarChannelLink {
+    display: flex;
+    justify-content: space-between;
+
+}
+.MuiButtonBase-root {
+    display: none
+}
+
+.sidebarChannelLink:hover button {
+    display: initial
+}
+
+.sidebarChannelLink.active button {
+    display: initial
+}
+
+
+.channelNameAndHash {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .sidebarChannelLink.active {
     color: white;
     background-color:  #40464b;
@@ -11,7 +35,6 @@
 
 .sidebarChannel a {
     display: flex;
-    padding-left: 15px;
     align-items: center;
     background-color: #2f3135;
     color: gray;

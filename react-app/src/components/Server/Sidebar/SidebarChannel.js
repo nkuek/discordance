@@ -3,6 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { findExistingServer } from '../../../store/server';
 import './SidebarChannel.css';
+import SettingsIcon from '@material-ui/icons/Settings';
+import { IconButton } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
+
+const CustomIconButton = withStyles({
+    root: {
+        display: 'none',
+    },
+})(IconButton);
 
 function SidebarChannel() {
     const dispatch = useDispatch();
@@ -27,8 +36,14 @@ function SidebarChannel() {
                         className="sidebarChannelLink"
                         to={`/servers/${server.id}/${channel.id}`}
                     >
-                        <span className="sidebarChannel__hash">#</span>
-                        {channel.name}
+                        <div className="channelNameAndHash">
+                            <span className="sidebarChannel__hash">#</span>
+                            <div className="channelName">{channel.name}</div>
+                        </div>
+
+                        <CustomIconButton>
+                            <SettingsIcon style={{ color: 'white' }} />
+                        </CustomIconButton>
                     </NavLink>
                 </div>
             ))}
