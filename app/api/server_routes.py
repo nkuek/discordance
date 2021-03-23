@@ -58,9 +58,11 @@ def delete_server():
 
 @server_routes.route('/edit/', methods=['PUT'])
 def edit_server():
-    print('==================')
-    serverId = request.json
-    print(serverId)
-    server = Server.query.get(serverId)
-    print(server)
-    print('==================')
+    server = request.json
+    matched_server = Server.query.get(server['id'])
+    matched_server.name = server['name']
+    matched_server.description = server['description']
+    matched_server.public = bool(server['isPublic'])
+    matched_server.image_url = server['image']
+    db.session.commit()
+    return matched_server.to_dict()
