@@ -13,10 +13,15 @@ import { authenticate } from "./store/auth";
 import Server from "./components/Server";
 import ServerSidebar from "./components/Server/ServerSidebar";
 import { fetchUserServers } from "./store/userInfo";
-
+// aws
+import UploadPicture from "./components/FileUpload/UploadPicture";
+import ViewImages from "./components/FileUpload/ViewImages";
+// --------------------------
 import * as sessionActions from "./store/session";
 
 function App() {
+  const serverImg = useSelector((state) => state.server.images);
+
   const dispatch = useDispatch();
 
   const [authenticated, setAuthenticated] = useState(false);
@@ -62,8 +67,18 @@ function App() {
           <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
             <HomePage path="/discover"></HomePage>
           </ProtectedRoute>
+          <ProtectedRoute
+            path="/upload"
+            exact={true}
+            authenticated={authenticated}
+          >
+            <UploadPicture />
+          </ProtectedRoute>
+          <Route path="/images" exact={true}>
+            <ViewImages />
+          </Route>
           <Route path="/discover" exact={true}>
-            <HomePage></HomePage>
+            <HomePage user={serverImg}></HomePage>
           </Route>
 
           <Route path="/servers/:serverId">

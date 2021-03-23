@@ -5,12 +5,29 @@ import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
-function HomePage() {
+function HomePage({ user }) {
   const dispatch = useDispatch();
 
+  // const serverImg = useSelector((state) => state.server.images);
+  console.log(user);
   useEffect(() => {
     dispatch(serverActions.findPublicServers());
   }, [dispatch]);
+
+  // aws
+  //  const [images, setImages] = useState([]);
+  //   useEffect(() => {
+  //     (async () => {
+  //       const res = await fetch("/api/images");
+  //       if (res.ok) {
+  //         const data = await res.json();
+  //         console.log(data);
+  //         setImages(data.images);
+  //       } else {
+  //         console.log("error");
+  //       }
+  //     })();
+  //   }, []);
 
   const publicServers = useSelector((state) => state?.publicServer);
   let searchCategories;

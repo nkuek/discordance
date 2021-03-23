@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8c1ddd66e0d9
+Revision ID: 86149a2a4ede
 Revises: 
-Create Date: 2021-03-23 17:37:27.515166
+Create Date: 2021-03-23 15:54:01.466962
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8c1ddd66e0d9'
+revision = '86149a2a4ede'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,12 +23,18 @@ def upgrade():
     sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
-    sa.Column('profile_url', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
+    )
+    op.create_table('images',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('url', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('servers',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -79,5 +85,6 @@ def downgrade():
     op.drop_table('server_users')
     op.drop_table('channels')
     op.drop_table('servers')
+    op.drop_table('images')
     op.drop_table('users')
     # ### end Alembic commands ###
