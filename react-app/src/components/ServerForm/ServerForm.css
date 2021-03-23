@@ -1,79 +1,80 @@
 .serverModalWrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
 }
 
 .serverFormErrors {
-    margin-left: 10px;
-    color: red
+  margin-left: 10px;
+  color: red;
 }
 
-.serverModalContainer{
-    width: 400px;
-    height: fit-content;
-    background-color: #fff;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 20px;
+.serverModalContainer {
+  width: 400px;
+  height: fit-content;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .serverModalFormTitleContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 1.5em;
 }
 
 .serverModalInputContainer {
-    border-radius: 3px;
-    padding: 10px;
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    font-size: 1em;
+  border-radius: 3px;
+  padding: 10px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  font-size: 1em;
 }
 
 .serverModalInputContainer label {
-    margin-bottom: 10px;
-    text-align: left;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .serverModalInputContainer input,
 .serverModalInputContainer select {
-    font: inherit;
-    padding: 5px;
-    border: 1px solid rgb(170, 170, 170);
-    font-size: 1em;
+  font: inherit;
+  padding: 5px;
+  border: 1px solid rgb(170, 170, 170);
+  font-size: 1em;
 }
 
 .serverModalInputContainer select {
-    background-color: inherit;
+  background-color: inherit;
 }
 
 .serverModalSubmit {
-    font: inherit;
-    background-color: #7289da;
-    border: none;
-    color: white;
-    padding: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 1em;
-    border-radius: 5px;
+  font: inherit;
+  background-color: #7289da;
+  border: none;
+  color: white;
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
 }
 
 .serverModalSubmit:hover {
-    background-color: #6476b9;
+  background-color: #6476b9;
 }
 
 .serverModalButtonContainer {
-    display: flex;
+  display: flex;
 }
