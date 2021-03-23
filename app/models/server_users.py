@@ -8,11 +8,11 @@ server_users = db.Table(
     db.Column(
         "user_id", db.Integer, db.ForeignKey('users.id'),
         nullable=False
-        ),
+    ),
     db.Column(
         'server_id', db.Integer, db.ForeignKey('servers.id'),
         nullable=False
-        )
+    )
 )
 
 
@@ -25,17 +25,17 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     profile_url = db.Column(db.String(255))
     created_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-        )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
     updated_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-        )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
 
     server_admin = db.relationship('Server', back_populates='admin')
     messages = db.relationship('Message', back_populates='user')
     servers = db.relationship(
         'Server', secondary=server_users, back_populates='users', lazy='dynamic'
-        )
+    )
 
     @property
     def password(self):
@@ -60,24 +60,25 @@ class Server(db.Model):
     __tablename__ = 'servers'
 
     id = db.Column(db.Integer, primary_key=True)
-    admin_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    admin_id = db.Column(db.Integer, db.ForeignKey(
+        'users.id'), nullable=False, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255))
     public = db.Column(db.Boolean, nullable=False)
     image_url = db.Column(db.String(255))
     created_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-            )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
     updated_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-            )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
 
     admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship('Channel', back_populates='servers')
     users = db.relationship(
         'User', secondary=server_users, back_populates='servers',
         lazy='dynamic'
-        )
+    )
 
     def to_dict(self):
         return {
