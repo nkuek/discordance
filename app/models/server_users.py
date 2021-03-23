@@ -66,6 +66,7 @@ class Server(db.Model):
     description = db.Column(db.String(255))
     public = db.Column(db.Boolean, nullable=False)
     image_url = db.Column(db.String(255))
+    category = db.Column(db.String(50), nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
