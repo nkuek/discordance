@@ -61,7 +61,6 @@ export const logout = () => async (dispatch) => {
 export const restoreUser = () => async (dispatch) => {
     const response = await fetch('/api/auth/');
     const data = await response.json();
-    console.log(data);
     return dispatch(setUser(data));
 };
 

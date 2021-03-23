@@ -1,45 +1,29 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { createServer } from '../../store/server';
-import { updateExistingServer, findExistingServer } from '../../store/server';
-import './EditServerForm.css';
+import './ServerForm.css';
 
-function EditServerForm({ showServerModal, setShowServerModal }) {
+function ConfirmDelete({ showServerModal, setShowServerModal }) {
     const loggedInUser = useSelector((state) => state.session.user);
-    const [isLoaded, setIsLoaded] = useState(false);
 
-    const server = useSelector((state) => state.server);
-    const { serverId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [name, setName] = useState(server.name);
+    const [name, setName] = useState(
+        loggedInUser && `${loggedInUser.username}'s server`
+    );
+
     const [description, setDescription] = useState('');
-    const [isPublic, setIsPublic] = useState('');
+    const [isPublic, setIsPublic] = useState('true');
     const [image, setImage] = useState('');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
-    useEffect(() => {
-        dispatch(findExistingServer(serverId));
-        setIsLoaded(true);
-    }, [dispatch]);
-
-    useEffect(() => {
-        setName(server.name);
-        setDescription(server.description);
-        setIsPublic(server.public === true ? 'true' : '');
-        setImage(server.image_url);
-    }, [server]);
     // close modal when clicking anywhere else
     const closeServerModal = (e) => {
         if (serverModalRef.current === e.target) {
             setShowServerModal(false);
-            setName(server.name);
-            setDescription(server.description);
-            setIsPublic(server.public === true ? 'true' : '');
-            setImage(server.image_url);
         }
     };
 
@@ -48,10 +32,6 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
         (e) => {
             if (e.key === 'Escape' && showServerModal) {
                 setShowServerModal(false);
-                setName(server.name);
-                setDescription(server.description);
-                setIsPublic(server.public === true ? 'true' : '');
-                setImage(server.image_url);
             }
         },
         [showServerModal, setShowServerModal]
@@ -70,7 +50,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
             return;
         }
         const newServer = await dispatch(
-            updateExistingServer({
+            createServer({
                 admin_id: loggedInUser.id,
                 name,
                 description,
@@ -78,10 +58,10 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                 image,
             })
         );
-        setName(server.name);
-        setDescription(server.description);
-        setIsPublic(server.public === true ? 'true' : '');
-        setImage(server.image_url);
+        setName(loggedInUser && `${loggedInUser.username}'s server`);
+        setDescription('');
+        setIsPublic('true');
+        setImage('');
         setErrors('');
         setShowServerModal(false);
         history.push(`/servers/${newServer.id}`);
@@ -96,8 +76,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
         transform: showServerModal ? `scale(1)` : `scale(0.8)`,
     });
 
-    //conditional render with isLoaded
-    return showServerModal && isLoaded ? (
+    return showServerModal ? (
         <div
             className="serverModalWrapper"
             ref={serverModalRef}
@@ -106,7 +85,9 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
             <animated.div style={animation}>
                 <div className="serverModalContainer">
                     <div className="serverModalFormTitleContainer">
-                        <div className="serverModalFormTitle">Edit Server</div>
+                        <div className="serverModalFormTitle">
+                            Create a Server
+                        </div>
                     </div>
                     {errors && <div className="serverFormErrors">{errors}</div>}
                     <form
@@ -136,7 +117,6 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                         <div className="serverModalInputContainer">
                             <label htmlFor="public">Privacy</label>
                             <select
-                                value={isPublic}
                                 onChange={(e) => setIsPublic(e.target.value)}
                             >
                                 <option value="true">Public</option>
@@ -155,7 +135,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                         </div>
                         <div className="serverModalButtonContainer">
                             <button className="serverModalSubmit" type="submit">
-                                Edit
+                                Create
                             </button>
                         </div>
                     </form>
@@ -165,4 +145,4 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
     ) : null;
 }
 
-export default EditServerForm;
+export default ConfirmDelete;
