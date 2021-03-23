@@ -3,12 +3,7 @@ const FIND_SERVER = 'server/findServer';
 const DELETE_SERVER = 'server/deleteServer';
 const EDIT_SERVER = 'server/editServer';
 
-const FIND_PUBLIC_SERVER = 'server/findPublicServer';
 
-const findPublicServer = (servers) => ({
-    type: FIND_PUBLIC_SERVER,
-    servers,
-});
 
 const addServer = (newServer) => ({
     type: ADD_SERVER,
@@ -68,7 +63,7 @@ export const findExistingServer = (serverId) => async (dispatch) => {
         body: JSON.stringify(serverId),
     });
     const server = await response.json();
-    dispatch(findServer(server));
+    return dispatch(findServer(server));
 };
 
 // Delete existing server
@@ -83,18 +78,7 @@ export const deleteExistingServer = (serverId) => async (dispatch) => {
     dispatch(deleteServer());
 };
 
-// find all public servers
 
-export const findPublicServers = () => async (dispatch) => {
-    const response = await fetch('/api/servers/public', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-    const publicServers = await response.json();
-    dispatch(findPublicServer(publicServers));
-};
 
 // Edit existing server
 export const updateExistingServer = (server) => async (dispatch) => {
@@ -121,8 +105,6 @@ const serverReducer = (state = initialState, action) => {
         case FIND_SERVER:
             return action.server;
 
-        case FIND_PUBLIC_SERVER:
-            return action.servers;
         case DELETE_SERVER:
             state = {};
             return state;

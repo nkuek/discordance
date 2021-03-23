@@ -3,10 +3,12 @@ import thunk from "redux-thunk";
 import serverReducer from "./server";
 import userInfoReducer from "./userInfo";
 import sessionReducer from "./session";
+import publicServerReducer from './publicServer';
 
 const rootReducer = combineReducers({
   server: serverReducer,
   userServers: userInfoReducer,
+  publicServer: publicServerReducer,
   session: sessionReducer,
 });
 
