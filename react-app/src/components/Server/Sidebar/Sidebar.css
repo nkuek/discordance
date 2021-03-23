@@ -16,6 +16,11 @@
     border-bottom: 3px solid #26282c;
 }
 
+.sidebar__description {
+    position: relative;
+    z-index: 1;
+}
+
 .sidebar__channels {
     flex: 1;
 }
@@ -89,4 +94,12 @@
 
 .sidebar__profileIcons>.MuiSvgIcon-root {
     padding: 10px;
+}
+
+.MuiList-root {
+    padding: 10px;
+}
+
+.descriptionContent {
+    font-size: .9em;
 }
