@@ -23,10 +23,10 @@ function ServerSidebar() {
   const [serverId, setServerId] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const server = useSelector((state) => state.server);
+  const server = useSelector((state) => state?.server);
 
-  const userServers = useSelector((state) => state.userServers);
-  const loggedInUser = useSelector((state) => state.session.user);
+  const userServers = useSelector((state) => state?.userServers);
+  const loggedInUser = useSelector((state) => state?.session.user);
 
   useEffect(() => {
     if (serverId) dispatch(findExistingServer(serverId));
@@ -95,14 +95,14 @@ function ServerSidebar() {
                     className="tooltip"
                   >
                     <IconButton
-                      onClick={(e) => handleServerClick(e, userServer.id)}
+                      onClick={(e) => handleServerClick(e, userServer?.id)}
                       className="server-icon"
                     >
                       {!userServer.image_url ? (
                         <BlurCircularRoundedIcon />
                       ) : (
                         <div className="server-icon">
-                          <img src={userServer.image_url} />
+                          <img src={userServer?.image_url} />
                         </div>
                       )}
                     </IconButton>

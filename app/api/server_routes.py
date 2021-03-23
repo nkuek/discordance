@@ -38,6 +38,15 @@ def find_server():
     )
     return server.to_dict()
 
+# @server_routes.route("/", methods=['GET'])
+# def find_server():
+#     serverId = request.json
+#     serverSearch = Server.query.filter(Server.id == serverId).all()
+#     serverList = []
+#     for server in serverSearch:
+#         serverList.append(server.to_dict())
+#     return jsonify(serverList)
+
 # find public servers
 
 

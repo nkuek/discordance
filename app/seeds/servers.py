@@ -1,5 +1,5 @@
 from app.models import db
-from app.models.server_users import Server
+from app.models.server_users import Server, User
 
 # Adds a demo user, you can add other servers here if you want
 
@@ -30,6 +30,7 @@ def seed_servers():
     db.session.add(apex)
     db.session.add(legends)
     db.session.add(cod)
+    # db.session.append()
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE the servers table.

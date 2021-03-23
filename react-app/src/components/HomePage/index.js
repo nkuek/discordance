@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import * as serverActions from "../../store/server";
+import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
@@ -12,7 +12,7 @@ function HomePage() {
     dispatch(serverActions.findPublicServers());
   }, [dispatch]);
 
-  const publicServers = useSelector((state) => state?.server);
+  const publicServers = useSelector((state) => state?.publicServer);
   let searchCategories;
   let filteredCategories;
   let categories = [
