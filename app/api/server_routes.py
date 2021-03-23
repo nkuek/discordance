@@ -4,6 +4,7 @@ from app.models import Server, db, User, Channel
 server_routes = Blueprint('servers', __name__)
 
 
+# Add new server
 @server_routes.route('/', methods=['POST'])
 def add_server():
     response = request.json
@@ -25,10 +26,11 @@ def add_server():
     return data
 
 
+# Find single server
 @server_routes.route('/', methods=['PUT'])
 def find_server():
     serverId = request.json
-    serverSearch = Server.query.filter(Server.id == serverId).first()
+    serverSearch = Server.query.get(serverId)
     server = Server(
         id=serverSearch.id,
         admin_id=serverSearch.admin_id,
@@ -36,13 +38,12 @@ def find_server():
         description=serverSearch.description,
         category=serverSearch.category,
         public=serverSearch.public,
-        image_url=serverSearch.image_url
+        image_url=serverSearch.image_url,
     )
     data = server.to_dict()
-    channels = Channel.query.filter(
-        Channel.server_id == server.id).all()
-    newList = [channel.to_dict() for channel in channels]
-    data['channels'] = newList
+    formattedChannels = [channel.to_dict() for channel in serverSearch.channels]
+    data['channels'] = formattedChannels
+
     return data
 
 
@@ -85,11 +86,11 @@ def edit_server():
     matched_server.image_url = server['image']
     matched_server.category = server['serverCategory']
     db.session.commit()
+
+    formattedChannels = [channel.to_dict() for channel in matched_server.channels]
     data = matched_server.to_dict()
-    channels = Channel.query.filter(
-        Channel.server_id == matched_server.id).all()
-    newList = [channel.to_dict() for channel in channels]
-    data['channels'] = newList
+    data['channels'] = formattedChannels
+
     return data
 
 
@@ -102,10 +103,7 @@ def add_channel():
         server_id=channel['serverId'],
     )
     server = Server.query.get(channel['serverId'])
-    # channels.server.append(new_channel)
-    # print("==================")
-    # print(server.channels)
-    # print("==================")
+
     db.session.add(new_channel)
     db.session.commit()
     return new_channel.to_dict()

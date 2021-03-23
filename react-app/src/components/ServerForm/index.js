@@ -16,7 +16,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('true');
     const [image, setImage] = useState('');
-    const [serverCategory, setServerCategory] = useState('Gaming');
+    const [serverCategory, setServerCategory] = useState('gaming');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
