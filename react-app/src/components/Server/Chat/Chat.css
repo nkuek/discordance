@@ -1,7 +1,7 @@
 .chat {
     display: flex;
     flex-direction: column;
-    flex: 0.75;
+    flex: 1;
     background-color: #363a3f;
     height: calc(100vh - 44px);
 }

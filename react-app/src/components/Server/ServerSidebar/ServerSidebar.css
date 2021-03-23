@@ -1,64 +1,64 @@
 .ServerSidebar {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  height: calc(144vh - 44px);
-  text-align: center;
-  background: #292b2f;
-  flex: 0.06;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(144vh - 44px);
+    text-align: center;
+    background: rgb(32, 34, 37);
+    flex: 0.06;
 }
 
 .server-icon svg,
 .server-icon img {
-  width: 42px;
-  height: 42px;
-  color: white;
+    width: 42px;
+    height: 42px;
+    color: white;
 }
 
 .server-icon img {
-  border-radius: 100%;
+    border-radius: 100%;
 }
 
 .home-icon svg {
-  width: 42px;
-  height: 37px;
-  color: white;
+    width: 42px;
+    height: 37px;
+    color: white;
 }
 
 .menu-seperator {
-  border-top: 2px solid #2f3136;
-  width: 85%;
-  margin: 0 auto;
-  margin-top: 4px;
-  margin-bottom: 4px;
+    border-top: 2px solid #2f3136;
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .home-icon::after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  border-bottom: 2px solid grey;
-  width: 80%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    border-bottom: 2px solid grey;
+    width: 80%;
 }
 
 .tooltip {
-  /* display: absolute; */
-  font-size: 14px;
+    /* display: absolute; */
+    font-size: 14px;
 }
 
 .userServersList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .userServersList svg {
-  width: 42px;
-  height: 37px;
-  color: white;
+    width: 42px;
+    height: 37px;
+    color: white;
 }
 
 .active {
-  border-left: 5px solid white;
+    border-left: 5px solid white;
 }
