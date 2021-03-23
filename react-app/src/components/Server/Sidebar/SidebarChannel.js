@@ -6,6 +6,7 @@ import './SidebarChannel.css';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
+import EditDeleteDropDown from '../../EditDeleteDropdown';
 
 const CustomIconButton = withStyles({
     root: {
@@ -41,9 +42,7 @@ function SidebarChannel() {
                             <div className="channelName">{channel.name}</div>
                         </div>
 
-                        <CustomIconButton>
-                            <SettingsIcon style={{ color: 'white' }} />
-                        </CustomIconButton>
+                        <EditDeleteDropDown />
                     </NavLink>
                 </div>
             ))}
