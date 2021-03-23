@@ -15,6 +15,7 @@ import ServerSidebar from './components/Server/ServerSidebar';
 import { fetchUserServers } from './store/userInfo';
 
 import * as sessionActions from './store/session';
+import Sidebar from './components/Server/Sidebar';
 
 function App() {
     const dispatch = useDispatch();
@@ -70,7 +71,7 @@ function App() {
                         <HomePage></HomePage>
                     </Route>
 
-                    <Route path="/servers/:serverId">
+                    <Route path="/servers/:serverId(\d+)">
                         <Server />
                     </Route>
                 </Switch>

@@ -8,12 +8,6 @@ import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import EditDeleteDropDown from '../../EditDeleteDropdown';
 
-const CustomIconButton = withStyles({
-    root: {
-        display: 'none',
-    },
-})(IconButton);
-
 function SidebarChannel() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
