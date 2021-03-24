@@ -31,23 +31,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // setImage(imageList);
     // console.log((Object.values(imageList[0]))[1])
     // };
-
-    // close modal when clicking anywhere else
-    const closeServerModal = (e) => {
-        if (serverModalRef.current === e.target) {
-            setShowServerModal(false);
-        }
-    };
-
-  // aws
-  const [awsImage, awsSetImage] = useState(null);
-  const [imageLoading, setImageLoading] = useState(false);
-
-
-    useEffect(() => {
-        document.addEventListener('keydown', keyPress);
-        return () => document.removeEventListener('keydown', keyPress);
-    }, [keyPress]);
+    
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -62,11 +46,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         // aws uploads can be a bit slow—displaying
         // some sort of loading message is a good idea
         setImageLoading(true); 
-
         if (!name) {
             setErrors('Server name cannot be empty!');
             return;
         }
+        
         const newServer = await dispatch(
             createServer(
                 formData
@@ -76,17 +60,16 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 // description,
                 // isPublic,
                 // image,
-            )
-            
-        );
-        setImageLoading(false);
-        setName(loggedInUser && `${loggedInUser.username}'s server`);
-        setDescription('');
-        setIsPublic('true');
-        setImage('');
-        setErrors('');
-
-
+                ));
+                setImageLoading(false);
+                setName(loggedInUser && `${loggedInUser.username}'s server`);
+                setDescription('');
+                setIsPublic('true');
+                setImage('');
+                setErrors('');
+                
+                
+    }
 
   // close modal when clicking anywhere else
   const closeServerModal = (e) => {
@@ -106,6 +89,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     [showServerModal, setShowServerModal]
   );
     
+  useEffect(() => {
+        document.addEventListener('keydown', keyPress);
+        return () => document.removeEventListener('keydown', keyPress);
+    }, [keyPress]);
 
     const updateImage = (e) => {
         console.log(e.target.files[0])
@@ -257,11 +244,8 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                     </form>
                 </div>
             </animated.div>
-
         </div>
-      </animated.div>
-    </div>
   ) : null;
-}
 
+}
 export default ServerForm;
