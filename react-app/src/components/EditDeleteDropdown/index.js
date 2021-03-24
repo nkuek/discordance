@@ -121,7 +121,6 @@ const EditDeleteDropDown = () => {
                 setShowDeleteChannelModal={setShowDeleteChannelModal}
             />
             <EditChannelForm
-                channel={channel}
                 showEditChannelModal={showEditChannelModal}
                 setShowEditChannelModal={setShowEditChannelModal}
             />

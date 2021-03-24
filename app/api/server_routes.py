@@ -119,3 +119,12 @@ def find_channel():
         server_id=channelSearch.server_id
     )
     return channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id/edit/', methods=['PUT'])
+def edit_channel():
+    channel = request.json
+    matched_channel = Channel.query.get(channel['id'])
+    matched_channel.name = channel['name']
+    db.session.commit()
+    return matched_channel.to_dict()
