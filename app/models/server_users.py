@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
+
 server_users = db.Table(
     'server_users',
     db.Column(
@@ -23,7 +24,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    profile_url = db.Column(db.String(255))
+
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
@@ -31,6 +32,9 @@ class User(db.Model, UserMixin):
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
 
+  # aws
+    profile_url = db.relationship("Image", back_populates="user")
+# --------------------------------------------------------------------
     server_admin = db.relationship('Server', back_populates='admin')
     messages = db.relationship('Message', back_populates='user')
     servers = db.relationship(
@@ -66,6 +70,7 @@ class Server(db.Model):
     description = db.Column(db.String(255))
     public = db.Column(db.Boolean, nullable=False)
     image_url = db.Column(db.String(255))
+
     category = db.Column(db.String(50), nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
@@ -73,6 +78,8 @@ class Server(db.Model):
     updated_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
+# aws
+    profile_url = db.relationship("Image", back_populates="server")
 
     admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship('Channel', back_populates='servers')
