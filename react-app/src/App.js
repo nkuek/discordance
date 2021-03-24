@@ -20,8 +20,6 @@ import ViewImages from "./components/FileUpload/ViewImages";
 import * as sessionActions from "./store/session";
 
 function App() {
-  const serverImg = useSelector((state) => state.server.images);
-
   const dispatch = useDispatch();
 
   const [authenticated, setAuthenticated] = useState(false);
@@ -78,7 +76,7 @@ function App() {
             <ViewImages />
           </Route>
           <Route path="/discover" exact={true}>
-            <HomePage user={serverImg}></HomePage>
+            <HomePage></HomePage>
           </Route>
 
           <Route path="/servers/:serverId">

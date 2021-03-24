@@ -21,76 +21,80 @@ const editServer = (updatedServer) => ({
   type: EDIT_SERVER,
   updatedServer,
 });
-
+// check this out
+// const SET_USER = "aws/setImg";
+// const setUser = (server) => ({
+//   type: SET_USER,
+//   payload: server,
+// });
 //add a server
-// export const createServer = (serverFormInput) => async (dispatch) => {
-//   const {
-//     admin_id,
-//     name,
-//     description,
-//     isPublic,
-//     image,
-//     serverCategory,
-//   } = serverFormInput;
-//   const response = await fetch(`/api/servers/`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       admin_id,
-//       name,
-//       description,
-//       isPublic,
-//       image,
-//       serverCategory,
-//     }),
-//   });
-//   const data = await response.json();
-//   dispatch(addServer(data));
-//   return data;
-// };
-
-// aws create user setUp
-export const createServer = (server) => async (dispatch) => {
+export const createServer = (serverFormInput) => async (dispatch) => {
   const {
-    images,
-    image,
-    description,
-    name,
     admin_id,
+    name,
+    description,
     isPublic,
+    image,
     serverCategory,
-  } = server;
-  const formData = new FormData();
-  formData.append("description", description);
-  formData.append("name", name);
-  formData.append("admin_id", admin_id);
-  formData.append("isPublic", isPublic);
-  formData.append("serverCategory", serverCategory);
-
-  // for multiple files
-  if (images && images.length !== 0) {
-    for (var i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-    }
-  }
-
-  // for single file
-  if (image) formData.append("image", image);
-
-  const res = await fetch(`/api/images/`, {
+  } = serverFormInput;
+  const response = await fetch(`/api/servers/`, {
     method: "POST",
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/json",
     },
-    body: formData,
+    body: JSON.stringify({
+      admin_id,
+      name,
+      description,
+      isPublic,
+      image,
+      serverCategory,
+    }),
   });
-
-  const data = await res.json();
-  dispatch(addServer(data.server));
+  const data = await response.json();
+  dispatch(addServer(data));
   return data;
 };
+
+// aws create user setUp
+// export const createServerAws = (server) => async (dispatch) => {
+//   const {
+//     images,
+//     image,
+//     description,
+//     name,
+//     admin_id,
+//     isPublic,
+//     serverCategory,
+//   } = server;
+//   const formData = new FormData();
+//   formData.append("description", description);
+//   formData.append("name", name);
+//   formData.append("admin_id", admin_id);
+//   formData.append("isPublic", isPublic);
+//   formData.append("serverCategory", serverCategory);
+
+//   // for multiple files
+//   if (images && images.length !== 0) {
+//     for (var i = 0; i < images.length; i++) {
+//       formData.append("images", images[i]);
+//     }
+//   }
+
+//   // for single file
+//   if (image) formData.append("image", image);
+
+//   const res = await fetch(`/api/images/`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//     },
+//     body: formData,
+//   });
+
+//   const data = await res.json();
+//   dispatch(setUser(data.server));
+// };
 
 // Find existing server in database
 export const findExistingServer = (serverId) => async (dispatch) => {
@@ -137,6 +141,8 @@ export const updateExistingServer = (server) => async (dispatch) => {
 const initialState = {};
 const serverReducer = (state = initialState, action) => {
   switch (action.type) {
+    // case SET_USER:
+    //   return { ...state, server: action.payload };
     case ADD_SERVER:
       return action.newServer;
     case FIND_SERVER:

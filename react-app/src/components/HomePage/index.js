@@ -5,30 +5,29 @@ import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
-function HomePage({ user }) {
+function HomePage() {
   const dispatch = useDispatch();
 
-  // const serverImg = useSelector((state) => state.server.images);
-  console.log(user);
   useEffect(() => {
     dispatch(serverActions.findPublicServers());
   }, [dispatch]);
 
   // aws
-  //  const [images, setImages] = useState([]);
-  //   useEffect(() => {
-  //     (async () => {
-  //       const res = await fetch("/api/images");
-  //       if (res.ok) {
-  //         const data = await res.json();
-  //         console.log(data);
-  //         setImages(data.images);
-  //       } else {
-  //         console.log("error");
-  //       }
-  //     })();
-  //   }, []);
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/images");
+      if (res.ok) {
+        const data = await res.json();
+        // console.log(data);
 
+        setImages(data.images);
+      } else {
+        console.log("error");
+      }
+    })();
+  }, []);
+  console.log(images);
   const publicServers = useSelector((state) => state?.publicServer);
   let searchCategories;
   let filteredCategories;
@@ -44,8 +43,30 @@ function HomePage({ user }) {
   ];
   let filter = [];
   const publicSer = Object.values(publicServers);
-  console.log(publicSer);
+  // console.log(publicSer);
+  const [serverInfo, setServerInfo] = useState([]);
 
+  console.log(serverInfo);
+  if (!images) {
+    return null;
+  }
+  const imageUrl = Object.values(images);
+  // console.log(imageUrl[0]?.url);
+  let idx = 0;
+  let im;
+
+  // new stuff
+  const use = Object.values(publicServers).map((el, idx) => {
+    return (
+      <>
+        {" "}
+        {el?.name}
+        {el?.description}
+        {el?.id}
+      </>
+    );
+  });
+  console.log(publicServers);
   return (
     <>
       <h1 className="discover-title"> Discover </h1>
@@ -79,22 +100,52 @@ function HomePage({ user }) {
         </div>
         <div className="main-servers__container">
           <h1>Featured communities</h1>
-          <div className="servers-containers">
-            {Object.values(publicServers).map((el) => (
-              <div className="server-div__container" key={el?.id}>
-                <NavLink to={`servers/${el?.id}`}>
-                  <div className="img-div__container">
-                    <img src={`${el?.image_url}`} />
-                  </div>
-                  <div className="server-div__name"> {el?.name}</div>
-                  <div className="server-div__description">
-                    {" "}
-                    {el?.description}
-                  </div>
-                </NavLink>
-              </div>
-            ))}
-          </div>
+
+          {/* cool stuff */}
+
+          {images.map((im, idx) => {
+            if (idx !== 20) {
+              return (
+                <div className={`server-div__container _${idx}`} key={im?.id}>
+                  <NavLink to={`servers/${im.serverId}`}>
+                    <div className={`img-div__container`}>
+                      <img src={`${im.url}`} />
+                      {/* <div
+                        key={im.id}
+                        className="img"
+                        style={{
+                          backgroundImage: `url(${im.url})`,
+                          backgroundSize: "cover",
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "center",
+                          height: 143,
+                          width: "100%",
+                          margin: 0,
+                        }}
+                      /> */}
+                      <>
+                        <div
+                          key={publicServers[idx]?.id}
+                          className=".info-div__container"
+                        >
+                          <div className=".server-div__name">
+                            {publicServers[idx]?.name}
+                          </div>
+                          <div className=".server-div__description">
+                            {publicServers[idx]?.description}
+                          </div>
+                        </div>
+                      </>
+                    </div>
+                    {/* <div className="info-containers"></div> */}
+                  </NavLink>
+                </div>
+              );
+            }
+            idx += 1;
+          })}
+
+          {/* cool stuff ends*/}
         </div>
       </div>
     </>

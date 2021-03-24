@@ -23,10 +23,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
   // aws
   const [awsImage, awsSetImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("image", awsImage);
 
     // aws uploads can be a bit slow—displaying
     // some sort of loading message is a good idea
@@ -48,7 +49,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
   const updateImage = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    awsSetImage(file);
   };
 
   // aws ends --------------------
@@ -78,6 +79,34 @@ function ServerForm({ showServerModal, setShowServerModal }) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    const handleSubmit = async (e) => {
+      // e.preventDefault();
+      const formData = new FormData();
+      formData.append("image", awsImage);
+
+      // aws uploads can be a bit slow—displaying
+      // some sort of loading message is a good idea
+
+      setImageLoading(true);
+      const res = await fetch("/api/images", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        await res.json();
+        setImageLoading(false);
+        // history.push("/images");
+      } else {
+        setImageLoading(false);
+        console.log("error");
+      }
+    };
+
+    const updateImage = (e) => {
+      const file = e.target.files[0];
+      awsSetImage(file);
+    };
+
     if (!name) {
       setErrors("Server name cannot be empty!");
       return;
@@ -99,6 +128,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     setErrors("");
     setShowServerModal(false);
     history.push(`/servers/${newServer.id}`);
+    handleSubmit();
   };
 
   // Modal animations from react-spring
@@ -125,7 +155,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
           <form
             className="serverModalForm"
             onSubmit={(e) => onSubmit(e)}
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
           >
             <div className="serverModalInputContainer">
               <label htmlFor="name">Server Name</label>
@@ -177,6 +207,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
               <input type="file" accept="image/*" onChange={updateImage} />
               {imageLoading && <p>Loading...</p>}
             </div>
+
             <div className="serverModalButtonContainer">
               <button className="serverModalSubmit" type="submit">
                 Create

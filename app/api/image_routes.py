@@ -38,5 +38,5 @@ def upload_image():
 
 @image_routes.route("")
 def get_all_images():
-    images = Image.query.order_by(Image.id.desc()).all()
+    images = Image.query.order_by(Image.id.asc()).all()
     return {"images": [image.to_dict() for image in images]}
