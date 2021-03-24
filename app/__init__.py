@@ -4,11 +4,13 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
+from flask_socketio import SocketIO, emit, send
 
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.server_routes import server_routes
 from .api.auth_routes import auth_routes
+from .api.chat_routes import chat_routes
 
 from .api.image_routes import image_routes
 
@@ -18,6 +20,7 @@ from .seeds import seed_commands
 from .config import Config
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Setup login manager
 login = LoginManager(app)
@@ -37,6 +40,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(image_routes, url_prefix='/api/images')
+app.register_blueprint(chat_routes, url_prefix='/api/chat')
 db.init_app(app)
 Migrate(app, db)
 
@@ -78,3 +82,32 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
+
+
+@socketio.on('connect')
+def test_connect():
+    print("connected")
+    emit('Success', {"data": "Connected"})
+
+
+@socketio.on('my event')
+def test_message(message):
+    print('===========')
+    print('message')
+    print(message)
+    print('===========')
+    emit('my response', {'message': message}, broadcast=True)
+
+
+@socketio.on('new message')
+def new_message(message):
+    emit('load message', {'message': message}, broadcast=True)
+
+# @socketio.on('json')
+# def test_json(json):
+#     print('hello')
+#     send(json, json=True)
+
+
+if __name__ == '__main__':
+    socketio.run(app)

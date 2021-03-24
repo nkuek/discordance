@@ -135,9 +135,18 @@ def find_channel():
     channel = Channel(
         id=channelSearch.id,
         name=channelSearch.name,
-        server_id=channelSearch.server_id
+        server_id=channelSearch.server_id,
     )
-    return channel.to_dict()
+
+    existingChannel = channel.to_dict()
+    formattedMessages = [message.to_dict() for
+                         message in channelSearch.messages]
+
+    existingChannel['messages'] = formattedMessages
+    print('==========')
+    print(existingChannel)
+    print('==========')
+    return existingChannel
 
 
 @server_routes.route('/:id/:channel_id/edit/', methods=['PUT'])
