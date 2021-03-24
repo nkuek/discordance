@@ -12,14 +12,15 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
 
   const channel = useSelector((state) => state.channel);
 
-  const channelModalRef = useRef();
-  // close modal when clicking anywhere else
-  const closeChannelModal = (e) => {
-    if (channelModalRef.current === e.target) {
-      setShowEditChannelModal(false);
-      setChannelName(channel.name);
-    }
-  };
+
+    const editChannelModalRef = useRef();
+    // close modal when clicking anywhere else
+    const closeEditChannelModal = (e) => {
+        if (editChannelModalRef.current === e.target) {
+            setShowEditChannelModal(false);
+            setChannelName(channel.name);
+        }
+    };
 
   useEffect(() => {
     setChannelName(channel.name);
@@ -50,8 +51,9 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     transform: showEditChannelModal ? `scale(1)` : `scale(0.8)`,
   });
 
-  const handleChannelServer = async (e, updatedName, channelId) => {
-    e.preventDefault();
+
+    const handleEditChannel = async (e, updatedName, channelId) => {
+        e.preventDefault();
 
     if (!channelName) {
       setErrors("Channel name cannot be empty!");
@@ -66,38 +68,50 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     // history.push(`/servers/${server.id}/${newChannel.id}`);
   };
 
-  return showEditChannelModal ? (
-    <div
-      className="channelModalWrapper"
-      ref={channelModalRef}
-      onClick={closeChannelModal}
-    >
-      <animated.div style={animation}>
-        <div className="channelModalContainer">
-          {errors && <div className="channelFormErrors">{errors}</div>}
-          <form
-            onSubmit={(e) => handleChannelServer(channelName, channel.id)}
-            className="channelModalForm"
-          >
-            <div className="channelModalFormTitleContainer">
-              <div className="channelModalHeader">Edit Channel</div>
-            </div>
-            <div className="channelModalInputContainer">
-              <label htmlFor="channelName">Channel Name</label>
-              <input
-                name="channelName"
-                type="text"
-                placeholder="Channel Name"
-                value={channelName}
-                onChange={(e) => setChannelName(e.target.value)}
-              ></input>
-              <div className="channelModalButtonContainer">
-                <button className="channelModalSubmit" type="submit">
-                  Edit
-                </button>
-              </div>
-            </div>
-          </form>
+
+    return showEditChannelModal ? (
+        <div
+            className="channelModalWrapper"
+            ref={editChannelModalRef}
+            onClick={closeEditChannelModal}
+        >
+            <animated.div style={animation}>
+                <div className="channelModalContainer">
+                    {errors && (
+                        <div className="channelFormErrors">{errors}</div>
+                    )}
+                    <form
+                        onSubmit={(e) =>
+                            handleEditChannel(e, channelName, channel.id)
+                        }
+                        className="channelModalForm"
+                    >
+                        <div className="channelModalFormTitleContainer">
+                            <div className="channelModalHeader">
+                                Edit Channel
+                            </div>
+                        </div>
+                        <div className="channelModalInputContainer">
+                            <label htmlFor="channelName">Channel Name</label>
+                            <input
+                                name="channelName"
+                                type="text"
+                                placeholder="Channel Name"
+                                value={channelName}
+                                onChange={(e) => setChannelName(e.target.value)}
+                            ></input>
+                            <div className="channelModalButtonContainer">
+                                <button
+                                    className="channelModalSubmit"
+                                    type="submit"
+                                >
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </animated.div>
         </div>
       </animated.div>
     </div>

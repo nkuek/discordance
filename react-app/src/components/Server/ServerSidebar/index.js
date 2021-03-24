@@ -51,10 +51,6 @@ function ServerSidebar() {
     function homeButton() {
         history.push('/');
     }
-    // to go to /discover
-    function discoverButton() {
-        history.push('/discover');
-    }
 
     const openServerModal = () => {
         setShowServerModal((prev) => !prev);
@@ -82,20 +78,22 @@ function ServerSidebar() {
                         </IconButton>
                     </Tooltip>
                     <div className="menu-seperator" />
-                    <Tooltip
-                        title="Explore Public Servers"
-                        key="explore"
-                        placement="right"
-                        className="tooltip"
-                        arrow={true}
+                    <NavLink
+                        className="userServersListLink discover"
+                        to="/discover"
                     >
-                        <IconButton
-                            className="home-icon"
-                            onClick={discoverButton}
+                        <Tooltip
+                            title="Explore Public Servers"
+                            key="explore"
+                            placement="right"
+                            className="tooltip"
+                            arrow={true}
                         >
-                            <ExploreIcon />
-                        </IconButton>
-                    </Tooltip>
+                            <IconButton className="home-icon">
+                                <ExploreIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </NavLink>
 
                     {/* This is where we will map over the servers for that user and render their pictures */}
                     <div className="userServersList">

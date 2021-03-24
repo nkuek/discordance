@@ -1,6 +1,7 @@
 const ADD_CHANNEL = "channel/addChannel";
 const GET_CHANNEL = "channel/getChannel";
 const EDIT_CHANNEL = "channel/editChannel";
+const DELETE_CHANNEL = "channel/deleteChannel";
 
 const addChannel = (newChannel) => ({
   type: ADD_CHANNEL,
@@ -15,6 +16,10 @@ const getChannel = (channel) => ({
 const editChannel = (updatedChannel) => ({
   type: EDIT_CHANNEL,
   updatedChannel,
+});
+
+const deleteChannel = () => ({
+  type: DELETE_CHANNEL,
 });
 
 //add a channel
@@ -48,6 +53,7 @@ export const findExistingChannel = (channelId) => async (dispatch) => {
 };
 
 export const updateExistingChannel = (updatedChannel) => async (dispatch) => {
+
   const response = await fetch("/api/servers/:id/:channel_id/edit/", {
     method: "PUT",
     headers: {
@@ -61,11 +67,7 @@ export const updateExistingChannel = (updatedChannel) => async (dispatch) => {
 };
 
 //delete existing channel
-const DELETE_CHANNEL = "channel/deleteChannel";
 
-const deleteChannel = () => ({
-  type: DELETE_CHANNEL,
-});
 
 export const deleteExistingChannel = (channelId) => async (dispatch) => {
   await fetch("/api/servers/:id/:channel_id", {
