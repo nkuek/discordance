@@ -107,3 +107,15 @@ def add_channel():
     db.session.add(new_channel)
     db.session.commit()
     return new_channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id/', methods=['PUT'])
+def find_channel():
+    channelId = request.json
+    channelSearch = Channel.query.get(channelId)
+    channel = Channel(
+        id=channelSearch.id,
+        name=channelSearch.name,
+        server_id=channelSearch.server_id
+    )
+    return channel.to_dict()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Sidebar.css';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -110,18 +110,8 @@ function Sidebar() {
     const server = useSelector((state) => state.server);
 
     useEffect(() => {
-        if (isLoaded && server.channels.length > 0)
-            history.push(`/servers/${server.id}/${server.channels[0].id}`);
-        else return;
-    }, [server]);
-
-    useEffect(() => {
         setIsLoaded(true);
     }, [server]);
-
-    useEffect(() => {
-        dispatch(findExistingChannel());
-    });
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);

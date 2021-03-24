@@ -37,6 +37,7 @@ export const findExistingChannel = (channelId) => async (dispatch) => {
         body: JSON.stringify(channelId),
     });
     const data = await response.json();
+    console.log(data);
     dispatch(getChannel(data));
     return data;
 };
