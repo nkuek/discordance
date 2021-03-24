@@ -15,7 +15,8 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     );
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('true');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
     const [serverCategory, setServerCategory] = useState('Gaming');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
@@ -44,6 +45,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        // aws uploads can be a bit slow—displaying
+        // some sort of loading message is a good idea
+        
+        setImageLoading(true); 
 
         if (!name) {
             setErrors('Server name cannot be empty!');
@@ -56,9 +61,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 serverCategory,
                 description,
                 isPublic,
-                image,
+                image: image,
             })
+            
         );
+        setImageLoading(false);
         setName(loggedInUser && `${loggedInUser.username}'s server`);
         setDescription('');
         setIsPublic('true');
@@ -67,7 +74,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         setShowServerModal(false);
         history.push(`/servers/${newServer.id}`);
     };
-
+    const updateImage = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    }
     // Modal animations from react-spring
     const animation = useSpring({
         config: {
@@ -76,7 +86,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         opacity: showServerModal ? 1 : 0,
         transform: showServerModal ? `scale(1)` : `scale(0.8)`,
     });
-
+    
     return showServerModal ? (
         <div
             className="serverModalWrapper"
@@ -140,7 +150,9 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                                 </option>
                             </select>
                         </div>
-                        <div className="serverModalInputContainer">
+
+
+                        {/* <div className="serverModalInputContainer">
                             <label htmlFor="image">Image</label>
                             <input
                                 type="text"
@@ -149,11 +161,21 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                                 value={image}
                                 onChange={(e) => setImage(e.target.value)}
                             ></input>
+                        </div> */}
+                        <div className="serverModalInputContainer">
+                        <label htmlFor="image">Server Image</label>
+                        <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={updateImage}
+                        />
                         </div>
                         <div className="serverModalButtonContainer">
                             <button className="serverModalSubmit" type="submit">
                                 Create
                             </button>
+                            {(imageLoading)&& <p>Loading...</p>}
                         </div>
                     </form>
                 </div>

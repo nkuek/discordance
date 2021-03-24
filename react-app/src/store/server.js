@@ -25,6 +25,7 @@ const editServer = (updatedServer) => ({
 
 //add a server
 export const createServer = (serverFormInput) => async (dispatch) => {
+  console.log(serverFormInput)
   const {
     admin_id,
     name,
