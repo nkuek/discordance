@@ -28,6 +28,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useSelector, useDispatch } from 'react-redux';
 import EditServerForm from '../../EditServerForm';
 import { updateExistingServer } from '../../../store/server';
+import { findExistingChannel } from '../../../store/channel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
 
@@ -96,17 +97,21 @@ const SimpleAccordionDetails = withStyles((theme) => ({
 }))(AccordionDetails);
 
 function Sidebar() {
-    const [channels, setChannels] = useState([]);
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showChannelModal, setShowChannelModal] = useState(false);
     const [showDescription, setShowDescription] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, [server]);
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);

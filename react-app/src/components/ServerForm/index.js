@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,8 +7,10 @@ import { useHistory } from 'react-router-dom';
 import { createServer } from '../../store/server';
 import './ServerForm.css';
 
+
 function ServerForm({ showServerModal, setShowServerModal }) {
-    const loggedInUser = useSelector((state) => state.session.user);
+  const loggedInUser = useSelector((state) => state.session.user);
+
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -36,15 +39,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         }
     };
 
-    // close modal when pressing escape key
-    const keyPress = useCallback(
-        (e) => {
-            if (e.key === 'Escape' && showServerModal) {
-                setShowServerModal(false);
-            }
-        },
-        [showServerModal, setShowServerModal]
-    );
+  // aws
+  const [awsImage, awsSetImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
+
 
     useEffect(() => {
         document.addEventListener('keydown', keyPress);
@@ -87,9 +85,28 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         setIsPublic('true');
         setImage('');
         setErrors('');
+
+
+
+  // close modal when clicking anywhere else
+  const closeServerModal = (e) => {
+    if (serverModalRef.current === e.target) {
+      setShowServerModal(false);
+    }
+  };
+
+  // close modal when pressing escape key
+  const keyPress = useCallback(
+    (e) => {
+      if (e.key === "Escape" && showServerModal) {
+
         setShowServerModal(false);
-        history.push(`/servers/${newServer.id}`);
-    };
+      }
+    },
+    [showServerModal, setShowServerModal]
+  );
+    
+
     const updateImage = (e) => {
         console.log(e.target.files[0])
         const file = e.target.files[0];
@@ -103,7 +120,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         opacity: showServerModal ? 1 : 0,
         transform: showServerModal ? `scale(1)` : `scale(0.8)`,
     });
-    
+
     return showServerModal ? (
         <div
             className="serverModalWrapper"
@@ -240,8 +257,11 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                     </form>
                 </div>
             </animated.div>
+
         </div>
-    ) : null;
+      </animated.div>
+    </div>
+  ) : null;
 }
 
 export default ServerForm;

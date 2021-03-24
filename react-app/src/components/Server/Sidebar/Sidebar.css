@@ -1,7 +1,8 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 240px;
+    min-width: 240px;
+    max-width:240px;
     height: calc(100vh - 44px);
     background-color: #2f3135;
 }
@@ -18,7 +19,7 @@
 
 .sidebar__description {
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .sidebar__channels {

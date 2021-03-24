@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import HomeIcon from "@material-ui/icons/Home";
-
 import ExploreIcon from "@material-ui/icons/Explore";
-
+import { withStyles } from "@material-ui/styles";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import GroupWorkRoundedIcon from "@material-ui/icons/GroupWorkRounded";
 import BlurCircularRoundedIcon from "@material-ui/icons/BlurCircularRounded";
@@ -14,6 +13,18 @@ import ServerForm from "../../ServerForm";
 import "./ServerSidebar.css";
 import { fetchUserServers } from "../../../store/userInfo";
 import { findExistingServer } from "../../../store/server";
+
+const CustomBlurCircularRoundedIcon = withStyles({
+  root: {
+    borderRadius: "100%",
+    backgroundColor: "black",
+    padding: "5px 2px",
+    color: "gray",
+    "&:hover": {
+      borderRadius: "7px",
+    },
+  },
+})(BlurCircularRoundedIcon);
 
 function ServerSidebar() {
   const dispatch = useDispatch();
@@ -39,10 +50,6 @@ function ServerSidebar() {
 
   function homeButton() {
     history.push("/");
-  }
-  // to go to /discover
-  function discoverButton() {
-    history.push("/discover");
   }
 
   const openServerModal = () => {
@@ -71,35 +78,42 @@ function ServerSidebar() {
             </IconButton>
           </Tooltip>
           <div className="menu-seperator" />
-          <Tooltip
-            title="Explore Public Servers"
-            key="explore"
-            placement="right"
-            className="tooltip"
-            arrow={true}
-          >
-            <IconButton className="home-icon" onClick={discoverButton}>
-              <ExploreIcon />
-            </IconButton>
-          </Tooltip>
+          <NavLink className="userServersListLink discover" to="/discover">
+            <Tooltip
+              title="Explore Public Servers"
+              key="explore"
+              placement="right"
+              className="tooltip"
+              arrow={true}
+            >
+              <IconButton className="home-icon">
+                <ExploreIcon />
+              </IconButton>
+            </Tooltip>
+          </NavLink>
 
           {/* This is where we will map over the servers for that user and render their pictures */}
           <div className="userServersList">
             {Object.keys(userServers).length > 0 &&
               userServers.map((userServer) => (
-                <NavLink key={userServer.id} to={`/servers/${userServer.id}`}>
+                <NavLink
+                  className="userServersListLink"
+                  key={userServer.id}
+                  to={`/servers/${userServer.id}`}
+                >
                   <Tooltip
                     title={userServer.name}
                     key={userServer.id}
                     placement="right"
                     className="tooltip"
+                    arrow={true}
                   >
                     <IconButton
                       onClick={(e) => handleServerClick(e, userServer?.id)}
                       className="server-icon"
                     >
                       {!userServer.image_url ? (
-                        <BlurCircularRoundedIcon />
+                        <CustomBlurCircularRoundedIcon />
                       ) : (
                         <div className="server-icon">
                           <img src={userServer?.image_url} />
@@ -116,6 +130,7 @@ function ServerSidebar() {
               key="create-server"
               placement="right"
               className="tooltip"
+              arrow={true}
             >
               <div>
                 <IconButton className="server-icon" onClick={openServerModal}>

@@ -27,9 +27,15 @@
 
 .home-icon svg {
     width: 42px;
-    height: 37px;
+    height: 42px;
     color: white;
 }
+
+.discover {
+    display: inline-block;
+}
+
+
 
 .menu-seperator {
     border-top: 2px solid #2f3136;
@@ -65,6 +71,6 @@
     color: white;
 }
 
-.active {
+.userServersListLink.active {
     border-left: 5px solid white;
 }

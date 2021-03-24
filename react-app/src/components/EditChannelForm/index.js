@@ -2,33 +2,40 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createChannel } from '../../store/channel';
-import './ChannelForm.css';
+import { updateExistingChannel } from '../../store/channel';
 
-function ChannelForm({ showChannelModal, setShowChannelModal }) {
+function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [channelName, setChannelName] = useState('');
     const [errors, setErrors] = useState('');
 
-    const channelModalRef = useRef();
+    const channel = useSelector((state) => state.channel);
+
+    const editChannelModalRef = useRef();
     // close modal when clicking anywhere else
-    const closeChannelModal = (e) => {
-        if (channelModalRef.current === e.target) {
-            setShowChannelModal(false);
+    const closeEditChannelModal = (e) => {
+        if (editChannelModalRef.current === e.target) {
+            setShowEditChannelModal(false);
+            setChannelName(channel.name);
+            setErrors('');
         }
     };
 
-    const server = useSelector((state) => state.server);
+    useEffect(() => {
+        setChannelName(channel.name);
+    }, [channel]);
 
     // close modal when pressing escape key
     const keyPress = useCallback(
         (e) => {
-            if (e.key === 'Escape' && showChannelModal) {
-                setShowChannelModal(false);
+            if (e.key === 'Escape' && showEditChannelModal) {
+                setShowEditChannelModal(false);
+                setChannelName(channel.name);
+                setErrors('');
             }
         },
-        [showChannelModal, setShowChannelModal]
+        [showEditChannelModal, setShowEditChannelModal]
     );
 
     useEffect(() => {
@@ -41,13 +48,11 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
         config: {
             duration: 150,
         },
-        opacity: showChannelModal ? 1 : 0,
-        transform: showChannelModal ? `scale(1)` : `scale(0.8)`,
+        opacity: showEditChannelModal ? 1 : 0,
+        transform: showEditChannelModal ? `scale(1)` : `scale(0.8)`,
     });
 
-    const handleChannelServer = async (e, name, serverId) => {
-        e.preventDefault();
-
+    const handleEditChannel = async (e, updatedName, channelId) => {
         if (!channelName) {
             setErrors('Channel name cannot be empty!');
             return;
@@ -55,34 +60,35 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
 
         setErrors('');
         setChannelName('');
-        setShowChannelModal(false);
+        setShowEditChannelModal(false);
 
-        const newChannel = await dispatch(createChannel(name, serverId));
-        history.push(`/servers/${server.id}/${newChannel.id}`);
+        dispatch(updateExistingChannel({ updatedName, channelId }));
+        // history.push(`/servers/${server.id}/${newChannel.id}`);
     };
 
-    return showChannelModal ? (
+    return showEditChannelModal ? (
         <div
+            style={{ zIndex: 3 }}
             className="channelModalWrapper"
-            ref={channelModalRef}
-            onClick={closeChannelModal}
+            ref={editChannelModalRef}
+            onClick={closeEditChannelModal}
         >
             <animated.div style={animation}>
                 <div className="channelModalContainer">
-                    {errors && (
-                        <div className="channelFormErrors">{errors}</div>
-                    )}
                     <form
                         onSubmit={(e) =>
-                            handleChannelServer(e, channelName, server.id)
+                            handleEditChannel(e, channelName, channel.id)
                         }
                         className="channelModalForm"
                     >
                         <div className="channelModalFormTitleContainer">
                             <div className="channelModalHeader">
-                                Create a Channel
+                                Edit Channel
                             </div>
                         </div>
+                        {errors && (
+                            <div className="channelFormErrors">{errors}</div>
+                        )}
                         <div className="channelModalInputContainer">
                             <label htmlFor="channelName">Channel Name</label>
                             <input
@@ -97,7 +103,7 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
                                     className="channelModalSubmit"
                                     type="submit"
                                 >
-                                    Create
+                                    Edit
                                 </button>
                             </div>
                         </div>
@@ -108,4 +114,4 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
     ) : null;
 }
 
-export default ChannelForm;
+export default EditChannelForm;

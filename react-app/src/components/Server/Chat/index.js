@@ -1,35 +1,57 @@
-import React from "react";
-import "./Chat.css";
-import ChatHeader from "./ChatHeader";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
-import GifIcon from "@material-ui/icons/Gif";
-import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { findExistingChannel } from '../../../store/channel';
+import './Chat.css';
+import ChatHeader from './ChatHeader';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import GifIcon from '@material-ui/icons/Gif';
+import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
 function Chat() {
-  return (
-    <div className="chat">
-      <ChatHeader />
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [newChannel, setNewChannel] = useState(false);
 
-      <div className="chat__messages"></div>
+    const { channelId } = useParams();
 
-      <div className="chat__input">
-        <AddCircleIcon fontSize="large" />
-        <form>
-          <input placeholder={`message #TEST`} />
-          <button className="chat__inputButton" type="submit">
-            Send Message
-          </button>
-        </form>
+    const channel = useSelector((state) => state.channel);
 
-        <div className="chat__inputIcons">
-          <CardGiftcardIcon fontSize="large" />
-          <GifIcon fontSize="large" />
-          <EmojiEmotionsIcon fontSize="large" />
-        </div>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        dispatch(findExistingChannel(channelId));
+    }, [channelId]);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, channel);
+
+    return (
+        isLoaded && (
+            <div className="chat">
+                <ChatHeader />
+
+                <div className="chat__messages"></div>
+
+                <div className="chat__input">
+                    <AddCircleIcon fontSize="large" />
+                    <form>
+                        <input placeholder={`message #TEST`} />
+                        <button className="chat__inputButton" type="submit">
+                            Send Message
+                        </button>
+                    </form>
+
+                    <div className="chat__inputIcons">
+                        <CardGiftcardIcon fontSize="large" />
+                        <GifIcon fontSize="large" />
+                        <EmojiEmotionsIcon fontSize="large" />
+                    </div>
+                </div>
+            </div>
+        )
+    );
 }
 
 export default Chat;
