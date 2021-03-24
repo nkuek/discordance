@@ -1,9 +1,7 @@
-
-const ADD_SERVER = 'server/addServer';
-const FIND_SERVER = 'server/findServer';
-const DELETE_SERVER = 'server/deleteServer';
-const EDIT_SERVER = 'server/editServer';
-
+const ADD_SERVER = "server/addServer";
+const FIND_SERVER = "server/findServer";
+const DELETE_SERVER = "server/deleteServer";
+const EDIT_SERVER = "server/editServer";
 
 const addServer = (newServer) => ({
   type: ADD_SERVER,
@@ -29,9 +27,12 @@ const editServer = (updatedServer) => ({
 //   type: SET_USER,
 //   payload: server,
 // });
+
+// need to fix this ------------
+const FIND_PUBLIC_SERVER = "server/findPublicServer";
+
 //add a server
 export const createServer = (serverFormInput) => async (dispatch) => {
-
   const {
     admin_id,
     name,
