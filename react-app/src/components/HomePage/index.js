@@ -106,36 +106,21 @@ function HomePage() {
           {images.map((im, idx) => {
             if (idx !== 20) {
               return (
-                <div className={`server-div__container _${idx}`} key={im?.id}>
+                <div className={`server-div__container`} key={im?.id}>
                   <NavLink to={`servers/${im.serverId}`}>
                     <div className={`img-div__container`}>
                       <img src={`${im.url}`} />
-                      {/* <div
-                        key={im.id}
-                        className="img"
-                        style={{
-                          backgroundImage: `url(${im.url})`,
-                          backgroundSize: "cover",
-                          backgroundRepeat: "no-repeat",
-                          backgroundPosition: "center",
-                          height: 143,
-                          width: "100%",
-                          margin: 0,
-                        }}
-                      /> */}
-                      <>
-                        <div
-                          key={publicServers[idx]?.id}
-                          className=".info-div__container"
-                        >
-                          <div className=".server-div__name">
-                            {publicServers[idx]?.name}
-                          </div>
-                          <div className=".server-div__description">
-                            {publicServers[idx]?.description}
-                          </div>
+                      <div
+                        key={publicServers[idx]?.id}
+                        className="info-div__container"
+                      >
+                        <div className="server-div__name">
+                          {publicServers[idx]?.name}
                         </div>
-                      </>
+                        <div className="server-div__description">
+                          {publicServers[idx]?.description}
+                        </div>
+                      </div>
                     </div>
                     {/* <div className="info-containers"></div> */}
                   </NavLink>
