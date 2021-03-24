@@ -1,7 +1,8 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    flex: 0.25;
+    min-width: 240px;
+    max-width:240px;
     height: calc(100vh - 44px);
     background-color: #2f3135;
 }
@@ -14,6 +15,11 @@
     background-color: #2f3135;
     color: white;
     border-bottom: 3px solid #26282c;
+}
+
+.sidebar__description {
+    position: relative;
+    z-index: 0;
 }
 
 .sidebar__channels {
@@ -89,4 +95,12 @@
 
 .sidebar__profileIcons>.MuiSvgIcon-root {
     padding: 10px;
+}
+
+.MuiList-root {
+    padding: 10px;
+}
+
+.descriptionContent {
+    font-size: .9em;
 }

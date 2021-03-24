@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
+
 
 import HomePage from "./components/HomePage/index";
 import NavBar from "./components/NavBar/index";
@@ -19,27 +20,33 @@ import ViewImages from "./components/FileUpload/ViewImages";
 // --------------------------
 import * as sessionActions from "./store/session";
 
+
+
+
+import Sidebar from './components/Server/Sidebar';
+
+
 function App() {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const [authenticated, setAuthenticated] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
-  useEffect(async () => {
-    const user = await authenticate();
-    if (!user.errors) {
-      dispatch(sessionActions.restoreUser());
-      setAuthenticated(true);
-      dispatch(fetchUserServers(user.id));
+    useEffect(async () => {
+        const user = await authenticate();
+        if (!user.errors) {
+            dispatch(sessionActions.restoreUser());
+            setAuthenticated(true);
+            dispatch(fetchUserServers(user.id));
+        }
+        setLoaded(true);
+    }, [dispatch]);
+
+    if (!loaded) {
+        return null;
     }
-    setLoaded(true);
-  }, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
 
-  return (
     <BrowserRouter>
       <NavBar
         authenticated={authenticated}
@@ -78,14 +85,13 @@ function App() {
           <Route path="/discover" exact={true}>
             <HomePage></HomePage>
           </Route>
-
-          <Route path="/servers/:serverId">
-            <Server />
-          </Route>
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
+                    <Route path="/servers/:serverId(\d+)">
+                        <Server />
+                    </Route>
+                </Switch>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

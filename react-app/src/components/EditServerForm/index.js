@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +7,11 @@ import { createServer } from "../../store/server";
 import { updateExistingServer, findExistingServer } from "../../store/server";
 import "./EditServerForm.css";
 
+
 function EditServerForm({ showServerModal, setShowServerModal }) {
   const loggedInUser = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
+
 
   const server = useSelector((state) => state.server);
   const { serverId } = useParams();
@@ -28,6 +31,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
     dispatch(findExistingServer(serverId));
     setIsLoaded(true);
   }, [dispatch]);
+
 
   // Yassine
   useEffect(() => {

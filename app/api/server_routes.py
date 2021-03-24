@@ -1,9 +1,10 @@
 from flask import Blueprint, json, request, jsonify
-from app.models import Server, db, User
+from app.models import Server, db, User, Channel
 
 server_routes = Blueprint('servers', __name__)
 
 
+# Add new server
 @server_routes.route('/', methods=['POST'])
 def add_server():
     response = request.json
@@ -20,13 +21,16 @@ def add_server():
     user.servers.append(new_server)
     db.session.add(new_server)
     db.session.commit()
-    return new_server.to_dict()
+    data = new_server.to_dict()
+    data['channels'] = []
+    return data
 
 
+# Find single server
 @server_routes.route('/', methods=['PUT'])
 def find_server():
     serverId = request.json
-    serverSearch = Server.query.filter(Server.id == serverId).first()
+    serverSearch = Server.query.get(serverId)
     server = Server(
         id=serverSearch.id,
         admin_id=serverSearch.admin_id,
@@ -34,9 +38,15 @@ def find_server():
         description=serverSearch.description,
         category=serverSearch.category,
         public=serverSearch.public,
-        image_url=serverSearch.image_url
+        image_url=serverSearch.image_url,
     )
-    return server.to_dict()
+    data = server.to_dict()
+    formattedChannels = [channel.to_dict()
+                         for channel in serverSearch.channels]
+    data['channels'] = formattedChannels
+
+    return data
+
 
 # @server_routes.route("/", methods=['GET'])
 # def find_server():
@@ -77,4 +87,54 @@ def edit_server():
     matched_server.image_url = server['image']
     matched_server.category = server['serverCategory']
     db.session.commit()
-    return matched_server.to_dict()
+
+    formattedChannels = [channel.to_dict()
+                         for channel in matched_server.channels]
+    data = matched_server.to_dict()
+    data['channels'] = formattedChannels
+
+    return data
+
+
+# CHANNELS
+@server_routes.route('/:id/:channel_id/', methods=['POST'])
+def add_channel():
+    channel = request.json
+    new_channel = Channel(
+        name=channel['name'],
+        server_id=channel['serverId'],
+    )
+    server = Server.query.get(channel['serverId'])
+
+    db.session.add(new_channel)
+    db.session.commit()
+    return new_channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id/', methods=['PUT'])
+def find_channel():
+    channelId = request.json
+    channelSearch = Channel.query.get(channelId)
+    channel = Channel(
+        id=channelSearch.id,
+        name=channelSearch.name,
+        server_id=channelSearch.server_id
+    )
+    return channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id/edit/', methods=['PUT'])
+def edit_channel():
+    channel = request.json
+    matched_channel = Channel.query.get(channel['channelId'])
+    matched_channel.name = channel['updatedName']
+    db.session.commit()
+    return matched_channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id/', methods=['DELETE'])
+def delete_channel():
+    channelId = request.json
+    channel = Channel.query.get(channelId)
+    db.session.delete(channel)
+    db.session.commit()

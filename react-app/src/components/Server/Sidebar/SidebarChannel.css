@@ -1,11 +1,33 @@
-.sidebarChannel:hover>h4 {
+.sidebarChannelLink:hover {
+    color: white;
+    background-color: rgba(64, 70, 75, 0.4);
+}
+
+.sidebarChannelLink {
+    display: inline-block;
+    width: 100%;
+}
+
+.MuiButtonBase-root {
+    display: initial
+}
+
+.sidebarChannelLink:hover button {
+    display: initial;
+}
+
+.sidebarChannelLink.active button {
+    display: initial;
+}
+
+
+.sidebarChannelLink.active {
     color: white;
     background-color: #40464b;
 }
 
-.sidebarChannel>h4 {
+.sidebarChannel a {
     display: flex;
-    padding-left: 15px;
     align-items: center;
     background-color: #2f3135;
     color: gray;
@@ -15,4 +37,27 @@
 .sidebarChannel__hash {
     font-size: 30px;
     padding: 8px;
+    font-style: italic;
+}
+
+.sidebarChannel {
+    display: flex;
+}
+
+.channelNameAndHash {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    text-align: start;
+}
+
+.channelName {
+    overflow:hidden;
+    display:inline-block;
+    /* word-break: break-all; */
+    /* word-wrap:break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 240px;
+    display:inline-block;
 }

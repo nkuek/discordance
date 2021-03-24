@@ -1,7 +1,9 @@
-const ADD_SERVER = "server/addServer";
-const FIND_SERVER = "server/findServer";
-const DELETE_SERVER = "server/deleteServer";
-const EDIT_SERVER = "server/editServer";
+
+const ADD_SERVER = 'server/addServer';
+const FIND_SERVER = 'server/findServer';
+const DELETE_SERVER = 'server/deleteServer';
+const EDIT_SERVER = 'server/editServer';
+
 
 const addServer = (newServer) => ({
   type: ADD_SERVER,
@@ -29,6 +31,7 @@ const editServer = (updatedServer) => ({
 // });
 //add a server
 export const createServer = (serverFormInput) => async (dispatch) => {
+
   const {
     admin_id,
     name,
@@ -135,8 +138,6 @@ export const updateExistingServer = (server) => async (dispatch) => {
   console.log("----------------");
   dispatch(editServer(updatedServer));
 };
-
-// Grabs all the servers that the logged in user has joined from the database
 
 const initialState = {};
 const serverReducer = (state = initialState, action) => {

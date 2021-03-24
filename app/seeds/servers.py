@@ -6,7 +6,7 @@ from app.models.server_users import Server, User
 
 def seed_servers():
 
-    fornite = Server(admin_id=1, category='gaming', name='Official Fornite', description='The Official Fortnite Discord Server! Join to follow news channels, LFG, and chat.',
+    fortnite = Server(admin_id=1, category='gaming', name='Official Fornite', description='The Official Fortnite Discord Server! Join to follow news channels, LFG, and chat.',
                      public=True, image_url='https://cdn.discordapp.com/discovery-splashes/322850917248663552/5d3cb159f4f10a52b056cd40c332c4d7.jpg?size=320')
 
     valorant = Server(admin_id=1, category='gaming', name='VALORANT', description='The VALORANT Discord server, in collaboration with Riot Games. We offer the latest news, LFGs and various chats.',
@@ -24,13 +24,20 @@ def seed_servers():
     cod = Server(admin_id=1, category='gaming', name='Call of Duty', description='The Call of Duty Discord server is a developer-recognized community focused on the first-person shooter franchise.',
                  public=True, image_url='https://cdn.discordapp.com/discovery-splashes/136986169563938816/e4d2d97c9e210f1df4e26612e8a9ac48.jpg?size=320')
 
-    db.session.add(fornite)
+    db.session.add(fortnite)
     db.session.add(valorant)
     db.session.add(minecraft)
     db.session.add(apex)
     db.session.add(legends)
     db.session.add(cod)
-    # db.session.append()
+
+    user = User.query.get(1)
+    user.servers.append(fortnite)
+    user.servers.append(valorant)
+    user.servers.append(minecraft)
+    user.servers.append(apex)
+    user.servers.append(legends)
+    user.servers.append(cod)
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE the servers table.

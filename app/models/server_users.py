@@ -96,5 +96,5 @@ class Server(db.Model):
             "description": self.description,
             "category": self.category,
             "public": self.public,
-            "image_url": self.image_url
+            "image_url": self.image_url,
         }
