@@ -11,20 +11,15 @@ server_routes = Blueprint('servers', __name__)
 @server_routes.route('/', methods=['POST'])
 # @login_required
 def add_server():
-
-    image = request.files["image"]
-    print('image!!!!!!!!!!!!!!!!!!!!')
-    print(image)
-    # response = request.json
-
-    # image = request.files
-    print('image------------------------')
-    print(image)
-    image.filename = get_unique_filename(image.filename)
-    upload = upload_file_to_s3(image)
-    print("image-----------------------end")
+    url = None
+    if "image" in request.files:
+        image = request.files["image"]
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        url = upload["url"]
+        
+    
     # print(upload)
-    url = upload["url"]
     new_server = Server(
         admin_id=request.form['admin_id'],
         name=request.form['name'],
