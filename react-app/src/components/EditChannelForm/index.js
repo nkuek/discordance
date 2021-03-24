@@ -18,6 +18,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
         if (editChannelModalRef.current === e.target) {
             setShowEditChannelModal(false);
             setChannelName(channel.name);
+            setErrors('');
         }
     };
 
@@ -31,6 +32,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
             if (e.key === 'Escape' && showEditChannelModal) {
                 setShowEditChannelModal(false);
                 setChannelName(channel.name);
+                setErrors('');
             }
         },
         [showEditChannelModal, setShowEditChannelModal]
@@ -74,9 +76,6 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
         >
             <animated.div style={animation}>
                 <div className="channelModalContainer">
-                    {errors && (
-                        <div className="channelFormErrors">{errors}</div>
-                    )}
                     <form
                         onSubmit={(e) =>
                             handleEditChannel(e, channelName, channel.id)
@@ -88,6 +87,9 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
                                 Edit Channel
                             </div>
                         </div>
+                        {errors && (
+                            <div className="channelFormErrors">{errors}</div>
+                        )}
                         <div className="channelModalInputContainer">
                             <label htmlFor="channelName">Channel Name</label>
                             <input

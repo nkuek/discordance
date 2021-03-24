@@ -4,8 +4,8 @@
 }
 
 .sidebarChannelLink {
-    display: flex;
-    justify-content: space-between;
+    display: inline-block;
+    width: 100%;
 }
 
 .MuiButtonBase-root {
@@ -20,12 +20,6 @@
     display: initial;
 }
 
-
-.channelNameAndHash {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
 
 .sidebarChannelLink.active {
     color: white;
@@ -44,4 +38,26 @@
     font-size: 30px;
     padding: 8px;
     font-style: italic;
+}
+
+.sidebarChannel {
+    display: flex;
+}
+
+.channelNameAndHash {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    text-align: start;
+}
+
+.channelName {
+    overflow:hidden;
+    display:inline-block;
+    /* word-break: break-all; */
+    /* word-wrap:break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 240px;
+    display:inline-block;
 }

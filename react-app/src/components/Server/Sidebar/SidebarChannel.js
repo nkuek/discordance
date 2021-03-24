@@ -43,6 +43,7 @@ const CustomMenuItem = withStyles({
 const CustomIconButton = withStyles({
     root: {
         display: 'none',
+        padding: '6px',
     },
 })(IconButton);
 
