@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,10 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { createServer } from '../../store/server';
 import './ServerForm.css';
 
-
 function ServerForm({ showServerModal, setShowServerModal }) {
-  const loggedInUser = useSelector((state) => state.session.user);
-
+    const loggedInUser = useSelector((state) => state.session.user);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -31,26 +28,25 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // setImage(imageList);
     // console.log((Object.values(imageList[0]))[1])
     // };
-    
 
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("admin_id", loggedInUser.id);
-        formData.append("name", name);
-        formData.append("serverCategory", serverCategory);
-        formData.append("description", description);
-        formData.append("isPublic", isPublic);
-        formData.append("image", image);
+        formData.append('admin_id', loggedInUser.id);
+        formData.append('name', name);
+        formData.append('serverCategory', serverCategory);
+        formData.append('description', description);
+        formData.append('isPublic', isPublic);
+        formData.append('image', image);
 
         // aws uploads can be a bit slow—displaying
         // some sort of loading message is a good idea
-        setImageLoading(true); 
+        setImageLoading(true);
         if (!name) {
             setErrors('Server name cannot be empty!');
             return;
         }
-        
+
         const newServer = await dispatch(
             createServer(
                 formData
@@ -60,45 +56,45 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 // description,
                 // isPublic,
                 // image,
-                ));
-                setImageLoading(false);
-                setName(loggedInUser && `${loggedInUser.username}'s server`);
-                setDescription('');
-                setIsPublic('true');
-                setImage('');
-                setErrors('');
-                
-                
-    }
-
-  // close modal when clicking anywhere else
-  const closeServerModal = (e) => {
-    if (serverModalRef.current === e.target) {
-      setShowServerModal(false);
-    }
-  };
-
-  // close modal when pressing escape key
-  const keyPress = useCallback(
-    (e) => {
-      if (e.key === "Escape" && showServerModal) {
+            )
+        );
+        setImageLoading(false);
+        setName(loggedInUser && `${loggedInUser.username}'s server`);
+        setDescription('');
+        setIsPublic('true');
+        setImage('');
+        setErrors('');
 
         setShowServerModal(false);
-      }
-    },
-    [showServerModal, setShowServerModal]
-  );
-    
-  useEffect(() => {
+    };
+
+    // close modal when clicking anywhere else
+    const closeServerModal = (e) => {
+        if (serverModalRef.current === e.target) {
+            setShowServerModal(false);
+        }
+    };
+
+    // close modal when pressing escape key
+    const keyPress = useCallback(
+        (e) => {
+            if (e.key === 'Escape' && showServerModal) {
+                setShowServerModal(false);
+            }
+        },
+        [showServerModal, setShowServerModal]
+    );
+
+    useEffect(() => {
         document.addEventListener('keydown', keyPress);
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
     const updateImage = (e) => {
-        console.log(e.target.files[0])
+        console.log(e.target.files[0]);
         const file = e.target.files[0];
         setImage(file);
-    }
+    };
     // Modal animations from react-spring
     const animation = useSpring({
         config: {
@@ -172,7 +168,6 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             </select>
                         </div>
 
-
                         {/* <div className="serverModalInputContainer">
                             <label htmlFor="image">Image</label>
                             <input
@@ -184,16 +179,15 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                             ></input>
                         </div> */}
 
-                        
                         <div className="serverModalInputContainer">
-                        <label htmlFor="image">Image</label>
-                        <input
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                        onChange={updateImage}
-                        />
-                        {imageLoading && <p>Loading...</p>}
+                            <label htmlFor="image">Image</label>
+                            <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                onChange={updateImage}
+                            />
+                            {imageLoading && <p>Loading...</p>}
                         </div>
 
                         {/* <div className="App">
@@ -245,7 +239,6 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                 </div>
             </animated.div>
         </div>
-  ) : null;
-
+    ) : null;
 }
 export default ServerForm;
