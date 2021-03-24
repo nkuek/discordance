@@ -9,7 +9,7 @@ server_routes = Blueprint('servers', __name__)
 
 
 @server_routes.route('/', methods=['POST'])
-@login_required
+# @login_required
 def add_server():
 
     image = request.files["image"]
