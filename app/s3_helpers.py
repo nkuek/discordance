@@ -16,7 +16,7 @@ s3 = boto3.client(
 
 def allowed_file(filename):
     return "." in filename and \
-          filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def get_unique_filename(filename):

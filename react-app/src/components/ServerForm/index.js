@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
+import ImageUploading from 'react-images-uploading';
 import { useHistory } from 'react-router-dom';
 import { createServer } from '../../store/server';
 import './ServerForm.css';
@@ -15,11 +16,18 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     );
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState('true');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState([]);
     const [imageLoading, setImageLoading] = useState(false);
     const [serverCategory, setServerCategory] = useState('Gaming');
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
+
+    // const maxNumber = 1;
+    // const onChange = (imageList, addUpdateIndex) => {
+    // // data for submit
+    // setImage(imageList);
+    // console.log((Object.values(imageList[0]))[1])
+    // };
 
     // close modal when clicking anywhere else
     const closeServerModal = (e) => {
@@ -45,9 +53,16 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("admin_id", loggedInUser.id);
+        formData.append("name", name);
+        formData.append("serverCategory", serverCategory);
+        formData.append("description", description);
+        formData.append("isPublic", isPublic);
+        formData.append("image", image);
+
         // aws uploads can be a bit slow—displaying
         // some sort of loading message is a good idea
-        
         setImageLoading(true); 
 
         if (!name) {
@@ -55,14 +70,15 @@ function ServerForm({ showServerModal, setShowServerModal }) {
             return;
         }
         const newServer = await dispatch(
-            createServer({
-                admin_id: loggedInUser.id,
-                name,
-                serverCategory,
-                description,
-                isPublic,
-                image: image,
-            })
+            createServer(
+                formData
+                // admin_id: loggedInUser.id,
+                // name,
+                // serverCategory,
+                // description,
+                // isPublic,
+                // image,
+            )
             
         );
         setImageLoading(false);
@@ -75,6 +91,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
         history.push(`/servers/${newServer.id}`);
     };
     const updateImage = (e) => {
+        console.log(e.target.files[0])
         const file = e.target.files[0];
         setImage(file);
     }
@@ -162,20 +179,63 @@ function ServerForm({ showServerModal, setShowServerModal }) {
                                 onChange={(e) => setImage(e.target.value)}
                             ></input>
                         </div> */}
+
+                        
                         <div className="serverModalInputContainer">
-                        <label htmlFor="image">Server Image</label>
+                        <label htmlFor="image">Image</label>
                         <input
                         type="file"
                         name="image"
                         accept="image/*"
                         onChange={updateImage}
                         />
+                        {imageLoading && <p>Loading...</p>}
                         </div>
+
+                        {/* <div className="App">
+                        <ImageUploading
+                            multiple
+                            value={image}
+                            onChange={onChange}
+                            maxNumber={maxNumber}
+                            dataURLKey="data_url"
+                        >
+                            {({
+                            imageList,
+                            onImageUpload,
+                            onImageUpdate,
+                            onImageRemove,
+                            isDragging,
+                            dragProps
+                            }) => (
+                            // write your building UI
+                            <div className="upload__image-wrapper">
+                                <button
+                                style={isDragging ? { color: "red" } : null}
+                                onClick={onImageUpload}
+                                {...dragProps}
+                                >
+                                Click or Drop image here
+                                </button>
+                                &nbsp;
+                                {imageList.map((image, index) => (
+                                <div key={index} className="image-item">
+                                    <img src={image.data_url} alt="" width="100" />
+                                    <div className="image-item__btn-wrapper">
+                                    <button onClick={() => onImageUpdate(index)}>Update</button>
+                                    <button onClick={() => onImageRemove(index)}>Remove</button>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                            )}
+                        </ImageUploading>
+                        </div> */}
+
                         <div className="serverModalButtonContainer">
                             <button className="serverModalSubmit" type="submit">
                                 Create
                             </button>
-                            {(imageLoading)&& <p>Loading...</p>}
                         </div>
                     </form>
                 </div>
