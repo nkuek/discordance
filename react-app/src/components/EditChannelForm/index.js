@@ -53,8 +53,6 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     });
 
     const handleEditChannel = async (e, updatedName, channelId) => {
-        e.preventDefault();
-
         if (!channelName) {
             setErrors('Channel name cannot be empty!');
             return;
@@ -70,6 +68,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
 
     return showEditChannelModal ? (
         <div
+            style={{ zIndex: 3 }}
             className="channelModalWrapper"
             ref={editChannelModalRef}
             onClick={closeEditChannelModal}

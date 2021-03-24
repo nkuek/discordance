@@ -12,12 +12,11 @@
     display: initial
 }
 
-.sidebarChannelLink:hover button {
-    display: initial;
-}
 
-.sidebarChannelLink.active button {
+.sidebarChannelLink.active + button {
     display: initial;
+    background-color: #40464b;
+    border-radius: 0;
 }
 
 

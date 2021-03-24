@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';

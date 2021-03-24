@@ -17,6 +17,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { withStyles } from '@material-ui/styles';
 import ConfirmDeleteChannel from '../../ConfirmDeleteChannel';
 import EditChannelForm from '../../EditChannelForm';
+import ChannelDropdown from '../../ChannelDropdown';
 
 const CustomMenuList = withStyles({
     root: {
@@ -42,8 +43,10 @@ const CustomMenuItem = withStyles({
 
 const CustomIconButton = withStyles({
     root: {
-        display: 'none',
+        // display: 'none',
         padding: '6px',
+        position: 'relative',
+        zIndex: 0,
     },
 })(IconButton);
 
@@ -98,7 +101,7 @@ function SidebarChannel() {
                             <span className="sidebarChannel__hash">#</span>
                             <div className="channelName">{channel.name}</div>
                         </div>
-                        <CustomIconButton
+                        {/* <CustomIconButton
                             aria-label="more"
                             aria-controls="long-menu"
                             aria-haspopup="true"
@@ -149,16 +152,17 @@ function SidebarChannel() {
                                     </CustomMenuList>
                                 </ClickAwayListener>
                             </Paper>
-                        </Popper>
+                        </Popper> */}
                     </NavLink>
-                    <ConfirmDeleteChannel
+                    <ChannelDropdown />
+                    {/* <ConfirmDeleteChannel
                         showDeleteChannelModal={showDeleteChannelModal}
                         setShowDeleteChannelModal={setShowDeleteChannelModal}
                     />
                     <EditChannelForm
                         showEditChannelModal={showEditChannelModal}
-                        setShowEditChannelModal={setShowEditChannelModal}
-                    />
+                        setShowEditChannelModal={setShowEditChannelModal} */}
+                    {/* /> */}
                 </div>
             ))}
         </>
