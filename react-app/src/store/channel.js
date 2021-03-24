@@ -48,7 +48,7 @@ export const findExistingChannel = (channelId) => async (dispatch) => {
 };
 
 export const updateExistingChannel = (updatedChannel) => async (dispatch) => {
-    const response = await fetch('/api/server/:id/:channel_id/edit/', {
+    const response = await fetch('/api/servers/:id/:channel_id/edit/', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

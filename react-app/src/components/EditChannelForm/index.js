@@ -12,10 +12,10 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
 
     const channel = useSelector((state) => state.channel);
 
-    const channelModalRef = useRef();
+    const editChannelModalRef = useRef();
     // close modal when clicking anywhere else
-    const closeChannelModal = (e) => {
-        if (channelModalRef.current === e.target) {
+    const closeEditChannelModal = (e) => {
+        if (editChannelModalRef.current === e.target) {
             setShowEditChannelModal(false);
             setChannelName(channel.name);
         }
@@ -50,7 +50,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
         transform: showEditChannelModal ? `scale(1)` : `scale(0.8)`,
     });
 
-    const handleChannelServer = async (e, updatedName, channelId) => {
+    const handleEditChannel = async (e, updatedName, channelId) => {
         e.preventDefault();
 
         if (!channelName) {
@@ -69,8 +69,8 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     return showEditChannelModal ? (
         <div
             className="channelModalWrapper"
-            ref={channelModalRef}
-            onClick={closeChannelModal}
+            ref={editChannelModalRef}
+            onClick={closeEditChannelModal}
         >
             <animated.div style={animation}>
                 <div className="channelModalContainer">
@@ -79,7 +79,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
                     )}
                     <form
                         onSubmit={(e) =>
-                            handleChannelServer(e, channelName, channel.id)
+                            handleEditChannel(e, channelName, channel.id)
                         }
                         className="channelModalForm"
                     >

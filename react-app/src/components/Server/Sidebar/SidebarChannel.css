@@ -9,7 +9,7 @@
 
 }
 .MuiButtonBase-root {
-    display: none
+    display: initial
 }
 
 .sidebarChannelLink:hover button {
