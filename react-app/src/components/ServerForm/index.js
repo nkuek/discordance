@@ -8,26 +8,17 @@ import "./ServerForm.css";
 function ServerForm({ showServerModal, setShowServerModal }) {
   const loggedInUser = useSelector((state) => state.session.user);
 
-
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [name, setName] = useState(
-        loggedInUser && `${loggedInUser.username}'s server`
-    );
-    const [description, setDescription] = useState('');
-    const [isPublic, setIsPublic] = useState('true');
-    const [image, setImage] = useState('');
-    const [serverCategory, setServerCategory] = useState('gaming');
-    const [errors, setErrors] = useState('');
-    const serverModalRef = useRef();
-
-    // close modal when clicking anywhere else
-    const closeServerModal = (e) => {
-        if (serverModalRef.current === e.target) {
-            setShowServerModal(false);
-        }
-    };
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [name, setName] = useState(
+    loggedInUser && `${loggedInUser.username}'s server`
+  );
+  const [description, setDescription] = useState("");
+  const [isPublic, setIsPublic] = useState("true");
+  const [image, setImage] = useState("");
+  const [serverCategory, setServerCategory] = useState("gaming");
+  const [errors, setErrors] = useState("");
+  const serverModalRef = useRef();
 
   // aws
   const [awsImage, awsSetImage] = useState(null);
