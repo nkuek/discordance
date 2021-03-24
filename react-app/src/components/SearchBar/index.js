@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./SearchBar.css";
 
 function SearchBar() {
-  const servers = useSelector((state) => state.server);
+  const servers = useSelector((state) => state.publicServer);
 
   let [use, setUse] = useState([]);
 
