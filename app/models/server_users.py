@@ -75,7 +75,7 @@ class Server(db.Model):
     )
 
     admin = db.relationship('User', back_populates='server_admin')
-    channels = db.relationship('Channel', back_populates='servers', cascade='all, delete-orphan')
+    channels = db.relationship('Channel', back_populates='servers')
     users = db.relationship(
         'User', secondary=server_users, back_populates='servers',
         lazy='dynamic'
@@ -90,5 +90,4 @@ class Server(db.Model):
             "category": self.category,
             "public": self.public,
             "image_url": self.image_url,
-            # "channels": self.channels
         }

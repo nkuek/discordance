@@ -76,14 +76,15 @@ function SidebarChannel() {
         setOpen(false);
     };
 
-    useEffect(() => {
-        if (Object.keys(server).length > 0)
-            dispatch(findExistingServer(server?.id));
-    }, [dispatch, channel]);
+  useEffect(() => {
+    if (Object.keys(server).length > 0)
+      dispatch(findExistingServer(server?.id));
+  }, [dispatch, channel]);
 
-    useEffect(() => {
-        if (Object.keys(server).length > 0) setIsLoaded(true);
-    }, [server]);
+  useEffect(() => {
+    if (Object.keys(server).length > 0) setIsLoaded(true);
+  }, [server]);
+
 
     return isLoaded ? (
         <>

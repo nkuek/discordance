@@ -41,7 +41,8 @@ def find_server():
         image_url=serverSearch.image_url,
     )
     data = server.to_dict()
-    formattedChannels = [channel.to_dict() for channel in serverSearch.channels]
+    formattedChannels = [channel.to_dict()
+                         for channel in serverSearch.channels]
     data['channels'] = formattedChannels
 
     return data
@@ -87,7 +88,8 @@ def edit_server():
     matched_server.category = server['serverCategory']
     db.session.commit()
 
-    formattedChannels = [channel.to_dict() for channel in matched_server.channels]
+    formattedChannels = [channel.to_dict()
+                         for channel in matched_server.channels]
     data = matched_server.to_dict()
     data['channels'] = formattedChannels
 
@@ -128,3 +130,11 @@ def edit_channel():
     matched_channel.name = channel['name']
     db.session.commit()
     return matched_channel.to_dict()
+
+
+@server_routes.route('/:id/:channel_id', methods=['DELETE'])
+def delete_channel():
+    channelId = request.json
+    channel = Channel.query.get(channelId)
+    db.session.delete(channel)
+    db.session.commit()

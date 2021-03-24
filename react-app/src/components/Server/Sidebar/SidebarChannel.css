@@ -5,21 +5,21 @@
 
 .sidebarChannelLink {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-
 }
+
 .MuiButtonBase-root {
     display: initial
 }
 
 .sidebarChannelLink:hover button {
-    display: initial
+    display: initial;
 }
 
 .sidebarChannelLink.active button {
-    display: initial
+    display: initial;
 }
-
 
 .channelNameAndHash {
     display: flex;
@@ -29,9 +29,8 @@
 
 .sidebarChannelLink.active {
     color: white;
-    background-color:  #40464b;
+    background-color: #40464b;
 }
-
 
 .sidebarChannel a {
     display: flex;
