@@ -55,18 +55,8 @@ function HomePage() {
   let idx = 0;
   let im;
 
-  // new stuff
-  const use = Object.values(publicServers).map((el, idx) => {
-    return (
-      <>
-        {" "}
-        {el?.name}
-        {el?.description}
-        {el?.id}
-      </>
-    );
-  });
   console.log(publicServers);
+
   return (
     <>
       <h1 className="discover-title"> Discover </h1>
