@@ -12,8 +12,8 @@ import io from 'socket.io-client';
 
 const socket = io('localhost:5000/');
 
-socket.on('load message', async (msg) => {
-    const response = await fetch('/api/chat/', {
+socket.on('load message', (msg) => {
+    fetch('/api/chat/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

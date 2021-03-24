@@ -84,7 +84,7 @@ const channelReducer = (state = initialState, action) => {
         case ADD_CHANNEL:
             return action.newChannel;
         case GET_CHANNEL:
-            return action.channel;
+            return { ...action.channel };
         case EDIT_CHANNEL:
             return action.updatedChannel;
         case DELETE_CHANNEL:
