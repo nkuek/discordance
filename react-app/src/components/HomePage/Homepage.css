@@ -89,25 +89,22 @@ a,
 }
 
 .server-div__description {
-  /* color: white; */
+  color: white;
   font-size: 15px;
   padding-top: 8px;
 }
 
 .img-div__container > img {
   height: 143px;
-  min-width: 299px;
+  width: 299px;
 
   border-radius: 10px;
 }
 
-._0,
-._1 {
+.server-div__container {
   transition: all 0.3s ease-in-out;
 }
 
-._0,
-._1 :hover {
+.server-div__container:hover {
   background-color: #202124e1;
-  /* margin-top: 1mm; */
 }
