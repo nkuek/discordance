@@ -9,7 +9,23 @@
 .chat__messages {
     flex: 1;
     overflow: scroll;
+    color: white;
 }
+
+.chatMessageContainer {
+    padding: 20px;
+}
+
+.chatMessageContainer:hover {
+    background-color: #32353B;
+}
+
+.chatUsername {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
 
 .chat__messages::-webkit-scrollbar {
     display: none;

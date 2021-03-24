@@ -31,6 +31,7 @@ const LoginForm = ({
             setIsOpenLogin(false);
             setAuthenticated(true);
             dispatch(fetchUserServers(user.payload.id));
+
             return <Redirect to="/" />;
         } else {
             setErrors(user.payload.errors);
