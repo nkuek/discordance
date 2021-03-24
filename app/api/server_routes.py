@@ -1,23 +1,40 @@
-from flask import Blueprint, json, request, jsonify
+from flask import Blueprint, json, request, jsonify, flash, request
 from app.models import Server, db, User, Channel
+
+from flask_login import current_user, login_required
+from app.s3_helpers import (
+    upload_file_to_s3, allowed_file, get_unique_filename)
 
 server_routes = Blueprint('servers', __name__)
 
 
-# Add new server
 @server_routes.route('/', methods=['POST'])
+@login_required
 def add_server():
-    response = request.json
+
+    image = request.files["image"]
+    print('image!!!!!!!!!!!!!!!!!!!!')
+    print(image)
+    # response = request.json
+
+    # image = request.files
+    print('image------------------------')
+    print(image)
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+    print("image-----------------------end")
+    # print(upload)
+    url = upload["url"]
     new_server = Server(
-        admin_id=response['admin_id'],
-        name=response['name'],
-        description=response['description'],
-        category=response['serverCategory'],
-        public=(bool(response['isPublic'])),
-        image_url=response['image'],
+        admin_id=request.form['admin_id'],
+        name=request.form['name'],
+        description=request.form['description'],
+        category=request.form['serverCategory'],
+        public=(bool(request.form['isPublic'])),
+        image_url=url,
     )
 
-    user = User.query.get(response['admin_id'])
+    user = User.query.get(request.form['admin_id'])
     user.servers.append(new_server)
     db.session.add(new_server)
     db.session.commit()

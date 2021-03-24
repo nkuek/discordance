@@ -33,27 +33,27 @@ const FIND_PUBLIC_SERVER = "server/findPublicServer";
 
 //add a server
 export const createServer = (serverFormInput) => async (dispatch) => {
-  const {
-    admin_id,
-    name,
-    description,
-    isPublic,
-    image,
-    serverCategory,
-  } = serverFormInput;
+  console.log(serverFormInput, 'create server')
+  // const {
+  //   admin_id,
+  //   name,
+  //   description,
+  //   isPublic,
+  //   image,
+  //   serverCategory,
+  // } = serverFormInput;
+
   const response = await fetch(`/api/servers/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      admin_id,
-      name,
-      description,
-      isPublic,
-      image,
-      serverCategory,
-    }),
+    body: serverFormInput
+    // JSON.stringify({
+    //   admin_id,
+    //   name,
+    //   description,
+    //   isPublic,
+    //   image,
+    //   serverCategory,
+    // }),
   });
   const data = await response.json();
   dispatch(addServer(data));
