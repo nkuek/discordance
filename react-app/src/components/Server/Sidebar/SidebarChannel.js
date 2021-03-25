@@ -51,33 +51,13 @@ const CustomIconButton = withStyles({
 })(IconButton);
 
 function SidebarChannel() {
-    const anchorRef = useRef(null);
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [showDeleteChannelModal, setShowDeleteChannelModal] = useState(false);
-    const [showEditChannelModal, setShowEditChannelModal] = useState(false);
-    const [open, setOpen] = useState(false);
     const server = useSelector((state) => state.server);
     const channel = useSelector((state) => state.channel);
-    const openEditChannelModal = () => {
-        setShowEditChannelModal((prev) => !prev);
-        setOpen(false);
-    };
-    const openDeleteChannelModal = () => {
-        setShowDeleteChannelModal((prev) => !prev);
-        setOpen(false);
-    };
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-
-        setOpen(false);
+    const handleClick = () => {
+        const chatBox = document.querySelector('.chat__messages');
     };
 
     useEffect(() => {
@@ -94,6 +74,7 @@ function SidebarChannel() {
             {server?.channels.map((channel) => (
                 <div key={channel.id} className="sidebarChannel">
                     <NavLink
+                        onClick={handleClick}
                         className="sidebarChannelLink"
                         to={`/servers/${server.id}/${channel.id}`}
                     >
@@ -101,68 +82,8 @@ function SidebarChannel() {
                             <span className="sidebarChannel__hash">#</span>
                             <div className="channelName">{channel.name}</div>
                         </div>
-                        {/* <CustomIconButton
-                            aria-label="more"
-                            aria-controls="long-menu"
-                            aria-haspopup="true"
-                            onClick={handleToggle}
-                            ref={anchorRef}
-                        >
-                            <SettingsIcon style={{ color: 'white' }} />
-                        </CustomIconButton>
-                        <Popper
-                            open={open}
-                            anchorEl={anchorRef.current}
-                            role={undefined}
-                            transition
-                            disablePortal
-                            style={{
-                                // positon: 'relative',
-                                zIndex: 2,
-                            }}
-                        >
-                            <Paper
-                                style={{
-                                    backgroundColor: '#18191C',
-                                    marginBottom: '3px',
-                                }}
-                            >
-                                <ClickAwayListener onClickAway={handleClose}>
-                                    <CustomMenuList style={{ color: 'white' }}>
-                                        <CustomMenuItem
-                                            onClick={openEditChannelModal}
-                                        >
-                                            <div className="serverModalCategory">
-                                                Edit
-                                            </div>
-                                            <EditIcon
-                                                style={{ color: 'white' }}
-                                            />
-                                        </CustomMenuItem>
-                                        <CustomMenuItem
-                                            onClick={openDeleteChannelModal}
-                                        >
-                                            <div className="serverModalCategory">
-                                                Delete
-                                            </div>
-                                            <DeleteIcon
-                                                style={{ color: 'white' }}
-                                            />
-                                        </CustomMenuItem>
-                                    </CustomMenuList>
-                                </ClickAwayListener>
-                            </Paper>
-                        </Popper> */}
                     </NavLink>
                     <ChannelDropdown />
-                    {/* <ConfirmDeleteChannel
-                        showDeleteChannelModal={showDeleteChannelModal}
-                        setShowDeleteChannelModal={setShowDeleteChannelModal}
-                    />
-                    <EditChannelForm
-                        showEditChannelModal={showEditChannelModal}
-                        setShowEditChannelModal={setShowEditChannelModal} */}
-                    {/* /> */}
                 </div>
             ))}
         </>
