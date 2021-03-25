@@ -31,10 +31,6 @@ import ViewImages from './components/FileUpload/ViewImages';
 // --------------------------
 import * as sessionActions from './store/session';
 
-import TestSocket from './components/TestSocket';
-
-import Sidebar from './components/Server/Sidebar';
-
 function App() {
     const dispatch = useDispatch();
 
@@ -131,9 +127,6 @@ function App() {
                     <Route path="/servers/:serverId(\d+)">
                         <Server />
                     </Route>
-                    {/* <Route path="/chat">
-                        <TestSocket />
-                    </Route> */}
                 </Switch>
             </div>
         </BrowserRouter>
