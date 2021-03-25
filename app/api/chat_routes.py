@@ -23,4 +23,10 @@ def live_chat():
     return jsonify(messageReq)
 
 
-# @chat_routes.route('/', methods=['DELETE'])
+@chat_routes.route('/delete/', methods=['DELETE'])
+def delete_message():
+    messageId = request.json
+    message = Message.query.get(messageId)
+    db.session.delete(message)
+    db.session.commit()
+    return message.to_dict()
