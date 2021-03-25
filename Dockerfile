@@ -7,7 +7,7 @@ COPY react-app/. .
 ENV REACT_APP_BASE_URL=https://discordanc3.herokuapp.com/
 
 # Build our React App
-RUN npm install
+RUN npm install && npm cache clean --force
 RUN npm run build
 
 FROM python:3.8
