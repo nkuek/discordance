@@ -127,10 +127,7 @@ export const updateExistingServer = (server) => async (dispatch) => {
     console.log(server);
     const response = await fetch('/api/servers/edit/', {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(server),
+        body: server,
     });
     const updatedServer = await response.json();
     console.log('----------------');

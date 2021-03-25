@@ -1,5 +1,7 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const EDIT_USER = 'server/editUser';
+
 
 const setUser = (user) => {
     return {
@@ -13,6 +15,11 @@ const removeUser = () => {
         type: REMOVE_USER,
     };
 };
+
+const editUser = (updatedUser) => ({
+    type: EDIT_USER,
+    updatedUser,
+});
 
 // signup
 export const signup = (user) => async (dispatch) => {
@@ -56,6 +63,17 @@ export const restoreUser = () => async (dispatch) => {
     return dispatch(setUser(data));
 };
 
+export const updateExistingUser = (user) => async (dispatch) => {
+    console.log(user);
+    const response = await fetch('/api/auth/edit/', {
+        method: 'PUT',
+        body: user,
+    });
+    const updatedUser = await response.json();
+    console.log('----------------');
+    dispatch(editUser(updatedUser));
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
@@ -69,6 +87,10 @@ const sessionReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.user = null;
             return newState;
+        case EDIT_USER:
+            newState = Object.assign({}, state);
+            newState.user = action.updatedUser;   
+            return newState; 
         default:
             return state;
     }

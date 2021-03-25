@@ -8,7 +8,7 @@ import './EditServerForm.css';
 function EditServerForm({ showServerModal, setShowServerModal }) {
     const loggedInUser = useSelector((state) => state.session.user);
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const [imageLoading, setImageLoading] = useState(false);
     const server = useSelector((state) => state.server);
     const { serverId } = useParams();
     const dispatch = useDispatch();
@@ -66,30 +66,37 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
+
+
     const onSubmit = (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('id', server.id)
+        formData.append('admin_id', loggedInUser.id);
+        formData.append('name', name);
+        formData.append('serverCategory', serverCategory);
+        formData.append('description', description);
+        formData.append('isPublic', isPublic);
+        formData.append('image', image);
 
+        setImageLoading(true);
         if (!name) {
             setErrors('Server name cannot be empty!');
             return;
         }
         dispatch(
-            updateExistingServer({
-                id: server.id,
-                admin_id: loggedInUser.id,
-                name,
-                serverCategory,
-                description,
-                isPublic,
-                image,
-            })
+            updateExistingServer(
+                formData
+            )
         );
+
         setName(server.name);
         setDescription(server.description);
         setIsPublic(server.public === true ? 'true' : '');
         setImage(server.image_url);
         setErrors('');
         setShowServerModal(false);
+        setImageLoading(false);
         history.push(`/servers/${server.id}`);
     };
 
@@ -101,6 +108,12 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
         opacity: showServerModal ? 1 : 0,
         transform: showServerModal ? `scale(1)` : `scale(0.8)`,
     });
+
+    const updateImage = (e) => {
+        console.log(e.target.files[0]);
+        const file = e.target.files[0];
+        setImage(file);
+    };
 
     //conditional render with isLoaded
     return showServerModal && isLoaded ? (
@@ -169,12 +182,12 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                         <div className="serverModalInputContainer">
                             <label htmlFor="image">Image</label>
                             <input
-                                type="text"
+                                type="file"
                                 name="image"
-                                placeholder="Image Url"
-                                value={image}
-                                onChange={(e) => setImage(e.target.value)}
-                            ></input>
+                                accept="image/*"
+                                onChange={updateImage}
+                            />
+                            {imageLoading && <p>Loading...</p>}
                         </div>
                         <div className="serverModalButtonContainer">
                             <button className="serverModalSubmit" type="submit">

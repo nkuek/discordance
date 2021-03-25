@@ -1,0 +1,14 @@
+.UpdateModalSubmit {
+    font: inherit;
+    background-color: #7289da;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.UpdateModalSubmit:hover {
+    background-color: #6476b9;
+}

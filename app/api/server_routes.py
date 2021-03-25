@@ -88,16 +88,22 @@ def delete_server():
     db.session.delete(server)
     db.session.commit()
 
-
 @server_routes.route('/edit/', methods=['PUT'])
 def edit_server():
-    server = request.json
-    matched_server = Server.query.get(server['id'])
-    matched_server.name = server['name']
-    matched_server.description = server['description']
-    matched_server.public = bool(server['isPublic'])
-    matched_server.image_url = server['image']
-    matched_server.category = server['serverCategory']
+    
+    matched_server = Server.query.get(request.form['id'])
+    url = None
+    if "image" in request.files:
+        image = request.files["image"]
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        url = upload["url"]
+
+    matched_server.name = request.form['name']
+    matched_server.description = request.form['description']
+    matched_server.public = bool(request.form['isPublic'])
+    matched_server.image_url = url
+    matched_server.category = request.form['serverCategory']
     db.session.commit()
 
     formattedChannels = [channel.to_dict()
