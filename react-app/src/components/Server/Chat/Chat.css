@@ -3,7 +3,7 @@
     flex-direction: column;
     flex: 1;
     background-color: #363a3f;
-    height: calc(100vh - 44px);
+    height: calc(100vh - 58px);
 }
 
 .chat__messages {
@@ -17,15 +17,13 @@
 }
 
 .chatMessageContainer:hover {
-    background-color: #32353B;
+    background-color: #32353b;
 }
 
 .chatUsername {
     font-weight: bold;
     font-size: 1.1em;
 }
-
-
 
 .chat__messages::-webkit-scrollbar {
     display: none;

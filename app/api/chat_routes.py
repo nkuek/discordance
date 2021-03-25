@@ -12,6 +12,12 @@ def live_chat():
         user_id=messageReq['message']['user']['id'],
         channel_id=messageReq['message']['channel']['id']
     )
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    print(messageReq)
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     db.session.add(new_message)
     db.session.commit()
     return jsonify(messageReq)
+
+
+@chat_routes.route('/', methods=['DELETE'])
