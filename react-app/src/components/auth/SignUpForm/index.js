@@ -17,6 +17,8 @@ const SignUpForm = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [image, setImage] = useState([]);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -26,17 +28,23 @@ const SignUpForm = ({
 
   const onSignUp = async (e) => {
     e.preventDefault();
+    setImageLoading(true);
 
+    const formData1 = new FormData();
+    formData1.append('username', username);
+    formData1.append('email', email);
+    formData1.append('password', password);
+    formData1.append('image', image);
+    console.log(formData1);
     if (password === repeatPassword) {
       const user = await dispatch(
-        sessionActions.signup({
-          email,
-          username,
-          password,
-        })
+        sessionActions.signup(
+          formData1
+        )
       );
 
       if (!user.payload.errors) {
+        setImageLoading(false);
         setAuthenticated(true);
         return <Redirect to="/" />;
       }
@@ -62,6 +70,12 @@ const SignUpForm = ({
   if (authenticated) {
     return <Redirect to="/" />;
   }
+
+  const updateImage = (e) => {
+        console.log(e.target.files[0]);
+        const file = e.target.files[0];
+        setImage(file);
+    };
 
   return (
     <div className="SignUpModalWrapper">
@@ -107,6 +121,16 @@ const SignUpForm = ({
               required={true}
             ></input>
           </div>
+          <div className="SignUpModalInputContainer">
+            <label htmlFor="image">Profile Image</label>
+            <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={updateImage}
+            />
+            {imageLoading && <p>Loading...</p>}
+        </div>
           <div className="SignUpModalButtonContainer">
             <button className="SignUpModalSubmit" type="submit">
               Sign Up

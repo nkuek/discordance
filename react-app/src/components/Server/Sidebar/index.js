@@ -8,13 +8,13 @@ import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CallIcon from '@material-ui/icons/Call';
 import {
-    Avatar,
     IconButton,
     MenuItem,
     Popper,
     Paper,
     MenuList,
     ClickAwayListener,
+    Avatar,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -29,6 +29,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import EditServerForm from '../../EditServerForm';
 import { updateExistingServer } from '../../../store/server';
 import { findExistingChannel } from '../../../store/channel';
+import { restoreUser } from '../../../store/session';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
 
@@ -96,6 +97,7 @@ const SimpleAccordionDetails = withStyles((theme) => ({
     },
 }))(AccordionDetails);
 
+
 function Sidebar() {
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -108,11 +110,13 @@ function Sidebar() {
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
-
+    const user = useSelector((state) => state.session.user);
+    
     useEffect(() => {
-        setIsLoaded(true);
-    }, [server]);
-
+        if (user && server) setIsLoaded(true);
+    }, [server, user]);
+    
+    
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
         setOpen(false);
@@ -147,7 +151,7 @@ function Sidebar() {
         dispatch(updateExistingServer(serverId));
     };
 
-    return (
+    return ( isLoaded &&
         <div className="sidebar">
             <div className="sidebar__top">
                 <h3>{server.name}</h3>
@@ -265,10 +269,12 @@ function Sidebar() {
             </div>
 
             <div className="sidebar__profile">
-                <Avatar />
+                {user.profile_URL === undefined ? <Avatar /> : <div>
+                    <img className="profile__image" src={`${user.profile_URL}`} />
+                </div>  }
                 <div className="sidebar__profileInfo">
-                    <h3>Hussein Profile</h3>
-                    <p>#ID</p>
+                    <h3>{`${user.username}`}</h3>
+                    <p>{`# ${user.id}`}</p>
                 </div>
 
                 <div className="sidebar__profileIcons">

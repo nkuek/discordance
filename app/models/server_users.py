@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-
+    profile_URL = db.Column(db.String(255))
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
@@ -56,7 +56,8 @@ class User(db.Model, UserMixin):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "profile_URL":self.profile_URL
         }
 
 
