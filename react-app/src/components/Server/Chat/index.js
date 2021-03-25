@@ -1,36 +1,19 @@
-import React, { Children, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
-import { findExistingChannel } from "../../../store/channel";
-import "./Chat.css";
-import ChatHeader from "./ChatHeader";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
-import GifIcon from "@material-ui/icons/Gif";
-import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
-import io from "socket.io-client";
 
-const socket = io("localhost:5000/");
+import React, { Children, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { findExistingChannel } from '../../../store/channel';
+import './Chat.css';
+import ChatHeader from './ChatHeader';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import GifIcon from '@material-ui/icons/Gif';
+import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import io from 'socket.io-client';
+import createNewMessage from '../../../store/chat';
 
-socket.on("load message", (msg) => {
-  fetch("/api/chat/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(msg),
-  });
-});
+const socket = io('http://localhost:5000/');
 
-// socket.on("delete message", (msg) => {
-//   fetch("/api/chat/", {
-//     method: "DELETE",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(msg),
-//   });
-// });
 
 function Chat() {
   const chatBox = document.querySelector(".chat__messages");
@@ -52,23 +35,35 @@ function Chat() {
     setNewMessage(true);
   };
 
-  const deleteMessage = (e) => {
-    e.preventDefault();
-    socket.emit("message delete", { channel });
-  };
 
-  useEffect(() => {
-    console.log("dispatching");
-    dispatch(findExistingChannel(channelId));
-  }, [channelId, newMessage]);
+    const handleNewMessage = (e) => {
+        e.preventDefault();
+        if (!messageInput) return;
+        setMessageInput('');
+        socket.emit('new message');
+        createNewMessage(messageInput, user, channel);
+        setNewMessage(true);
+    };
 
-  useEffect(() => {
-    if (channel) {
-      setIsLoaded(true);
-      setNewMessage(false);
-      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-    }
-  }, [channel]);
+    useEffect(() => {
+        socket.on('load message', () => {
+            setNewMessage(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log('dispatching');
+        dispatch(findExistingChannel(channelId));
+        setNewMessage(false);
+    }, [channelId, newMessage]);
+
+    useEffect(() => {
+        if (channel) {
+            setIsLoaded(true);
+            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }, [channel]);
+
 
   return (
     isLoaded && (

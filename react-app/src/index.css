@@ -28,7 +28,17 @@ li {
 }
 
 h1 {
-    margin-left: 10px;
-    margin-right: 10px;
-    color: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #fff;
 }
+
+button {
+  border: none;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+

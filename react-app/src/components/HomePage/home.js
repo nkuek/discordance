@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 
-import Discover from "./discover";
+// import Discover from "./discover";
 
 import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
-function HomePage() {
+function Home() {
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -19,9 +19,8 @@ function HomePage() {
 
   return (
     <>
-      <Discover />
       {/* home page */}
-      <div className="homePage-div__container">
+      <div className="home-div__container">
         <div className="banner-div__container">
           <img src="https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg" />
           <div className="banner-text__container">
@@ -32,8 +31,8 @@ function HomePage() {
         </div>
 
         <div className="main-servers__container">
-          <h1>Featured communities</h1>
-          <div className="servers-containers">
+          <h1 className="h1-communities">Featured communities</h1>
+          <div className="servers-containers__home">
             {Object.values(publicServers).map((el) => (
               <div className="server-div__container" key={el?.id}>
                 <NavLink to={`servers/${el?.id}`}>
@@ -56,4 +55,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Home;

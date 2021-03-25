@@ -1,14 +1,83 @@
+.categories-main-container {
+  /* background-color: rgb(53, 53, 175); */
+}
+.MuiIconButton-label {
+  width: 160;
+  /* background-color: #27292e; */
+}
+td {
+  display: flex;
+  font-size: 20px;
+  margin-left: 20px;
+  color: #b9bbbee3;
+  /* background-color: yellow; */
+  transition: all ease-in 0.2s;
+}
+td:hover {
+  color: #b9bbbe;
+  text-shadow: #b9bbbe23 -3px 3px;
+}
+.categories-button__home > .categories,
+.categories-button__gaming > .categories,
+.categories-button__music > .categories,
+.categories-button__education > .categories,
+.categories-button__tech > .categories,
+.categories-button__enter > .categories {
+  border-radius: 0;
+  /* background-color: aqua; */
+}
+
+.categories-button__home > .categories {
+  padding-right: 86px;
+}
+.categories-button__gaming > .categories {
+  padding-right: 69px;
+}
+
+.categories-button__music > .categories {
+  padding-right: 87px;
+}
+.categories-button__education > .categories {
+  padding-right: 50px;
+}
+
+.categories-button__enter > .categories {
+  padding-right: 14px;
+}
+
+.categories-button__home > .categories:hover,
+.categories-button__gaming > .categories:hover,
+.categories-button__music > .categories:hover,
+.categories-button__education > .categories:hover,
+.categories-button__tech > .categories:hover,
+.categories-button__enter > .categories:hover {
+  background-color: rgba(85, 80, 80, 0.185);
+}
+.categories-button {
+  /* background: purple; */
+}
+
+.categories-button__home:hover {
+  /* background: rgb(184, 135, 184); */
+}
+
 .discover-title {
-    padding-top: 5px;
-    font-size: 25px;
-    width: 150px;
-    height: 61px;
+  color: #e4e8ee;
+  padding-top: 15px;
+  font-size: 25px;
+  width: 150px;
+  height: 61px;
+  /* background-color: red; */
 }
 
 .homePage-div__container {
-    margin-left: 12px;
-    width: 1653px;
-    background-color: #36393f;
+  width: 1653px;
+  background-color: #36393f;
+}
+
+.home-div__container {
+  width: 1840px;
+  background-color: #36393f;
 }
 
 .servers-containers {
@@ -16,6 +85,20 @@
     flex-wrap: wrap;
     margin-bottom: 25px;
 }
+
+
+.servers-containers__home {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-left: 90px;
+  /* justify-content: space-evenly; */
+}
+
+.main-servers__container > .h1-communities {
+  margin-left: 100px;
+  width: 500px;
+}
+
 
 .banner-div__container {
     position: relative;
@@ -108,6 +191,7 @@ a,
 }
 
 .server-div__container:hover {
-    background-color: #202124e1;
-    margin-top: 1mm;
+  background-color: #202124e1;
+  margin-top: 1mm;
 }
+
