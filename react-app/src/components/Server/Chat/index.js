@@ -34,9 +34,9 @@ function Chat() {
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
-        setMessageInput('');
         socket.emit('new message');
         createNewMessage(messageInput, user, channel);
+        setMessageInput('');
         setNewMessage(true);
     };
 
