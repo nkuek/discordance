@@ -16,12 +16,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import Emoji from '../../Emojis/Emojis';
 
-// const url =
-//     process.env.NODE_ENV === 'development'
-//         ? 'http://localhost:5000/'
-//         : 'https://discordanc3.herokuapp.com/';
+const url =
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/';
 
-const socket = io.connect('https://discordanc3.herokuapp.com/', {
+const socket = io.connect(url, {
     secure: true,
 });
 
@@ -49,9 +47,9 @@ function Chat() {
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
-        setMessageInput('');
         socket.emit('new message');
         createNewMessage(messageInput, user, channel);
+        setMessageInput('');
         setNewMessage(true);
     };
 
