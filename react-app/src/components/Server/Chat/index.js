@@ -38,10 +38,8 @@ socket.on('load message', (msg) => {
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
-    const history = useHistory();
     const [messageInput, setMessageInput] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
-    const [newChannel, setNewChannel] = useState(false);
 
     const { channelId } = useParams();
 
@@ -67,6 +65,7 @@ function Chat() {
         if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
     }, [channel]);
 
+    useEffect(() => {}, [channelId]);
     return (
         isLoaded && (
             <div className="chat">
