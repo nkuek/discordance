@@ -113,3 +113,33 @@
     font-size: 0.9em;
 
 }
+
+.profile__image--container{
+    position: relative;
+    text-align: center;
+    
+}
+
+.profile__image:hover {
+    display: block;
+    color: rgb(11, 245, 11);
+    cursor: pointer;
+    opacity: 10%;
+    background-color: white;
+    
+}
+
+.label:after{
+    content:'';
+}
+.label:hover:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content:'Edit';
+    color: rgb(11, 245, 11);
+    font-weight: bolder;
+    cursor: pointer;
+    
+}

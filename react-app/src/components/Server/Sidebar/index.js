@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import { useSelector, useDispatch } from 'react-redux';
+import EditProfileImageForm from '../../auth/EditProfileImageForm/EditProfileImageForm';
+import Modal from "react-modal";
 
 // Mui Icons
 import {
@@ -37,6 +39,30 @@ import { findExistingChannel } from '../../../store/channel';
 import SidebarChannel from './SidebarChannel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
+
+const customStyles = {
+    overlay: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+    },
+    content: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        borderRadius: "10px",
+        padding: "20px",
+    },
+};
+
+Modal.setAppElement("#root");
 
 const CustomMenuList = withStyles({
     root: {
@@ -104,6 +130,7 @@ const SimpleAccordionDetails = withStyles((theme) => ({
 
 function Sidebar() {
     const dispatch = useDispatch();
+    const [openSignUpModal, setIsOpenSignUpModal] = useState(false);
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showChannelModal, setShowChannelModal] = useState(false);
@@ -152,6 +179,19 @@ function Sidebar() {
     const handleEditServer = (serverId) => {
         dispatch(updateExistingServer(serverId));
     };
+
+    function openModalSignUp() {
+    setIsOpenSignUpModal(true);
+    }
+
+    function closeModalSignUp() {
+    setIsOpenSignUpModal(false);
+    }
+
+    function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+    }
 
     return (
         isLoaded && (
@@ -274,27 +314,39 @@ function Sidebar() {
                 </div>
 
                 <div className="sidebar__profile">
-                    {!user || user.profile_URL === undefined ? (
-                        <Avatar />
-                    ) : (
-                        <div>
-                            <img
-                                className="profile__image"
-                                src={`${user.profile_URL}`}
-                            />
-                        </div>
-                    )}
+                    <div onClick={openModalSignUp}>
+                        {!user || user.profile_URL === undefined ? (
+                            <Avatar />
+                        ) : (
+                            <div className="profile__image--container">
+                                <div className="label">
+                                <img
+                                    className="profile__image"
+                                    src={`${user.profile_URL}`}
+                                />
+                                </div>
+                            </div>
+                        )}
+                    </div>
                     <div className="sidebar__profileInfo">
                         <h3>{user && `${user.username}`}</h3>
                         <p>{user && `# ${user.id}`}</p>
                     </div>
-
                     <div className="sidebar__profileIcons">
                         <MicIcon />
                         <HeadsetIcon />
                         <SettingsIcon />
                     </div>
                 </div>
+                <Modal
+                    isOpen={openSignUpModal}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModalSignUp}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+                    <EditProfileImageForm closeModalSignUp={closeModalSignUp}/>
+                </Modal>
             </div>
         )
     );
