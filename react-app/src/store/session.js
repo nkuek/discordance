@@ -52,8 +52,8 @@ export const login = (user) => async (dispatch) => {
 };
 
 // logout
-export const logout = () => async (dispatch) => {
-    const response = await fetch('/api/auth/logout/');
+export const logout = () => (dispatch) => {
+    fetch('/api/auth/logout/');
     return dispatch(removeUser());
 };
 

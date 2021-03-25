@@ -1,6 +1,6 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
 import './Chat.css';
 import ChatHeader from './ChatHeader';
@@ -44,14 +44,14 @@ function Chat() {
         console.log('dispatching');
         dispatch(findExistingChannel(channelId));
         setNewMessage(false);
-    }, [channelId, newMessage]);
+    }, [channelId, newMessage, dispatch]);
 
     useEffect(() => {
         if (channel) {
             setIsLoaded(true);
             if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         }
-    }, [channel]);
+    }, [channel, chatBox]);
 
     return (
         isLoaded && (

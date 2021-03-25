@@ -6,7 +6,6 @@ import Sidebar from './Sidebar';
 import Chat from './Chat';
 import Message from './Message';
 import { findExistingServer } from '../../store/server';
-import { findExistingChannel } from '../../store/channel';
 
 function Server() {
     const dispatch = useDispatch();
@@ -19,7 +18,7 @@ function Server() {
 
     useEffect(() => {
         dispatch(findExistingServer(serverId));
-    }, [dispatch]);
+    }, [dispatch, serverId]);
 
     useEffect(() => {
         setIsLoaded(true);
@@ -33,7 +32,7 @@ function Server() {
     useEffect(() => {
         if (server.channels && server.channels.length > 0 && firstLoadedRender)
             history.push(`/servers/${server.id}/${server.channels[0].id}`);
-    }, [firstLoadedRender]);
+    }, [firstLoadedRender, server, history]);
 
     return (
         isLoaded && (

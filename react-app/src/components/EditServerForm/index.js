@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createServer } from '../../store/server';
 import { updateExistingServer, findExistingServer } from '../../store/server';
 import './EditServerForm.css';
 
@@ -27,7 +26,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
     useEffect(() => {
         dispatch(findExistingServer(serverId));
         setIsLoaded(true);
-    }, [dispatch]);
+    }, [dispatch, serverId]);
 
     // Yassine
     useEffect(() => {
@@ -61,7 +60,7 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
                 setImage(server.image_url);
             }
         },
-        [showServerModal, setShowServerModal]
+        [showServerModal, setShowServerModal, server]
     );
 
     useEffect(() => {
@@ -69,14 +68,14 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
         return () => document.removeEventListener('keydown', keyPress);
     }, [keyPress]);
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
         if (!name) {
             setErrors('Server name cannot be empty!');
             return;
         }
-        await dispatch(
+        dispatch(
             updateExistingServer({
                 id: server.id,
                 admin_id: loggedInUser.id,
