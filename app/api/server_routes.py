@@ -148,9 +148,6 @@ def find_channel():
     #         formattedMessage['username'] = username
 
     existingChannel['messages'] = formattedMessages
-    print('==========')
-    print(formattedMessages)
-    print('==========')
     return existingChannel
 
 

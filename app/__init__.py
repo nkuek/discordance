@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from flask_socketio import SocketIO, emit, send
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 
 from .models import db, User
 from .api.user_routes import user_routes
@@ -90,18 +90,34 @@ def test_connect():
     emit('Success', {"data": "Connected"})
 
 
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + 'has entered the room.', room=room)
+
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + 'has left the room.', room=room)
+
+
 @socketio.on('my event')
 def test_message(message):
     print('===========')
     print('message')
     print(message)
     print('===========')
-    emit('my response', {'message': message}, broadcast=True)
+    emit('my response', {'message': message}, broadcast=True, )
 
 
 @socketio.on('new message')
-def new_message(message):
-    emit('load message', {'message': message}, broadcast=True)
+def new_message():
+    emit('load message', broadcast=True)
 
 # @socketio.on('json')
 # def test_json(json):
