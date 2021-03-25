@@ -29,16 +29,6 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  //   const location = useLocation();
-  //   console.log(location.pathname);
-  //   debugger;
-  //   const classNames = ["mainContent"];
-  //   if (location.pathname === "/" || location.pathname === "/discover") {
-  //     classNames.push("homepage");
-  //   }
-
-  //   } else if (location.pathname === "servers") classNames.push(" ");
-
   useEffect(async () => {
     const user = await authenticate();
     if (!user.errors) {

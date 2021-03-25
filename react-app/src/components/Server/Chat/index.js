@@ -22,15 +22,15 @@ socket.on("load message", (msg) => {
   });
 });
 
-socket.on("delete message", (msg) => {
-  fetch("/api/chat/", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(msg),
-  });
-});
+// socket.on("delete message", (msg) => {
+//   fetch("/api/chat/", {
+//     method: "DELETE",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(msg),
+//   });
+// });
 
 function Chat() {
   const chatBox = document.querySelector(".chat__messages");
