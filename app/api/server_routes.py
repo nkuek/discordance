@@ -17,8 +17,8 @@ def add_server():
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         url = upload["url"]
-        
-    
+
+
     # print(upload)
     new_server = Server(
         admin_id=request.form['admin_id'],
@@ -137,10 +137,11 @@ def find_channel():
     formattedMessages = [message.to_dict() for
                          message in channelSearch.messages]
 
+    for formattedMessage in formattedMessages:
+        messageUsername = User.query.get(formattedMessage['user_id']).username
+        formattedMessage['username'] = messageUsername
+
     existingChannel['messages'] = formattedMessages
-    print('==========')
-    print(existingChannel)
-    print('==========')
     return existingChannel
 
 

@@ -11,11 +11,17 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
     const [channelName, setChannelName] = useState('');
     const [errors, setErrors] = useState('');
 
+    const resetForm = () => {
+        setErrors('');
+        setChannelName('');
+    };
+
     const channelModalRef = useRef();
     // close modal when clicking anywhere else
     const closeChannelModal = (e) => {
         if (channelModalRef.current === e.target) {
             setShowChannelModal(false);
+            resetForm();
         }
     };
 
@@ -26,6 +32,7 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
         (e) => {
             if (e.key === 'Escape' && showChannelModal) {
                 setShowChannelModal(false);
+                resetForm();
             }
         },
         [showChannelModal, setShowChannelModal]
@@ -53,8 +60,7 @@ function ChannelForm({ showChannelModal, setShowChannelModal }) {
             return;
         }
 
-        setErrors('');
-        setChannelName('');
+        resetForm();
         setShowChannelModal(false);
 
         const newChannel = await dispatch(createChannel(name, serverId));

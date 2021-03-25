@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import './Sidebar.css';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddIcon from '@material-ui/icons/Add';
-import SidebarChannel from './SidebarChannel';
-import SignalCellularAltIcon from '@material-ui/icons/SignalCellularAlt';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import CallIcon from '@material-ui/icons/Call';
+import { useSelector } from 'react-redux';
+
+// Mui Icons
+import {
+    ExpandMore as ExpandMoreIcon,
+    Mic as MicIcon,
+    Edit as EditIcon,
+    Delete as DeleteIcon,
+    Headset as HeadsetIcon,
+    Call as CallIcon,
+    InfoOutlined as InfoOutlinedIcon,
+    Add as AddIcon,
+    Settings as SettingsIcon,
+    SignalCellularAlt as SignalCellularAltIcon,
+} from '@material-ui/icons';
+
+// Mui Functions
 import {
     IconButton,
     MenuItem,
@@ -15,21 +25,17 @@ import {
     MenuList,
     ClickAwayListener,
     Avatar,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    withStyles,
+  
 } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import MicIcon from '@material-ui/icons/Mic';
-import HeadsetIcon from '@material-ui/icons/Headset';
-import { withStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { useSelector, useDispatch } from 'react-redux';
+
 import EditServerForm from '../../EditServerForm';
 import { updateExistingServer } from '../../../store/server';
 import { findExistingChannel } from '../../../store/channel';
-import { restoreUser } from '../../../store/session';
+import SidebarChannel from './SidebarChannel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
 
@@ -103,9 +109,6 @@ function Sidebar() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showChannelModal, setShowChannelModal] = useState(false);
     const [showDescription, setShowDescription] = useState(true);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const dispatch = useDispatch();
-    const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
@@ -146,6 +149,7 @@ function Sidebar() {
     const openChannelModal = () => {
         setShowChannelModal((prev) => !prev);
     };
+
 
     const handleEditServer = (serverId) => {
         dispatch(updateExistingServer(serverId));

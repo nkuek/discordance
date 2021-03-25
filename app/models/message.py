@@ -11,16 +11,17 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     channel_id = db.Column(
         db.Integer, db.ForeignKey('channels.id'), nullable=False
-        )
+    )
     created_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-            )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
     updated_at = db.Column(
-            db.DateTime, nullable=False, default=datetime.utcnow()
-            )
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )
 
     user = db.relationship('User', back_populates='messages')
-    channel = db.relationship('Channel', back_populates='messages')
+    channel = db.relationship(
+        'Channel', back_populates='messages')
 
     def to_dict(self):
         return {

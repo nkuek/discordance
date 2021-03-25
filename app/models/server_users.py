@@ -83,7 +83,8 @@ class Server(db.Model):
     profile_url = db.relationship("Image", back_populates="server")
 
     admin = db.relationship('User', back_populates='server_admin')
-    channels = db.relationship('Channel', back_populates='servers', cascade='all, delete-orphan')
+    channels = db.relationship(
+        'Channel', back_populates='servers', cascade='all, delete-orphan')
     users = db.relationship(
         'User', secondary=server_users, back_populates='servers',
         lazy='dynamic'

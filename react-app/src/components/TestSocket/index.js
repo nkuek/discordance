@@ -4,8 +4,8 @@ import io from 'socket.io-client';
 
 const socket = io('localhost:5000/');
 
-socket.on('my response', async (msg) => {
-    const response = await fetch('/api/chat/', {
+socket.on('my response', (msg) => {
+    fetch('/api/chat/', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

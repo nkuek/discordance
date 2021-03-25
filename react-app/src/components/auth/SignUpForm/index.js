@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { signUp } from "../../../store/auth";
-import "./SignUpForm.css";
-import * as sessionActions from "../../../store/session";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import './SignUpForm.css';
+import * as sessionActions from '../../../store/session';
+import { useDispatch } from 'react-redux';
 
 const SignUpForm = ({
-  authenticated,
-  setAuthenticated,
-  closeModalSignUp,
-  openModalLogin,
+    authenticated,
+    setAuthenticated,
+    closeModalSignUp,
+    openModalLogin,
 }) => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -20,11 +21,9 @@ const SignUpForm = ({
   const [image, setImage] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
 
-  const onLogin = (e) => {
-    e.preventDefault();
-    closeModalSignUp();
-    openModalLogin();
-  };
+
+    const history = useHistory();
+
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -46,30 +45,38 @@ const SignUpForm = ({
       if (!user.payload.errors) {
         setImageLoading(false);
         setAuthenticated(true);
-        return <Redirect to="/" />;
+        return history.push('/discover');
       }
     }
   };
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
+    const onLogin = (e) => {
+        e.preventDefault();
+        closeModalSignUp();
+        openModalLogin();
+    };
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
+    const updateUsername = (e) => {
+        setUsername(e.target.value);
+    };
 
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
+    const updateEmail = (e) => {
+        setEmail(e.target.value);
+    };
 
-  if (authenticated) {
-    return <Redirect to="/" />;
-  }
+    const updatePassword = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const updateRepeatPassword = (e) => {
+        setRepeatPassword(e.target.value);
+    };
+
+    if (authenticated) {
+        return <Redirect to="/" />;
+    }
+
 
   const updateImage = (e) => {
         console.log(e.target.files[0]);
@@ -145,6 +152,7 @@ const SignUpForm = ({
       </div>
     </div>
   );
+
 };
 
 export default SignUpForm;

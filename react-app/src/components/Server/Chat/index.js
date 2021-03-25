@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
@@ -9,36 +9,16 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
+import createNewMessage from '../../../store/chat';
 
-const socket = io('localhost:5000/');
+const socket = io('http://localhost:5000/');
 
-socket.on('load message', (msg) => {
-    fetch('/api/chat/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(msg),
-    });
-
-    const message = document.createElement('p');
-    const username = document.createElement('p');
-    const chatMessageContainer = document.createElement('div');
-    chatMessageContainer.classList.add('chatMessageContainer');
-    username.innerHTML = msg.message.user.username;
-    message.innerHTML = msg.message.messageInput;
-    username.classList.add('chatUsername');
-    message.classList.add('chatMessage');
-    chatMessageContainer.appendChild(username);
-    chatMessageContainer.appendChild(message);
-    document.querySelector('.chat__messages').appendChild(chatMessageContainer);
-});
 function Chat() {
+    const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
-    const history = useHistory();
     const [messageInput, setMessageInput] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
-    const [newChannel, setNewChannel] = useState(false);
+    const [newMessage, setNewMessage] = useState(false);
 
     const { channelId } = useParams();
 
@@ -49,23 +29,48 @@ function Chat() {
         e.preventDefault();
         if (!messageInput) return;
         setMessageInput('');
-        socket.emit('new message', { messageInput, user, channel });
+        socket.emit('new message');
+        createNewMessage(messageInput, user, channel);
+        setNewMessage(true);
     };
 
     useEffect(() => {
-        dispatch(findExistingChannel(channelId));
-    }, [channelId]);
+        socket.on('load message', () => {
+            setNewMessage(true);
+        });
+    }, []);
 
     useEffect(() => {
-        setIsLoaded(true);
-    }, channel);
+        console.log('dispatching');
+        dispatch(findExistingChannel(channelId));
+        setNewMessage(false);
+    }, [channelId, newMessage]);
+
+    useEffect(() => {
+        if (channel) {
+            setIsLoaded(true);
+            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }, [channel]);
 
     return (
         isLoaded && (
             <div className="chat">
                 <ChatHeader />
 
-                <div className="chat__messages"></div>
+                <div className="chat__messages">
+                    {channel.messages &&
+                        channel.messages.length > 0 &&
+                        channel.messages.map((message, idx) => (
+                            <div key={idx} className="chatMessageContainer">
+                                <p className="chatUsername">
+                                    {message.username}
+                                </p>
+                                <p className="chatMessage">{message.message}</p>
+                                {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
+                            </div>
+                        ))}
+                </div>
 
                 <div className="chat__input">
                     <AddCircleIcon fontSize="large" />

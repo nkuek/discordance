@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUploading from 'react-images-uploading';
-import { useHistory } from 'react-router-dom';
 import { createServer } from '../../store/server';
 import './ServerForm.css';
 
@@ -10,7 +9,6 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     const loggedInUser = useSelector((state) => state.session.user);
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const [name, setName] = useState(
         loggedInUser && `${loggedInUser.username}'s server`
     );
@@ -29,7 +27,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // console.log((Object.values(imageList[0]))[1])
     // };
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('admin_id', loggedInUser.id);
@@ -47,7 +45,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
             return;
         }
 
-        const newServer = await dispatch(
+        dispatch(
             createServer(
                 formData
                 // admin_id: loggedInUser.id,

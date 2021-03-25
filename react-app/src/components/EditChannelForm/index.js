@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { updateExistingChannel } from '../../store/channel';
 
 function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [channelName, setChannelName] = useState('');
     const [errors, setErrors] = useState('');
 
@@ -35,7 +33,7 @@ function EditChannelForm({ showEditChannelModal, setShowEditChannelModal }) {
                 setErrors('');
             }
         },
-        [showEditChannelModal, setShowEditChannelModal]
+        [showEditChannelModal, setShowEditChannelModal, channel]
     );
 
     useEffect(() => {
