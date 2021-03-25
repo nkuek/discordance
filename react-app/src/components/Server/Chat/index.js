@@ -12,7 +12,9 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
 
-const socket = io('http://localhost:5000/');
+const socket = io(
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/'
+);
 
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
