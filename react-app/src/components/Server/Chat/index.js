@@ -11,6 +11,10 @@ import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
+import Emoji from '../../Emojis/Emojis';
 
 // const url =
 //     process.env.NODE_ENV === 'development'
@@ -32,7 +36,16 @@ function Chat() {
 
     const user = useSelector((state) => state.session.user);
     const channel = useSelector((state) => state.channel);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
@@ -107,11 +120,20 @@ function Chat() {
                             Send Message
                         </button>
                     </form>
-
                     <div className="chat__inputIcons">
                         <CardGiftcardIcon fontSize="large" />
                         <GifIcon fontSize="large" />
-                        <EmojiEmotionsIcon fontSize="large" />
+                        <EmojiEmotionsIcon className="emoji-icon" onClick={handleClick} fontSize="large" />
+                        <Menu
+                            id="fade-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                            TransitionComponent={Fade}
+                        >
+                            <MenuItem onClick={handleClose}><Emoji setMessageInput={setMessageInput} /></MenuItem>
+                        </Menu>
                     </div>
                 </div>
             </div>
