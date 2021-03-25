@@ -16,17 +16,9 @@ const removeUser = () => {
 
 // signup
 export const signup = (user) => async (dispatch) => {
-    const { username, email, password } = user;
     const response = await fetch('/api/auth/signup/', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username,
-            email,
-            password,
-        }),
+        body: user
     });
     const data = await response.json();
     console.log(data);

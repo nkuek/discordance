@@ -18,20 +18,23 @@ import {
 
 // Mui Functions
 import {
-    Avatar,
     IconButton,
     MenuItem,
     Popper,
     Paper,
     MenuList,
     ClickAwayListener,
+    Avatar,
     Accordion,
     AccordionSummary,
     AccordionDetails,
     withStyles,
+  
 } from '@material-ui/core';
 
 import EditServerForm from '../../EditServerForm';
+import { updateExistingServer } from '../../../store/server';
+import { findExistingChannel } from '../../../store/channel';
 import SidebarChannel from './SidebarChannel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
@@ -100,6 +103,7 @@ const SimpleAccordionDetails = withStyles((theme) => ({
     },
 }))(AccordionDetails);
 
+
 function Sidebar() {
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -109,7 +113,13 @@ function Sidebar() {
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
-
+    const user = useSelector((state) => state.session.user);
+    
+    useEffect(() => {
+        if (user && server) setIsLoaded(true);
+    }, [server, user]);
+    
+    
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
         setOpen(false);
@@ -140,7 +150,12 @@ function Sidebar() {
         setShowChannelModal((prev) => !prev);
     };
 
-    return (
+
+    const handleEditServer = (serverId) => {
+        dispatch(updateExistingServer(serverId));
+    };
+
+    return ( isLoaded &&
         <div className="sidebar">
             <div className="sidebar__top">
                 <h3>{server.name}</h3>
@@ -258,10 +273,12 @@ function Sidebar() {
             </div>
 
             <div className="sidebar__profile">
-                <Avatar />
+                {user.profile_URL === undefined ? <Avatar /> : <div>
+                    <img className="profile__image" src={`${user.profile_URL}`} />
+                </div>  }
                 <div className="sidebar__profileInfo">
-                    <h3>Hussein Profile</h3>
-                    <p>#ID</p>
+                    <h3>{`${user.username}`}</h3>
+                    <p>{`# ${user.id}`}</p>
                 </div>
 
                 <div className="sidebar__profileIcons">
