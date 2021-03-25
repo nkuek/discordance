@@ -9,18 +9,10 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
+import createNewMessage from '../../../store/chat';
 
-const socket = io('localhost:5000/');
+const socket = io('http://localhost:5000/');
 
-socket.on('load message', (msg) => {
-    fetch('/api/chat/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(msg),
-    });
-});
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
@@ -37,19 +29,26 @@ function Chat() {
         e.preventDefault();
         if (!messageInput) return;
         setMessageInput('');
-        socket.emit('new message', { messageInput, user, channel });
+        socket.emit('new message');
+        createNewMessage(messageInput, user, channel);
         setNewMessage(true);
     };
 
     useEffect(() => {
+        socket.on('load message', () => {
+            setNewMessage(true);
+        });
+    }, []);
+
+    useEffect(() => {
         console.log('dispatching');
         dispatch(findExistingChannel(channelId));
+        setNewMessage(false);
     }, [channelId, newMessage]);
 
     useEffect(() => {
         if (channel) {
             setIsLoaded(true);
-            setNewMessage(false);
             if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         }
     }, [channel]);

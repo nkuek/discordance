@@ -141,16 +141,7 @@ def find_channel():
         messageUsername = User.query.get(formattedMessage['user_id']).username
         formattedMessage['username'] = messageUsername
 
-    # usernames = [User.query.get(formattedMessage['user_id']).username for formattedMessage in formattedMessages]
-
-    # for formattedMessage in formattedMessages:
-    #     for username in usernames:
-    #         formattedMessage['username'] = username
-
     existingChannel['messages'] = formattedMessages
-    print('==========')
-    print(formattedMessages)
-    print('==========')
     return existingChannel
 
 
