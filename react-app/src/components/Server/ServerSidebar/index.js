@@ -261,7 +261,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
               />
             </div>
           </Tooltip>
-        </li>
+        </div>
       </div>
     )
   );

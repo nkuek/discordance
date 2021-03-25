@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 
-
 import { useDispatch, useSelector } from "react-redux";
 // import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
@@ -24,7 +23,7 @@ import Edu from "./components/HomePage/education.js";
 import Entertainment from "./components/HomePage/enter.js";
 import Science from "./components/HomePage/science.js";
 import Home from "./components/HomePage/home.js";
-import { fetchUserServers } from "./store/userInfo";
+// import { fetchUserServers } from "./store/userInfo";
 
 // aws
 import UploadPicture from "./components/FileUpload/UploadPicture";
@@ -38,7 +37,6 @@ import Sidebar from "./components/Server/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
-
 
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
