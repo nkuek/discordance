@@ -1,3 +1,4 @@
+
 import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -13,17 +14,27 @@ import createNewMessage from '../../../store/chat';
 
 const socket = io('http://localhost:5000/');
 
+
 function Chat() {
-    const chatBox = document.querySelector('.chat__messages');
-    const dispatch = useDispatch();
-    const [messageInput, setMessageInput] = useState('');
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [newMessage, setNewMessage] = useState(false);
+  const chatBox = document.querySelector(".chat__messages");
+  const dispatch = useDispatch();
+  const [messageInput, setMessageInput] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [newMessage, setNewMessage] = useState(false);
 
-    const { channelId } = useParams();
+  const { channelId } = useParams();
 
-    const user = useSelector((state) => state.session.user);
-    const channel = useSelector((state) => state.channel);
+  const user = useSelector((state) => state.session.user);
+  const channel = useSelector((state) => state.channel);
+
+  const handleNewMessage = (e) => {
+    e.preventDefault();
+    if (!messageInput) return;
+    setMessageInput("");
+    socket.emit("new message", { messageInput, user, channel });
+    setNewMessage(true);
+  };
+
 
     const handleNewMessage = (e) => {
         e.preventDefault();
@@ -53,46 +64,46 @@ function Chat() {
         }
     }, [channel]);
 
-    return (
-        isLoaded && (
-            <div className="chat">
-                <ChatHeader />
 
-                <div className="chat__messages">
-                    {channel.messages &&
-                        channel.messages.length > 0 &&
-                        channel.messages.map((message, idx) => (
-                            <div key={idx} className="chatMessageContainer">
-                                <p className="chatUsername">
-                                    {message.username}
-                                </p>
-                                <p className="chatMessage">{message.message}</p>
-                            </div>
-                        ))}
-                </div>
+  return (
+    isLoaded && (
+      <div className="chat">
+        <ChatHeader />
 
-                <div className="chat__input">
-                    <AddCircleIcon fontSize="large" />
-                    <form onSubmit={(e) => handleNewMessage(e)}>
-                        <input
-                            value={messageInput}
-                            onChange={(e) => setMessageInput(e.target.value)}
-                            placeholder={`message #TEST`}
-                        />
-                        <button className="chat__inputButton" type="submit">
-                            Send Message
-                        </button>
-                    </form>
+        <div className="chat__messages">
+          {channel.messages &&
+            channel.messages.length > 0 &&
+            channel.messages.map((message, idx) => (
+              <div key={idx} className="chatMessageContainer">
+                <p className="chatUsername">{message.username}</p>
+                <p className="chatMessage">{message.message}</p>
+                <button onClick={(e) => deleteMessage(e)}>X</button>
+              </div>
+            ))}
+        </div>
 
-                    <div className="chat__inputIcons">
-                        <CardGiftcardIcon fontSize="large" />
-                        <GifIcon fontSize="large" />
-                        <EmojiEmotionsIcon fontSize="large" />
-                    </div>
-                </div>
-            </div>
-        )
-    );
+        <div className="chat__input">
+          <AddCircleIcon fontSize="large" />
+          <form onSubmit={(e) => handleNewMessage(e)}>
+            <input
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder={`message #TEST`}
+            />
+            <button className="chat__inputButton" type="submit">
+              Send Message
+            </button>
+          </form>
+
+          <div className="chat__inputIcons">
+            <CardGiftcardIcon fontSize="large" />
+            <GifIcon fontSize="large" />
+            <EmojiEmotionsIcon fontSize="large" />
+          </div>
+        </div>
+      </div>
+    )
+  );
 }
 
 export default Chat;

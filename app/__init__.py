@@ -119,6 +119,10 @@ def test_message(message):
 def new_message():
     emit('load message', broadcast=True)
 
+
+# @socketio.on('message delete')
+# def delete_message(message):
+#     emit('delete message', {'message': message})
 # @socketio.on('json')
 # def test_json(json):
 #     print('hello')

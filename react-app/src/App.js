@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
+
+
 import { useDispatch, useSelector } from "react-redux";
 // import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
@@ -12,8 +15,10 @@ import User from "./components/User";
 import { authenticate } from "./store/auth";
 import Server from "./components/Server";
 import ServerSidebar from "./components/Server/ServerSidebar";
-// new components
-import GomePage from "./components/HomePage/gaming.js";
+
+import { fetchUserServers } from "./store/userInfo";
+
+import GamePage from "./components/HomePage/gaming.js";
 import Music from "./components/HomePage/music.js";
 import Edu from "./components/HomePage/education.js";
 import Entertainment from "./components/HomePage/enter.js";
@@ -33,6 +38,7 @@ import Sidebar from "./components/Server/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
+
 
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -107,7 +113,7 @@ function App() {
             <HomePage></HomePage>
           </Route>
           <Route path="/gaming" exact={true}>
-            <GomePage></GomePage>
+            <GamePage></GamePage>
           </Route>
           <Route path="/music" exact={true}>
             <Music></Music>

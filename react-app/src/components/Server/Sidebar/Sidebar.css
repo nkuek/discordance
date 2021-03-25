@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     min-width: 240px;
-    max-width:240px;
-    height: calc(100vh - 44px);
+    max-width: 240px;
+    height: calc(100vh - 58px);
     background-color: #2f3135;
 }
 
@@ -102,5 +102,5 @@
 }
 
 .descriptionContent {
-    font-size: .9em;
+    font-size: 0.9em;
 }
