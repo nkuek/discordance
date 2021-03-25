@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
@@ -20,26 +20,13 @@ socket.on('load message', (msg) => {
         },
         body: JSON.stringify(msg),
     });
-
-    const chatBox = document.querySelector('.chat__messages');
-    const message = document.createElement('p');
-    const username = document.createElement('p');
-    const chatMessageContainer = document.createElement('div');
-    chatMessageContainer.classList.add('chatMessageContainer');
-    username.innerHTML = msg.message.user.username;
-    message.innerHTML = msg.message.messageInput;
-    username.classList.add('chatUsername');
-    message.classList.add('chatMessage');
-    chatMessageContainer.appendChild(username);
-    chatMessageContainer.appendChild(message);
-    chatBox.appendChild(chatMessageContainer);
-    chatBox.scrollTop = chatBox.scrollHeight;
 });
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
     const [messageInput, setMessageInput] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
+    const [newMessage, setNewMessage] = useState(false);
 
     const { channelId } = useParams();
 
@@ -51,21 +38,22 @@ function Chat() {
         if (!messageInput) return;
         setMessageInput('');
         socket.emit('new message', { messageInput, user, channel });
+        setNewMessage(true);
     };
 
     useEffect(() => {
+        console.log('dispatching');
         dispatch(findExistingChannel(channelId));
-    }, [channelId]);
+    }, [channelId, newMessage]);
 
     useEffect(() => {
         if (channel) {
             setIsLoaded(true);
+            setNewMessage(false);
+            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         }
-        console.log(chatBox);
-        if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
     }, [channel]);
 
-    useEffect(() => {}, [channelId]);
     return (
         isLoaded && (
             <div className="chat">
@@ -74,8 +62,8 @@ function Chat() {
                 <div className="chat__messages">
                     {channel.messages &&
                         channel.messages.length > 0 &&
-                        channel.messages.map((message) => (
-                            <div className="chatMessageContainer">
+                        channel.messages.map((message, idx) => (
+                            <div key={idx} className="chatMessageContainer">
                                 <p className="chatUsername">
                                     {message.username}
                                 </p>
