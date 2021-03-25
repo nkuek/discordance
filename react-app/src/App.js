@@ -76,7 +76,6 @@ function App() {
                     authenticated={authenticated}
                     setAuthenticated={setAuthenticated}
                 />
-                {console.log(authenticated)}
                 {home()}
                 <Switch>
                     <ProtectedRoute

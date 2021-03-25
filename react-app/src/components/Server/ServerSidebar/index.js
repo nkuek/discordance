@@ -83,7 +83,6 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const location = useLocation();
-    console.log(location.pathname);
     // debugger;
     const classNames = ['ServerSidebar'];
     if (location.pathname === '/' || location.pathname === '/discover') {
@@ -268,7 +267,6 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                                         />
                                     </Modal>
                                 )}
-                                {console.log(modalIsOpenLogin)}
                                 <AddCircleOutlineIcon />
                             </IconButton>
                             <ServerForm

@@ -12,9 +12,14 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
 
-const socket = io(
-    process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/'
-);
+const url =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/'
+        : 'https://discordanc3.herokuapp.com/';
+
+const socket = io(url);
+
+console.log(url);
 
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');

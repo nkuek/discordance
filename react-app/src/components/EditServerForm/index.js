@@ -21,8 +21,6 @@ function EditServerForm({ showServerModal, setShowServerModal }) {
     const [errors, setErrors] = useState('');
     const serverModalRef = useRef();
 
-    console.log(server.category);
-
     useEffect(() => {
         dispatch(findExistingServer(serverId));
         setIsLoaded(true);
