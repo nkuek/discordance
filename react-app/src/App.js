@@ -90,7 +90,7 @@ function App() {
             <User />
           </ProtectedRoute>
           <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-            <Home path="/"></Home>
+            <Home></Home>
           </ProtectedRoute>
           <ProtectedRoute
             path="/upload"

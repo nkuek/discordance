@@ -34,3 +34,12 @@ h1 {
   margin-right: 10px;
   color: #fff;
 }
+
+button {
+  border: none;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
