@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deleteExistingMessage } from "../../store/message";
 import "../ConfirmDelete/ConfirmDelete.css";
+import { deleteExistingChannel } from "../../store/channel";
 
 function ConfirmDeleteMessage({
+  newMessage,
+  setNewMessage,
   showDeleteMessageModal,
   setShowDeleteMessageModal,
 }) {
-  const [newMessage, setNewMessage] = useState(false);
+  // const [deleteMessage, setDeleteMessage] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -21,6 +24,10 @@ function ConfirmDeleteMessage({
       setShowDeleteMessageModal(false);
     }
   };
+
+  useEffect(() => {
+    setNewMessage(false);
+  }, [newMessage]);
 
   const channel = useSelector((state) => state.channel);
   const server = useSelector((state) => state.server);
@@ -53,6 +60,7 @@ function ConfirmDeleteMessage({
   const handleDeleteMessage = (messageId) => {
     dispatch(deleteExistingMessage(messageId));
     setShowDeleteMessageModal(false);
+    // setDeleteMessage(true);
     history.push(`/servers/${server.id}/${channel.id}`);
   };
 

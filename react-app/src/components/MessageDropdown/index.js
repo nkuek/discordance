@@ -49,7 +49,7 @@ const CustomIconButton = withStyles({
   },
 })(IconButton);
 
-const MessageDropdown = ({ messageId }) => {
+const MessageDropdown = ({ newMessage, setNewMessage }) => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [showDeleteMessageModal, setShowDeleteMessageModal] = useState(false);
@@ -122,6 +122,8 @@ const MessageDropdown = ({ messageId }) => {
         </Paper>
       </Popper>
       <ConfirmDeleteMessage
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
         showDeleteMessageModal={showDeleteMessageModal}
         setShowDeleteMessageModal={setShowDeleteMessageModal}
       />
