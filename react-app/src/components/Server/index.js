@@ -32,7 +32,7 @@ function Server() {
     useEffect(() => {
         if (server.channels && server.channels.length > 0 && firstLoadedRender)
             history.push(`/servers/${server.id}/${server.channels[0].id}`);
-    }, [firstLoadedRender, server, history]);
+    }, [firstLoadedRender]);
 
     return (
         isLoaded && (
