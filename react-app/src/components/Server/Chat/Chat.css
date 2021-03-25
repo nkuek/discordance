@@ -12,11 +12,20 @@
     color: white;
 }
 
-.chatMessageContainer {
-    padding: 20px;
+.chatImageAndBody {
     display: flex;
 }
 
+.messageBodyAndButtons {
+    display: flex;
+    align-items: center;
+}
+
+.chatMessageContainer {
+    justify-content: space-between;
+    padding: 20px;
+    display: flex;
+}
 
 .chatMessageContainer:hover {
     background-color: #32353b;
