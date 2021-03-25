@@ -14,7 +14,9 @@
 
 .chatMessageContainer {
     padding: 20px;
+    display: flex;
 }
+
 
 .chatMessageContainer:hover {
     background-color: #32353b;
@@ -22,7 +24,7 @@
 
 .chatUsername {
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 .chat__messages::-webkit-scrollbar {
@@ -66,4 +68,12 @@
 
 .chat__inputIcons>.MuiSvgIcon-root {
     padding: 5px;
+}
+
+.chatImageAndName {
+    display: flex;
+}
+
+.messageBody {
+    margin-left: 10px;
 }

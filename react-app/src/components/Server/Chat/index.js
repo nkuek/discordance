@@ -6,6 +6,7 @@ import './Chat.css';
 import ChatHeader from './ChatHeader';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import { Avatar } from '@material-ui/core';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
@@ -63,11 +64,27 @@ function Chat() {
                         channel.messages.length > 0 &&
                         channel.messages.map((message, idx) => (
                             <div key={idx} className="chatMessageContainer">
-                                <p className="chatUsername">
-                                    {message.username}
-                                </p>
-                                <p className="chatMessage">{message.message}</p>
-                                {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
+                                <div className="chatImageAndName">
+                                    {!user || user.profile_URL === undefined ? (
+                                        <Avatar />
+                                    ) : (
+                                        <div>
+                                            <img
+                                                className="profile__image"
+                                                src={`${user.profile_URL}`}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="messageBody">
+                                    <p className="chatUsername">
+                                        {message.username}
+                                    </p>
+                                    <p className="chatMessage">
+                                        {message.message}
+                                    </p>
+                                    {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
+                                </div>
                             </div>
                         ))}
                 </div>
