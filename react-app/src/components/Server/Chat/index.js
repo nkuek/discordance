@@ -13,13 +13,9 @@ import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
 
 const url =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:5000/'
-        : 'https://discordanc3.herokuapp.com/';
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/';
 
 const socket = io(url);
-
-console.log(url);
 
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
@@ -49,7 +45,6 @@ function Chat() {
     }, []);
 
     useEffect(() => {
-        console.log('dispatching');
         dispatch(findExistingChannel(channelId));
         setNewMessage(false);
     }, [channelId, newMessage]);

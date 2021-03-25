@@ -131,9 +131,9 @@ function App() {
                     <Route path="/servers/:serverId(\d+)">
                         <Server />
                     </Route>
-                    <Route path="/chat">
+                    {/* <Route path="/chat">
                         <TestSocket />
-                    </Route>
+                    </Route> */}
                 </Switch>
             </div>
         </BrowserRouter>
