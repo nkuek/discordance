@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { deleteExistingChannel } from "../../store/channel";
+import { deleteExistingMessage } from "../../store/message";
 import "../ConfirmDelete/ConfirmDelete.css";
 
 function ConfirmDeleteMessage({
@@ -21,7 +21,6 @@ function ConfirmDeleteMessage({
   };
 
   const channel = useSelector((state) => state.channel);
-  const server = useSelector((state) => state.server);
 
   // close modal when pressing escape key
   const keyPress = useCallback(
@@ -47,11 +46,11 @@ function ConfirmDeleteMessage({
     transform: showDeleteMessageModal ? `scale(1)` : `scale(0.8)`,
   });
 
-  //   const handleDeleteChannel = (channelId) => {
-  //     dispatch(deleteExistingChannel(channelId));
-  //     setShowDeleteChannelModal(false);
-  //     history.push(`/servers/${server.id}`);
-  //   };
+  const handleDeleteMessage = (messageId) => {
+    dispatch(deleteExistingMessage(messageId));
+    setShowDeleteMessageModal(false);
+    // history.push(`/servers/${server.id}`);
+  };
 
   return showDeleteMessageModal ? (
     <div
@@ -66,7 +65,7 @@ function ConfirmDeleteMessage({
           </div>
           <div className="deleteModalButtons">
             <button
-              //   onClick={() => handleDeleteChannel(channel.id)}
+              // onClick={() => handleDeleteMessage(message.id)}
               className="confirmDeleteModalButtonYes"
             >
               Yes

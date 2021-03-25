@@ -49,7 +49,7 @@ const CustomIconButton = withStyles({
   },
 })(IconButton);
 
-const MessageDropdown = () => {
+const MessageDropdown = ({ messageId }) => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [showDeleteMessageModal, setShowDeleteMessageModal] = useState(false);
