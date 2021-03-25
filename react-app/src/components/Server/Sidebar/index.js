@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Mui Icons
 import {
@@ -29,7 +29,6 @@ import {
     AccordionSummary,
     AccordionDetails,
     withStyles,
-  
 } from '@material-ui/core';
 
 import EditServerForm from '../../EditServerForm';
@@ -103,23 +102,23 @@ const SimpleAccordionDetails = withStyles((theme) => ({
     },
 }))(AccordionDetails);
 
-
 function Sidebar() {
+    const dispatch = useDispatch();
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showChannelModal, setShowChannelModal] = useState(false);
     const [showDescription, setShowDescription] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
     const user = useSelector((state) => state.session.user);
-    
+
     useEffect(() => {
         if (user && server) setIsLoaded(true);
     }, [server, user]);
-    
-    
+
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
         setOpen(false);
@@ -150,144 +149,154 @@ function Sidebar() {
         setShowChannelModal((prev) => !prev);
     };
 
-
     const handleEditServer = (serverId) => {
         dispatch(updateExistingServer(serverId));
     };
 
-    return ( isLoaded &&
-        <div className="sidebar">
-            <div className="sidebar__top">
-                <h3>{server.name}</h3>
-                <IconButton
-                    aria-label="more"
-                    aria-controls="long-menu"
-                    aria-haspopup="true"
-                    onClick={handleToggle}
-                    ref={anchorRef}
-                >
-                    <ExpandMoreIcon style={{ color: 'white' }} />
-                </IconButton>
-                <Popper
-                    open={open}
-                    anchorEl={anchorRef.current}
-                    role={undefined}
-                    transition
-                    disablePortal
-                    style={{
-                        positon: 'relative',
-                        zIndex: 2,
-                    }}
-                >
-                    <Paper
+    return (
+        isLoaded && (
+            <div className="sidebar">
+                <div className="sidebar__top">
+                    <h3>{server.name}</h3>
+                    <IconButton
+                        aria-label="more"
+                        aria-controls="long-menu"
+                        aria-haspopup="true"
+                        onClick={handleToggle}
+                        ref={anchorRef}
+                    >
+                        <ExpandMoreIcon style={{ color: 'white' }} />
+                    </IconButton>
+                    <Popper
+                        open={open}
+                        anchorEl={anchorRef.current}
+                        role={undefined}
+                        transition
+                        disablePortal
                         style={{
-                            backgroundColor: '#18191C',
-                            marginBottom: '3px',
+                            positon: 'relative',
+                            zIndex: 2,
                         }}
                     >
-                        <ClickAwayListener onClickAway={handleClose}>
-                            <CustomMenuList style={{ color: 'white' }}>
-                                <CustomMenuItem onClick={openServerModal}>
-                                    <div className="serverModalCategory">
-                                        Edit
-                                    </div>
-                                    <EditIcon style={{ color: 'white' }} />
-                                </CustomMenuItem>
-                                <CustomMenuItem onClick={openDeleteModal}>
-                                    <div className="serverModalCategory">
-                                        Delete
-                                    </div>
-                                    <DeleteIcon style={{ color: 'white' }} />
-                                </CustomMenuItem>
-                            </CustomMenuList>
-                        </ClickAwayListener>
-                    </Paper>
-                </Popper>
-                <ConfirmDelete
-                    showDeleteModal={showDeleteModal}
-                    setShowDeleteModal={setShowDeleteModal}
-                />
-                <EditServerForm
-                    server={server}
-                    showServerModal={showServerModal}
-                    setShowServerModal={setShowServerModal}
-                />
-                <ChannelForm
-                    showChannelModal={showChannelModal}
-                    setShowChannelModal={setShowChannelModal}
-                />
-            </div>
-            <div className="sidebar__description">
-                <SimpleAccordion
-                    square
-                    expanded={showDescription}
-                    onChange={handleDescription}
-                >
-                    <SimpleAccordionSummary
-                        aria-controls="description-content"
-                        id="descriptionHeaderContainer"
-                        expandIcon={
-                            <ExpandMoreIcon style={{ color: 'white' }} />
-                        }
-                    >
-                        <div className="descriptionHeader">Description</div>
-                    </SimpleAccordionSummary>
-                    <SimpleAccordionDetails>
-                        <div className="descriptionContent">
-                            {server.description}
-                        </div>
-                    </SimpleAccordionDetails>
-                </SimpleAccordion>
-            </div>
-            <div className="sidebar__channels">
-                <div className="sidebar__channelsHeader">
-                    <div className="sidebar__header">
-                        <ExpandMoreIcon />
-                        <h4>Text Channels</h4>
-                    </div>
-
-                    <AddIcon
-                        className="sidebar__addChannel"
-                        onClick={openChannelModal}
+                        <Paper
+                            style={{
+                                backgroundColor: '#18191C',
+                                marginBottom: '3px',
+                            }}
+                        >
+                            <ClickAwayListener onClickAway={handleClose}>
+                                <CustomMenuList style={{ color: 'white' }}>
+                                    <CustomMenuItem onClick={openServerModal}>
+                                        <div className="serverModalCategory">
+                                            Edit
+                                        </div>
+                                        <EditIcon style={{ color: 'white' }} />
+                                    </CustomMenuItem>
+                                    <CustomMenuItem onClick={openDeleteModal}>
+                                        <div className="serverModalCategory">
+                                            Delete
+                                        </div>
+                                        <DeleteIcon
+                                            style={{ color: 'white' }}
+                                        />
+                                    </CustomMenuItem>
+                                </CustomMenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Popper>
+                    <ConfirmDelete
+                        showDeleteModal={showDeleteModal}
+                        setShowDeleteModal={setShowDeleteModal}
+                    />
+                    <EditServerForm
+                        server={server}
+                        showServerModal={showServerModal}
+                        setShowServerModal={setShowServerModal}
+                    />
+                    <ChannelForm
+                        showChannelModal={showChannelModal}
+                        setShowChannelModal={setShowChannelModal}
                     />
                 </div>
-                <div className="sidebar__channelsList">
-                    <SidebarChannel />
+                <div className="sidebar__description">
+                    <SimpleAccordion
+                        square
+                        expanded={showDescription}
+                        onChange={handleDescription}
+                    >
+                        <SimpleAccordionSummary
+                            aria-controls="description-content"
+                            id="descriptionHeaderContainer"
+                            expandIcon={
+                                <ExpandMoreIcon style={{ color: 'white' }} />
+                            }
+                        >
+                            <div className="descriptionHeader">Description</div>
+                        </SimpleAccordionSummary>
+                        <SimpleAccordionDetails>
+                            <div className="descriptionContent">
+                                {server.description}
+                            </div>
+                        </SimpleAccordionDetails>
+                    </SimpleAccordion>
+                </div>
+                <div className="sidebar__channels">
+                    <div className="sidebar__channelsHeader">
+                        <div className="sidebar__header">
+                            <ExpandMoreIcon />
+                            <h4>Text Channels</h4>
+                        </div>
+
+                        <AddIcon
+                            className="sidebar__addChannel"
+                            onClick={openChannelModal}
+                        />
+                    </div>
+                    <div className="sidebar__channelsList">
+                        <SidebarChannel />
+                    </div>
+                </div>
+
+                <div className="sidebar__voice">
+                    <SignalCellularAltIcon
+                        className="sidebar__voiceIcon"
+                        fontSize="large"
+                    />
+                    <div className="sidebar__voiceInfo">
+                        <h3>Voice Connected</h3>
+                        <p>Stream</p>
+                    </div>
+
+                    <div className="sidebar__voiceIcons">
+                        <InfoOutlinedIcon />
+                        <CallIcon />
+                    </div>
+                </div>
+
+                <div className="sidebar__profile">
+                    {!user || user.profile_URL === undefined ? (
+                        <Avatar />
+                    ) : (
+                        <div>
+                            <img
+                                className="profile__image"
+                                src={`${user.profile_URL}`}
+                            />
+                        </div>
+                    )}
+                    <div className="sidebar__profileInfo">
+                        <h3>{`${user.username}`}</h3>
+                        <p>{`# ${user.id}`}</p>
+                    </div>
+
+                    <div className="sidebar__profileIcons">
+                        <MicIcon />
+                        <HeadsetIcon />
+                        <SettingsIcon />
+                    </div>
                 </div>
             </div>
-
-            <div className="sidebar__voice">
-                <SignalCellularAltIcon
-                    className="sidebar__voiceIcon"
-                    fontSize="large"
-                />
-                <div className="sidebar__voiceInfo">
-                    <h3>Voice Connected</h3>
-                    <p>Stream</p>
-                </div>
-
-                <div className="sidebar__voiceIcons">
-                    <InfoOutlinedIcon />
-                    <CallIcon />
-                </div>
-            </div>
-
-            <div className="sidebar__profile">
-                {user.profile_URL === undefined ? <Avatar /> : <div>
-                    <img className="profile__image" src={`${user.profile_URL}`} />
-                </div>  }
-                <div className="sidebar__profileInfo">
-                    <h3>{`${user.username}`}</h3>
-                    <p>{`# ${user.id}`}</p>
-                </div>
-
-                <div className="sidebar__profileIcons">
-                    <MicIcon />
-                    <HeadsetIcon />
-                    <SettingsIcon />
-                </div>
-            </div>
-        </div>
+        )
     );
 }
 
