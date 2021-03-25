@@ -1,4 +1,7 @@
-
+.SignUpModalWrapper {
+    position: relative;
+    z-index: 5;
+}
 
 .SignUpModalContainer{
     background-color: #fff;
