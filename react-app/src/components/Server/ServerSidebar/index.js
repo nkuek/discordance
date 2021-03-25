@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, NavLink, Redirect } from 'react-router-dom';
+import { useHistory, NavLink, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -82,6 +82,14 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
     const [serverId, setServerId] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const location = useLocation();
+    console.log(location.pathname);
+    // debugger;
+    const classNames = ['ServerSidebar'];
+    if (location.pathname === '/' || location.pathname === '/discover') {
+        classNames.push('homepage');
+    }
+
     const server = useSelector((state) => state?.server);
 
     const userServers = useSelector((state) => state?.userServers);
@@ -118,7 +126,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
     useEffect(() => {
         dispatch(fetchUserServers(loggedInUser?.id));
         setIsLoaded(true);
-    }, [server, dispatch, loggedInUser]);
+    }, [server]);
 
     function homeButton() {
         history.push('/');
@@ -140,8 +148,8 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
 
     return (
         isLoaded && (
-            <div className="ServerSidebar">
-                <li>
+            <div className={classNames.join(' ')}>
+                <div>
                     <Tooltip
                         title="Home"
                         key="home"
@@ -166,6 +174,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                         </IconButton>
                     </Tooltip>
                     <div className="menu-seperator" />
+                    {/* This is where we will map over the servers for that user and render their pictures */}
                     <div className="userServersList">
                         {Object.keys(userServers).length > 0 &&
                             userServers.map((userServer) => (
@@ -269,7 +278,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                             />
                         </div>
                     </Tooltip>
-                </li>
+                </div>
             </div>
         )
     );

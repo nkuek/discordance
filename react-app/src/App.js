@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+
+import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+// import LoginForm from "./components/auth/LoginForm/index";
+// import SignUpForm from "./components/auth/SignUpForm/index";
 
 import HomePage from './components/HomePage/index';
 import NavBar from './components/NavBar/index';
@@ -10,14 +14,16 @@ import User from './components/User';
 import { authenticate } from './store/auth';
 import Server from './components/Server';
 import ServerSidebar from './components/Server/ServerSidebar';
-// new components
+
+import { fetchUserServers } from './store/userInfo';
+
 import GamePage from './components/HomePage/gaming.js';
 import Music from './components/HomePage/music.js';
 import Edu from './components/HomePage/education.js';
 import Entertainment from './components/HomePage/enter.js';
 import Science from './components/HomePage/science.js';
 import Home from './components/HomePage/home.js';
-import { fetchUserServers } from './store/userInfo';
+// import { fetchUserServers } from "./store/userInfo";
 
 // aws
 import UploadPicture from './components/FileUpload/UploadPicture';
@@ -27,22 +33,22 @@ import * as sessionActions from './store/session';
 
 import TestSocket from './components/TestSocket';
 
+import Sidebar from './components/Server/Sidebar';
+
 function App() {
     const dispatch = useDispatch();
 
     const [authenticated, setAuthenticated] = useState(false);
     const [loaded, setLoaded] = useState(false);
 
-    useEffect(() => {
-        (async () => {
-            const user = await authenticate();
-            if (!user.errors) {
-                dispatch(sessionActions.restoreUser());
-                setAuthenticated(true);
-                dispatch(fetchUserServers(user.id));
-            }
-            setLoaded(true);
-        })();
+    useEffect(async () => {
+        const user = await authenticate();
+        if (!user.errors) {
+            dispatch(sessionActions.restoreUser());
+            setAuthenticated(true);
+            dispatch(fetchUserServers(user.id));
+        }
+        setLoaded(true);
     }, [dispatch]);
 
     if (!loaded) {

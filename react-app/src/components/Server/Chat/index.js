@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
 import './Chat.css';
 import ChatHeader from './ChatHeader';
@@ -44,14 +44,14 @@ function Chat() {
         console.log('dispatching');
         dispatch(findExistingChannel(channelId));
         setNewMessage(false);
-    }, [channelId, newMessage, dispatch]);
+    }, [channelId, newMessage]);
 
     useEffect(() => {
         if (channel) {
             setIsLoaded(true);
             if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         }
-    }, [channel, chatBox]);
+    }, [channel]);
 
     return (
         isLoaded && (
@@ -67,6 +67,7 @@ function Chat() {
                                     {message.username}
                                 </p>
                                 <p className="chatMessage">{message.message}</p>
+                                {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
                             </div>
                         ))}
                 </div>
