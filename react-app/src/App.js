@@ -18,7 +18,7 @@ import Music from "./components/HomePage/music.js";
 import Edu from "./components/HomePage/education.js";
 import Entertainment from "./components/HomePage/enter.js";
 import Science from "./components/HomePage/science.js";
-
+import Home from "./components/HomePage/home.js";
 import { fetchUserServers } from "./store/userInfo";
 
 // aws
@@ -51,6 +51,16 @@ function App() {
     return null;
   }
 
+  const home = () => {
+    if (authenticated === false) {
+      return (
+        <Route path="/" exact={true}>
+          <Home></Home>
+        </Route>
+      );
+    }
+  };
+
   return (
     <BrowserRouter>
       <NavBar
@@ -58,7 +68,12 @@ function App() {
         setAuthenticated={setAuthenticated}
       />
       <div className="mainContent">
-        <ServerSidebar />
+        <ServerSidebar
+          authenticated={authenticated}
+          setAuthenticated={setAuthenticated}
+        />
+        {console.log(authenticated)}
+        {home()}
         <Switch>
           <ProtectedRoute
             path="/users"
@@ -75,7 +90,7 @@ function App() {
             <User />
           </ProtectedRoute>
           <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-            <HomePage path="/"></HomePage>
+            <Home path="/"></Home>
           </ProtectedRoute>
           <ProtectedRoute
             path="/upload"
@@ -87,7 +102,8 @@ function App() {
           <Route path="/images" exact={true}>
             <ViewImages />
           </Route>
-          <Route path="/" exact={true}>
+
+          <Route path="/discover" exact={true}>
             <HomePage></HomePage>
           </Route>
           <Route path="/gaming" exact={true}>

@@ -31,16 +31,12 @@
   color: white;
 }
 
-.discover {
-  display: inline-block;
-}
-
 .menu-seperator {
   border-top: 2px solid #2f3136;
   width: 85%;
   margin: 0 auto;
   margin-top: 4px;
-  margin-bottom: 4px;
+  /* margin-bottom: 3px; */
 }
 
 .home-icon::after {
@@ -67,8 +63,4 @@
   width: 42px;
   height: 37px;
   color: white;
-}
-
-.userServersListLink.active {
-  border-left: 5px solid white;
 }

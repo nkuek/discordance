@@ -75,10 +75,28 @@ td:hover {
   background-color: #36393f;
 }
 
+.home-div__container {
+  width: 1840px;
+  background-color: #36393f;
+}
+
 .servers-containers {
   display: inline-flex;
   flex-wrap: wrap;
 }
+
+.servers-containers__home {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-left: 90px;
+  /* justify-content: space-evenly; */
+}
+
+.main-servers__container > .h1-communities {
+  margin-left: 100px;
+  width: 500px;
+}
+
 .banner-div__container {
   position: relative;
   text-align: center;
