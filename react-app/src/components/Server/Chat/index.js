@@ -13,7 +13,9 @@ import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
 
 const url =
-    process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/';
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/'
+        : 'https://discordanc3.herokuapp.com/';
 
 const socket = io.connect(url, {
     secure: true,
@@ -42,6 +44,7 @@ function Chat() {
 
     useEffect(() => {
         socket.on('load message', () => {
+            console.log('received message');
             setNewMessage(true);
         });
     }, []);
@@ -49,7 +52,7 @@ function Chat() {
     useEffect(() => {
         dispatch(findExistingChannel(channelId));
         setNewMessage(false);
-    }, [channelId, newMessage]);
+    }, [channelId, newMessage, channel.name]);
 
     useEffect(() => {
         if (channel) {
