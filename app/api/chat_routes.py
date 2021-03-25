@@ -20,4 +20,4 @@ def live_chat():
     return jsonify(messageReq)
 
 
-@chat_routes.route('/', methods=['DELETE'])
+# @chat_routes.route('/', methods=['DELETE'])
