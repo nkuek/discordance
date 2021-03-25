@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './SignUpForm.css';
 import * as sessionActions from '../../../store/session';
 import { useDispatch } from 'react-redux';
@@ -16,6 +17,8 @@ const SignUpForm = ({
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+
+    const history = useHistory();
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -37,7 +40,7 @@ const SignUpForm = ({
 
             if (!user.payload.errors) {
                 setAuthenticated(true);
-                return <Redirect to="/" />;
+                return history.push('/discover');
             }
         }
     };
