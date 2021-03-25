@@ -21,6 +21,7 @@ socket.on('load message', (msg) => {
         body: JSON.stringify(msg),
     });
 
+    const chatBox = document.querySelector('.chat__messages');
     const message = document.createElement('p');
     const username = document.createElement('p');
     const chatMessageContainer = document.createElement('div');
@@ -31,14 +32,14 @@ socket.on('load message', (msg) => {
     message.classList.add('chatMessage');
     chatMessageContainer.appendChild(username);
     chatMessageContainer.appendChild(message);
-    document.querySelector('.chat__messages').appendChild(chatMessageContainer);
+    chatBox.appendChild(chatMessageContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
 });
 function Chat() {
+    const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
-    const history = useHistory();
     const [messageInput, setMessageInput] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
-    const [newChannel, setNewChannel] = useState(false);
 
     const { channelId } = useParams();
 
@@ -57,15 +58,31 @@ function Chat() {
     }, [channelId]);
 
     useEffect(() => {
-        setIsLoaded(true);
-    }, channel);
+        if (channel) {
+            setIsLoaded(true);
+        }
+        console.log(chatBox);
+        if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    }, [channel]);
 
+    useEffect(() => {}, [channelId]);
     return (
         isLoaded && (
             <div className="chat">
                 <ChatHeader />
 
-                <div className="chat__messages"></div>
+                <div className="chat__messages">
+                    {channel.messages &&
+                        channel.messages.length > 0 &&
+                        channel.messages.map((message) => (
+                            <div className="chatMessageContainer">
+                                <p className="chatUsername">
+                                    {message.username}
+                                </p>
+                                <p className="chatMessage">{message.message}</p>
+                            </div>
+                        ))}
+                </div>
 
                 <div className="chat__input">
                     <AddCircleIcon fontSize="large" />
