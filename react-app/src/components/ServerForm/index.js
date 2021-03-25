@@ -27,6 +27,10 @@ function ServerForm({ showServerModal, setShowServerModal }) {
     // console.log((Object.values(imageList[0]))[1])
     // };
 
+    useEffect(() => {
+        if (loggedInUser) setName(`${loggedInUser.username}'s server`);
+    }, [loggedInUser]);
+
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();

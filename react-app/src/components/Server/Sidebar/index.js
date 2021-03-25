@@ -285,8 +285,8 @@ function Sidebar() {
                         </div>
                     )}
                     <div className="sidebar__profileInfo">
-                        <h3>{`${user.username}`}</h3>
-                        <p>{`# ${user.id}`}</p>
+                        <h3>{user && `${user.username}`}</h3>
+                        <p>{user && `# ${user.id}`}</p>
                     </div>
 
                     <div className="sidebar__profileIcons">

@@ -173,8 +173,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                             <ExploreIcon />
                         </IconButton>
                     </Tooltip>
-                    <div className="menu-seperator" />
-                    {/* This is where we will map over the servers for that user and render their pictures */}
+
                     <div className="userServersList">
                         {Object.keys(userServers).length > 0 &&
                             userServers.map((userServer) => (
