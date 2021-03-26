@@ -11,14 +11,15 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
   const history = useHistory();
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState("");
+  const [updatedMessage, setUpdatedMessage] = useState(false);
 
   const channel = useSelector((state) => state.channel);
   const server = useSelector((state) => state.server);
   const messageData = useSelector((state) => state.message);
 
   useEffect(() => {
-    if (channel.message) dispatch(findExistingChannel(channel.id));
-  }, [channel]);
+    if (updatedMessage) dispatch(findExistingChannel(channel.id));
+  }, [updatedMessage]);
 
   const editMessageModalRef = useRef();
   // close modal when clicking anywhere else
@@ -71,6 +72,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
     setErrors("");
     setMessage("");
     setShowEditMessageModal(false);
+    setUpdatedMessage(true);
 
     dispatch(updateExistingMessage({ updatedMessage, messageId }));
     history.push(`/servers/${server.id}/${channel.id}`);

@@ -159,7 +159,7 @@ function Chat() {
                   onClick={() => handleDropdown(message)}
                   className="messageButtons"
                 >
-                  {message.user_id === user.id ? (
+                  {user && message.user_id === user.id ? (
                     <MessageDropdown
                       newMessage={newMessage}
                       setNewMessage={setNewMessage}
