@@ -23,6 +23,10 @@ const url =
 
 const socket = io(url);
 
+socket.on('new user', (message) => {
+    console.log(message.message);
+});
+
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
@@ -41,7 +45,6 @@ function Chat() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     // useEffect(() => {
     //     socket.on('message', msg => {
     //         setMessages(messages => [...messages, msg])
