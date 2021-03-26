@@ -51,7 +51,7 @@ function Chat() {
         <Picker
             title="Pick your emoji…"
             emoji="point_up"
-            style={{ position: 'absolute', bottom: '100px', right: '100px' }}
+            style={{ position: 'absolute', bottom: '100px', right: '100px',backgroundColor: '#474b53' }}
             theme='dark'
             onSelect={emoji => {
                 setMessageInput(messageInput + emoji.native)
