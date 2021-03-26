@@ -130,10 +130,10 @@ const theme = createMuiTheme({
     MuiTooltip: {
       tooltip: {
         fontSize: "14px",
-        backgroundColor: "black",
+        backgroundColor: "rgb(24, 25, 28)",
       },
       arrow: {
-        color: "black",
+        color: "rgb(24, 25, 28)",
       },
     },
   },
