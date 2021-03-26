@@ -1,12 +1,15 @@
 .mainNavBar {
     background-color: #292b2f;
+    width:auto;
+    height: 60px;
 }
 
 .navbarContainer {
     display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
+    justify-content: space-between;
     padding: 10px;
+    height: 60px;
+    box-sizing: border-box;
 }
 
 .LoginModalSubmit, .SignUpModalSubmit {
@@ -20,6 +23,10 @@
     border-radius: 10px;
 }
 
+.LoginSignupLogout {
+    display: flex;
+    width: auto;
+}
 .LoginModalSubmit:hover, .SignUpModalSubmit:hover {
     background-color: #6476b9;
 }
@@ -27,10 +34,9 @@
 .developers__link--container {
     padding: 5px;
     padding-top: 10px;
-    margin-right: 82%;
     border-style: solid;
     border-radius: 10px;
-    border-color: white;
+    border: none;
     background-color: #7289da;
     cursor: pointer;
 }

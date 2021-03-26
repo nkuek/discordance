@@ -58,78 +58,91 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
     setIsOpenSignUp(false);
   }
 
-  return (
-    <nav className="mainNavBar">
-      <div className="navbarContainer">
-        <div className="developers__link--container">
-          <div>
-            <NavLink className="developers__link" to="/developers">
-              Developers
-            </NavLink>
-          </div>
-        </div>
-        <div>
-          {authenticated === true ? (
-            ""
-          ) : (
-            <button className="LoginModalSubmit" onClick={openModalLogin}>
-              Login
-            </button>
-          )}
-        </div>
-        <div>
-          <Modal
-            isOpen={modalIsOpenLogin}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModalLogin}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <LoginForm
-              setIsOpenLogin={setIsOpenLogin}
-              authenticated={authenticated}
-              setAuthenticated={setAuthenticated}
-              openModalSignUp={openModalSignUp}
-              closeModalLogin={closeModalLogin}
-            />
-          </Modal>
-        </div>
-        <div>
-          {authenticated === true ? (
-            ""
-          ) : (
-            <button className="SignUpModalSubmit" onClick={openModalSignUp}>
-              Sign Up
-            </button>
-          )}
-        </div>
-        <div>
-          <Modal
-            isOpen={authenticated === true ? false : modalIsOpenSignUp}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModalSignUp}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <SignUpForm
-              authenticated={authenticated}
-              setAuthenticated={setAuthenticated}
-              closeModalSignUp={closeModalSignUp}
-              openModalLogin={openModalLogin}
-            />
-          </Modal>
-        </div>
 
-        <div>
-          {authenticated === false ? (
-            ""
-          ) : (
-            <LogoutButton setAuthenticated={setAuthenticated} />
-          )}
-        </div>
-      </div>
-    </nav>
-  );
+    return (
+        <nav className="mainNavBar">
+            <div className="navbarContainer">
+                <div className="developers__link--container">
+                    <div>
+                        <NavLink className="developers__link" to="/developers">
+                            Developers
+                        </NavLink>
+                    </div>
+                </div>
+                <div className="LoginSignupLogout">
+                    <div>
+                        {authenticated === true ? (
+                            ''
+                        ) : (
+                            <button
+                                className="LoginModalSubmit"
+                                onClick={openModalLogin}
+                            >
+                                Login
+                            </button>
+                        )}
+                    </div>
+                    <div>
+                        <Modal
+                            isOpen={modalIsOpenLogin}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModalLogin}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <LoginForm
+                                setIsOpenLogin={setIsOpenLogin}
+                                authenticated={authenticated}
+                                setAuthenticated={setAuthenticated}
+                                openModalSignUp={openModalSignUp}
+                                closeModalLogin={closeModalLogin}
+                            />
+                        </Modal>
+                    </div>
+                    <div>
+                        {authenticated === true ? (
+                            ''
+                        ) : (
+                            <button
+                                className="SignUpModalSubmit"
+                                onClick={openModalSignUp}
+                            >
+                                Sign Up
+                            </button>
+                        )}
+                    </div>
+                    <div>
+                        <Modal
+                            isOpen={
+                                authenticated === true
+                                    ? false
+                                    : modalIsOpenSignUp
+                            }
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModalSignUp}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <SignUpForm
+                                authenticated={authenticated}
+                                setAuthenticated={setAuthenticated}
+                                closeModalSignUp={closeModalSignUp}
+                                openModalLogin={openModalLogin}
+                            />
+                        </Modal>
+                    </div>
+
+                    <div>
+                        {authenticated === false ? (
+                            ''
+                        ) : (
+                            <LogoutButton setAuthenticated={setAuthenticated} />
+                        )}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    );
 };
 
 export default NavBar;
