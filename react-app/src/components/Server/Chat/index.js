@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, { Children, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
@@ -33,6 +33,7 @@ const socket = io.connect(url, {
 function Chat() {
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
+    const ref = useRef();
     const [messageInput, setMessageInput] = useState('');
     const [emojiPickerState, SetEmojiPicker] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -44,6 +45,12 @@ function Chat() {
     const channel = useSelector((state) => state.channel);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
+    const closeEmoji = (event) => {
+        console.log(event.target, ref.current);
+        if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
+
+    }
 
     let emojiPicker;
     if (emojiPickerState) {
@@ -61,6 +68,7 @@ function Chat() {
                 onSelect={(emoji) => {
                     setMessageInput(messageInput + emoji.native);
                     SetEmojiPicker(false);
+                    document.querySelector('.chat__message--input').focus()
                 }}
             />
         );
@@ -69,6 +77,7 @@ function Chat() {
     function triggerPicker(event) {
         event.preventDefault();
         SetEmojiPicker(!emojiPickerState);
+        // if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
     }
 
     // const handleClick = (event) => {
@@ -126,7 +135,7 @@ function Chat() {
 
     return (
         isLoaded && (
-            <div className="chat">
+            <div onClick={closeEmoji} className="chat">
                 <ChatHeader />
 
                 <div className="chat__messages">
@@ -181,6 +190,7 @@ function Chat() {
                     <AddCircleIcon fontSize="large" />
                     <form onSubmit={(e) => handleNewMessage(e)}>
                         <input
+                            className="chat__message--input"
                             value={messageInput}
                             onChange={(e) => setMessageInput(e.target.value)}
                             placeholder={`message #TEST`}
