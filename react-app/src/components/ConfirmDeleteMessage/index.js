@@ -3,16 +3,14 @@ import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deleteExistingMessage } from "../../store/message";
+import { findExistingChannel } from "../../store/channel";
 import "../ConfirmDelete/ConfirmDelete.css";
-import { deleteExistingChannel } from "../../store/channel";
 
 function ConfirmDeleteMessage({
-  // newMessage,
-  // setNewMessage,
   showDeleteMessageModal,
   setShowDeleteMessageModal,
 }) {
-  // const [deleteMessage, setDeleteMessage] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,13 +23,13 @@ function ConfirmDeleteMessage({
     }
   };
 
-  // useEffect(() => {
-  //   setNewMessage(false);
-  // }, [newMessage]);
-
   const channel = useSelector((state) => state.channel);
   const server = useSelector((state) => state.server);
   const messageId = useSelector((state) => state.message);
+
+  useEffect(() => {
+    if (deleteMessage) dispatch(findExistingChannel(channel.id));
+  }, [deleteMessage]);
 
   // close modal when pressing escape key
   const keyPress = useCallback(
@@ -60,7 +58,7 @@ function ConfirmDeleteMessage({
   const handleDeleteMessage = (messageId) => {
     dispatch(deleteExistingMessage(messageId));
     setShowDeleteMessageModal(false);
-    // setDeleteMessage(true);
+    setDeleteMessage(true);
     history.push(`/servers/${server.id}/${channel.id}`);
   };
 
