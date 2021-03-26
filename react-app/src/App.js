@@ -26,8 +26,8 @@ import Home from "./components/HomePage/home.js";
 // import { fetchUserServers } from "./store/userInfo";
 
 // aws
-import UploadPicture from "./components/FileUpload/UploadPicture";
-import ViewImages from "./components/FileUpload/ViewImages";
+// import UploadPicture from "./components/FileUpload/UploadPicture";
+// import ViewImages from "./components/FileUpload/ViewImages";
 
 // --------------------------
 import * as sessionActions from "./store/session";
@@ -76,7 +76,6 @@ function App() {
             authenticated={authenticated}
             setAuthenticated={setAuthenticated}
           />
-          {console.log(authenticated)}
           {home()}
           <Switch>
             <ProtectedRoute
@@ -84,29 +83,18 @@ function App() {
               exact={true}
               authenticated={authenticated}
             >
-//               <UsersList />
+              {/* <UsersList /> */}
             </ProtectedRoute>
             <ProtectedRoute
               path="/users/:userId"
               exact={true}
               authenticated={authenticated}
             >
-//               <User />
+              {/* <User /> */}
             </ProtectedRoute>
             <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
               <Home></Home>
             </ProtectedRoute>
-            <ProtectedRoute
-              path="/upload"
-              exact={true}
-              authenticated={authenticated}
-            >
-              <UploadPicture />
-            </ProtectedRoute>
-            <Route path="/images" exact={true}>
-              <ViewImages />
-            </Route>
-
             <Route path="/discover" exact={true}>
               <HomePage></HomePage>
             </Route>

@@ -7,8 +7,8 @@ import "../ConfirmDelete/ConfirmDelete.css";
 import { deleteExistingChannel } from "../../store/channel";
 
 function ConfirmDeleteMessage({
-  newMessage,
-  setNewMessage,
+  // newMessage,
+  // setNewMessage,
   showDeleteMessageModal,
   setShowDeleteMessageModal,
 }) {
@@ -25,9 +25,9 @@ function ConfirmDeleteMessage({
     }
   };
 
-  useEffect(() => {
-    setNewMessage(false);
-  }, [newMessage]);
+  // useEffect(() => {
+  //   setNewMessage(false);
+  // }, [newMessage]);
 
   const channel = useSelector((state) => state.channel);
   const server = useSelector((state) => state.server);
