@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import './SignUpForm.css';
-import * as sessionActions from '../../../store/session';
-import { useDispatch } from 'react-redux';
-
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import "./SignUpForm.css";
+import * as sessionActions from "../../../store/session";
+import { useDispatch } from "react-redux";
+import { fetchUserServers } from "../../../store/userInfo";
 const SignUpForm = ({
-    authenticated,
-    setAuthenticated,
-    closeModalSignUp,
-    openModalLogin,
+  authenticated,
+  setAuthenticated,
+  closeModalSignUp,
+  openModalLogin,
 }) => {
-    const dispatch = useDispatch();
-
-
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,68 +20,64 @@ const SignUpForm = ({
   const [image, setImage] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
 
-
-    const history = useHistory();
-
+  const history = useHistory();
 
   const onSignUp = async (e) => {
     e.preventDefault();
     setImageLoading(true);
 
     const formData1 = new FormData();
-    formData1.append('username', username);
-    formData1.append('email', email);
-    formData1.append('password', password);
-    formData1.append('image', image);
+    formData1.append("username", username);
+    formData1.append("email", email);
+    formData1.append("password", password);
+    formData1.append("image", image);
     console.log(formData1);
     if (password === repeatPassword) {
-      const user = await dispatch(
-        sessionActions.signup(
-          formData1
-        )
-      );
+      const user = await dispatch(sessionActions.signup(formData1));
 
       if (!user.payload.errors) {
         setImageLoading(false);
         setAuthenticated(true);
-        return history.push('/discover');
+        dispatch(fetchUserServers(user.payload.id));
+
+        return history.push("/discover");
+      } else {
+        setErrors(user.payload.errors);
       }
     }
   };
 
-    const onLogin = (e) => {
-        e.preventDefault();
-        closeModalSignUp();
-        openModalLogin();
-    };
+  const onLogin = (e) => {
+    e.preventDefault();
+    closeModalSignUp();
+    openModalLogin();
+  };
 
+  const updateUsername = (e) => {
+    setUsername(e.target.value);
+  };
 
-    const updateUsername = (e) => {
-        setUsername(e.target.value);
-    };
+  const updateEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
-    const updateEmail = (e) => {
-        setEmail(e.target.value);
-    };
+  const updatePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
-    const updatePassword = (e) => {
-        setPassword(e.target.value);
-    };
+  const updateRepeatPassword = (e) => {
+    setRepeatPassword(e.target.value);
+  };
 
-    const updateRepeatPassword = (e) => {
-        setRepeatPassword(e.target.value);
-    };
-
-    if (authenticated) {
-        return <Redirect to="/" />;
-    }
-
+  if (authenticated) {
+    return <Redirect to="/" />;
+  }
 
   const updateImage = (e) => {
-        console.log(e.target.files[0]);
-        const file = e.target.files[0];
-        setImage(file);
-    };
+    console.log(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+  };
 
   return (
     <div className="SignUpModalWrapper">
@@ -91,6 +86,11 @@ const SignUpForm = ({
           <div className="SignUpModalFormTitle">Register</div>
         </div>
         <form onSubmit={onSignUp}>
+          <div className="LoginErrorModalContainer">
+            {errors.map((error) => (
+              <div className="login-errors__container">{error}</div>
+            ))}
+          </div>
           <div className="SignUpModalInputContainer">
             <label>User Name</label>
             <input
@@ -131,13 +131,13 @@ const SignUpForm = ({
           <div className="SignUpModalInputContainer">
             <label htmlFor="image">Profile Image</label>
             <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={updateImage}
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={updateImage}
             />
             {imageLoading && <p>Loading...</p>}
-        </div>
+          </div>
           <div className="SignUpModalButtonContainer">
             <button className="SignUpModalSubmit" type="submit">
               Sign Up
@@ -152,7 +152,6 @@ const SignUpForm = ({
       </div>
     </div>
   );
-
 };
 
 export default SignUpForm;

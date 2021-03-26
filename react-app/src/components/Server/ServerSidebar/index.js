@@ -46,6 +46,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "10px",
     padding: "20px",
+    backgroundColor: "#2c2f33",
+    border: "none",
   },
 };
 
@@ -68,6 +70,8 @@ const customStyles1 = {
     transform: "translate(-50%, -50%)",
     borderRadius: "10px",
     padding: "20px",
+    backgroundColor: "#2c2f33",
+    border: "none",
   },
 };
 

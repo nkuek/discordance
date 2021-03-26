@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { findExistingChannel } from "../../../store/channel";
@@ -12,11 +12,6 @@ import GifIcon from "@material-ui/icons/Gif";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 import io from "socket.io-client";
 import createNewMessage from "../../../store/chat";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Fade from "@material-ui/core/Fade";
-import { IconButton } from "@material-ui/core";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import MessageDropdown from "../../MessageDropdown";
 import { saveMessageToState } from "../../../store/message";
 import { Picker } from "emoji-mart";
@@ -33,6 +28,7 @@ const socket = io.connect(url, {
 function Chat() {
   const chatBox = document.querySelector(".chat__messages");
   const dispatch = useDispatch();
+  const ref = useRef();
   const [messageInput, setMessageInput] = useState("");
   const [emojiPickerState, SetEmojiPicker] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -44,6 +40,11 @@ function Chat() {
   const channel = useSelector((state) => state.channel);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const closeEmoji = (event) => {
+    console.log(event.target, ref.current);
+    if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
+  };
 
   let emojiPicker;
   if (emojiPickerState) {
@@ -61,6 +62,7 @@ function Chat() {
         onSelect={(emoji) => {
           setMessageInput(messageInput + emoji.native);
           SetEmojiPicker(false);
+          document.querySelector(".chat__message--input").focus();
         }}
       />
     );
@@ -71,30 +73,49 @@ function Chat() {
     SetEmojiPicker(!emojiPickerState);
   }
 
+  // useEffect(() => {
+  //   socket.on("load message", () => {
+  //     console.log("received message");
+  //     setNewMessage(true);
+  //   });
+  // }, []);
+
   const handleDropdown = (messageId) => {
     dispatch(saveMessageToState(messageId));
   };
-
   const handleNewMessage = (e) => {
     e.preventDefault();
     if (!messageInput) return;
-    socket.emit("new message");
+    socket.emit("new message", { user: user.username, room: channel.id });
     createNewMessage(messageInput, user, channel);
     setMessageInput("");
     setNewMessage(true);
   };
 
   useEffect(() => {
+    if (isLoaded && user && channel)
+      socket.emit("join", { username: user.username, room: channel.id });
+  }, [isLoaded, user, channel]);
+
+  useEffect(() => {
     socket.on("load message", () => {
-      console.log("received message");
+      if (process.env.NODE_ENV === "production")
+        console.log("received message");
       setNewMessage(true);
     });
   }, []);
 
   useEffect(() => {
+    socket.on("new user", (message) => {
+      console.log(message.message);
+    });
+    return () => socket.disconnect();
+  }, []);
+
+  useEffect(() => {
     dispatch(findExistingChannel(channelId));
     setNewMessage(false);
-  }, [channelId, newMessage, channel.name]);
+  }, [channelId, newMessage, channel.name, user?.profile_URL]);
 
   useEffect(() => {
     if (channel) {
@@ -105,9 +126,8 @@ function Chat() {
 
   return (
     isLoaded && (
-      <div className="chat">
+      <div onClick={closeEmoji} className="chat">
         <ChatHeader />
-
         <div className="chat__messages">
           {channel.messages &&
             channel.messages.length > 0 &&
@@ -115,13 +135,13 @@ function Chat() {
               <div key={idx} className="chatMessageContainer">
                 <div className="chatImageAndBody">
                   <div className="chatImageAndName">
-                    {!user || user.profile_URL === undefined ? (
+                    {!message || message.profile_URL === undefined ? (
                       <Avatar />
                     ) : (
                       <div>
                         <img
                           className="profile__image"
-                          src={`${user.profile_URL}`}
+                          src={`${message.profile_URL}`}
                         />
                       </div>
                     )}
@@ -140,15 +160,18 @@ function Chat() {
                   onClick={() => handleDropdown(message)}
                   className="messageButtons"
                 >
-                  <MessageDropdown
-                    newMessage={newMessage}
-                    setNewMessage={setNewMessage}
-                  />
+                  {message.user_id === user.id ? (
+                    <MessageDropdown
+                      newMessage={newMessage}
+                      setNewMessage={setNewMessage}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             ))}
         </div>
-
         <div className="chat__input">
           <AddCircleIcon fontSize="large" />
           <form onSubmit={(e) => handleNewMessage(e)}>

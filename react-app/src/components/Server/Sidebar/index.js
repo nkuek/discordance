@@ -192,7 +192,7 @@ function Sidebar() {
       <div className="sidebar">
         <div className="sidebar__top">
           <h3>{server.name}</h3>
-          <IconButton
+          {user && server.admin_id === user.id ? <IconButton
             aria-label="more"
             aria-controls="long-menu"
             aria-haspopup="true"
@@ -200,7 +200,7 @@ function Sidebar() {
             ref={anchorRef}
           >
             <ExpandMoreIcon style={{ color: "white" }} />
-          </IconButton>
+          </IconButton> : ''}
           <Popper
             open={open}
             anchorEl={anchorRef.current}
