@@ -25,3 +25,12 @@ def delete_message():
     db.session.delete(message)
     db.session.commit()
     return message.to_dict()
+
+
+@chat_routes.route('/edit/', methods=['PUT'])
+def edit_message():
+    message = request.json
+    matched_message = Message.query.get(message['messageId'])
+    matched_message.message = message['updatedMessage']
+    db.session.commit()
+    return matched_message.to_dict()

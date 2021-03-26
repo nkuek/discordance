@@ -1,30 +1,38 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
 import { updateExistingMessage } from "../../store/message";
+import { findExistingChannel } from "../../store/channel";
 import "./EditMessageForm.css";
 
 function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState("");
 
   const channel = useSelector((state) => state.channel);
+  const server = useSelector((state) => state.server);
   const messageData = useSelector((state) => state.message);
+
+  useEffect(() => {
+    if (channel.message) dispatch(findExistingChannel(channel.id));
+  }, [channel]);
 
   const editMessageModalRef = useRef();
   // close modal when clicking anywhere else
   const closeEditMessageModal = (e) => {
     if (editMessageModalRef.current === e.target) {
       setShowEditMessageModal(false);
-      //   setMessageName(message.name);
+      setMessage(messageData.message);
       setErrors("");
     }
   };
 
-  //   useEffect(() => {
-  // setMessageName(message.name);
-  //   }, [message]);
+  // useEffect(() => {
+  //   setMessage(messageData.message);
+  // }, [message]);
 
   // close modal when pressing escape key
   const keyPress = useCallback(
@@ -35,11 +43,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
         setErrors("");
       }
     },
-    [
-      showEditMessageModal,
-      setShowEditMessageModal,
-      // message
-    ]
+    [showEditMessageModal, setShowEditMessageModal, messageData]
   );
 
   useEffect(() => {
@@ -57,6 +61,8 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
   });
 
   const handleEditMessage = async (e, updatedMessage, messageId) => {
+    e.preventDefault();
+
     if (!message) {
       setErrors("Message cannot be empty!");
       return;
@@ -67,7 +73,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
     setShowEditMessageModal(false);
 
     dispatch(updateExistingMessage({ updatedMessage, messageId }));
-    // history.push(`/servers/${server.id}/${newChannel.id}`);
+    history.push(`/servers/${server.id}/${channel.id}`);
   };
 
   return showEditMessageModal ? (
