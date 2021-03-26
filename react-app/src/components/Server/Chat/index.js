@@ -82,6 +82,12 @@ function Chat() {
     // const handleClose = () => {
     //     setAnchorEl(null);
     // };
+
+    useEffect(() => {
+        if (isLoaded && user && channel)
+            socket.emit('join', { username: user.username, room: channel.id });
+    }, [isLoaded, user, channel]);
+
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
