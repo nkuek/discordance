@@ -90,6 +90,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
 
   const userServers = useSelector((state) => state?.userServers);
   const loggedInUser = useSelector((state) => state?.session.user);
+  const server = useSelector((state) => state.server);
 
   const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
   const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
@@ -122,7 +123,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   useEffect(() => {
     dispatch(fetchUserServers(loggedInUser?.id));
     setIsLoaded(true);
-  }, [dispatch, loggedInUser]);
+  }, [server]);
 
   function homeButton() {
     history.push("/");

@@ -142,7 +142,7 @@ function Sidebar() {
 
   useEffect(() => {
     if (Object.keys(server).length > 0) setIsLoaded(true);
-  }, [server]);
+  }, [server, user]);
 
   const openDeleteModal = () => {
     setShowDeleteModal((prev) => !prev);
@@ -192,15 +192,19 @@ function Sidebar() {
       <div className="sidebar">
         <div className="sidebar__top">
           <h3>{server.name}</h3>
-          {user && server.admin_id === user.id ? <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleToggle}
-            ref={anchorRef}
-          >
-            <ExpandMoreIcon style={{ color: "white" }} />
-          </IconButton> : ''}
+          {user && server.admin_id === user.id ? (
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleToggle}
+              ref={anchorRef}
+            >
+              <ExpandMoreIcon style={{ color: "white" }} />
+            </IconButton>
+          ) : (
+            ""
+          )}
           <Popper
             open={open}
             anchorEl={anchorRef.current}
