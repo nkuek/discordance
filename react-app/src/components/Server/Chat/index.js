@@ -21,7 +21,7 @@ const url =
         ? 'http://localhost:5000/'
         : 'https://discordanc3.herokuapp.com/';
 
-const socket = io(url);
+const socket = io(url, { transports: ['websocket', 'polling'] });
 
 socket.on('new user', (message) => {
     console.log(message.message);
@@ -62,7 +62,7 @@ function Chat() {
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
-        socket.emit('new message');
+        socket.emit('new message', { room: channel.id });
         createNewMessage(messageInput, user, channel);
         setMessageInput('');
         setNewMessage(true);

@@ -93,16 +93,7 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    emit('new user', {"message": f"{username} has joined the room"}, room=room)
-
-
-@socketio.on('leave')
-def on_leave(data):
-    print('leaving')
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + 'has left the room.', room=room)
+    emit('new user', {"message": f"{username} has joined the room"}, include_self=False, room=room)
 
 
 # @socketio.on('my event')
@@ -115,8 +106,9 @@ def on_leave(data):
 
 
 @socketio.on('new message')
-def new_message():
-    emit('load message', broadcast=True)
+def new_message(data):
+    room = data["room"]
+    emit('load message', room=room)
 
 
 # @socketio.on('message delete')
