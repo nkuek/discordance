@@ -68,7 +68,7 @@ export const updateExistingChannel = (updatedChannel) => async (dispatch) => {
 //delete existing channel
 
 export const deleteExistingChannel = (channelId) => async (dispatch) => {
-    await fetch('/api/servers/:id/:channel_id/', {
+    await fetch('/api/channels/', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
