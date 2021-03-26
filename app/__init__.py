@@ -13,9 +13,6 @@ from .api.auth_routes import auth_routes
 from .api.chat_routes import chat_routes
 from .api.channel_routes import channel_routes
 
-
-
-
 from .seeds import seed_commands
 
 from .config import Config
