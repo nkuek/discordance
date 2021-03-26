@@ -56,6 +56,10 @@ function Chat() {
         setNewMessage(true);
     };
 
+    const handleDropdown = (message) => {
+        dispatch(saveMessageToState(message));
+    };
+
     useEffect(() => {
         socket.on('new user', (message) => {
             console.log(message.message);
