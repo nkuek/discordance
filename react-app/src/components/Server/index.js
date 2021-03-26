@@ -29,10 +29,11 @@ function Server() {
         setFirstLoadedRender(false);
     }, [serverId]);
 
-    useEffect(() => {
-        if (server.channels && server.channels.length > 0 && firstLoadedRender)
-            history.push(`/servers/${server.id}/${server.channels[0].id}`);
-    }, [firstLoadedRender, history]);
+    // !causes infinite loop beware
+    // useEffect(() => {
+    //     if (server.channels && server.channels.length > 0 && firstLoadedRender)
+    //         history.push(`/servers/${server.id}/${server.channels[0].id}`);
+    // }, [firstLoadedRender]);
 
     return (
         isLoaded && (
