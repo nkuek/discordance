@@ -83,11 +83,6 @@ function Chat() {
     //     setAnchorEl(null);
     // };
 
-    useEffect(() => {
-        if (isLoaded && user && channel)
-            socket.emit('join', { username: user.username, room: channel.id });
-    }, [isLoaded, user, channel]);
-
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
@@ -98,10 +93,23 @@ function Chat() {
     };
 
     useEffect(() => {
+        if (isLoaded && user && channel)
+            socket.emit('join', { username: user.username, room: channel.id });
+    }, [isLoaded, user, channel]);
+
+    useEffect(() => {
         socket.on('load message', () => {
-            console.log('received message');
+            if (process.env.NODE_ENV === 'production')
+                console.log('received message');
             setNewMessage(true);
         });
+    }, []);
+
+    useEffect(() => {
+        socket.on('new user', (message) => {
+            console.log(message.message);
+        });
+        return () => socket.disconnect();
     }, []);
 
     useEffect(() => {
