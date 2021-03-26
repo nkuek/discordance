@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
-// import { updateExistingChannel } from "../../store/channel";
+import { updateExistingMessage } from "../../store/message";
 import "./EditMessageForm.css";
 
 function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
