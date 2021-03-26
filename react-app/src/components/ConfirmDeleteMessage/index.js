@@ -7,13 +7,10 @@ import { findExistingChannel } from "../../store/channel";
 import "../ConfirmDelete/ConfirmDelete.css";
 
 function ConfirmDeleteMessage({
-  // newMessage,
-  // setNewMessage,
   showDeleteMessageModal,
   setShowDeleteMessageModal,
 }) {
   const [deleteMessage, setDeleteMessage] = useState(false);
-  const [rerender, setRerender] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -32,11 +29,7 @@ function ConfirmDeleteMessage({
 
   useEffect(() => {
     if (deleteMessage) dispatch(findExistingChannel(channel.id));
-  }, [deleteMessage, rerender]);
-
-  useEffect(() => {
-    setRerender(true);
-  }, [channel]);
+  }, [deleteMessage]);
 
   // close modal when pressing escape key
   const keyPress = useCallback(
