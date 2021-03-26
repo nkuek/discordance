@@ -23,6 +23,7 @@ import Edu from "./components/HomePage/education.js";
 import Entertainment from "./components/HomePage/enter.js";
 import Science from "./components/HomePage/science.js";
 import Home from "./components/HomePage/home.js";
+import Developers from "./components/Developers/Developers";
 // import { fetchUserServers } from "./store/userInfo";
 
 // aws
@@ -115,6 +116,9 @@ function App() {
             </Route>
             <Route path="/servers/:serverId(\d+)">
               <Server />
+            </Route>
+            <Route path="/developers">
+              <Developers />
             </Route>
           </Switch>
         </div>

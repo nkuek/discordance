@@ -4,6 +4,7 @@ import LogoutButton from '../auth/LogoutButton/index';
 import LoginForm from '../auth/LoginForm/index';
 import SignUpForm from '../auth/SignUpForm/index';
 import './NavBar.css';
+import { NavLink } from 'react-router-dom';
 
 const customStyles = {
     overlay: {
@@ -58,6 +59,11 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
     return (
         <nav className="mainNavBar">
             <div className="navbarContainer">
+                <div className="developers__link--container">
+                    <div>
+                        <NavLink className="developers__link" to="/developers">Developers</NavLink>
+                    </div>
+                </div>
                 <div>
                     {authenticated === true ? (
                         ''
