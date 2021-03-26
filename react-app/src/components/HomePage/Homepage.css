@@ -92,6 +92,7 @@ td:hover {
   flex-wrap: wrap;
   margin-left: 90px;
   /* justify-content: space-evenly; */
+  padding-bottom: 30px;
 }
 
 .main-servers__container > .h1-communities {
@@ -194,4 +195,3 @@ a,
   background-color: #202124e1;
   margin-top: 1mm;
 }
-

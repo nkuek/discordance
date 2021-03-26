@@ -21,6 +21,7 @@ code {
     display: flex;
     flex: 1;
     background-color: #27292e;
+    min-height: calc(100vh - 60px);
 }
 
 li {
@@ -41,4 +42,3 @@ input:focus,
 button:focus {
   outline: none;
 }
-

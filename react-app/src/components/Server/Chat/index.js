@@ -164,41 +164,6 @@ function Chat() {
                             </div>
                         ))}
                 </div>
-
-                <div className="chat__input">
-                    <AddCircleIcon fontSize="large" />
-                    <form onSubmit={(e) => handleNewMessage(e)}>
-                        <input
-                            value={messageInput}
-                            onChange={(e) => setMessageInput(e.target.value)}
-                            placeholder={`message #TEST`}
-                        />
-                        <div className="emoji-container">{emojiPicker}</div>
-                        <button className="chat__inputButton" type="submit">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-                <div className="chat__inputIcons">
-                    <CardGiftcardIcon fontSize="large" />
-                    <GifIcon fontSize="large" />
-                    <EmojiEmotionsIcon
-                        className="emoji-icon"
-                        onClick={triggerPicker}
-                        fontSize="large"
-                    />
-                </div>
-
-                <div
-                    onClick={() => handleDropdown(message)}
-                    className="messageButtons"
-                >
-                    <MessageDropdown
-                        newMessage={newMessage}
-                        setNewMessage={setNewMessage}
-                    />
-                </div>
-
                 <div className="chat__input">
                     <AddCircleIcon fontSize="large" />
                     <form onSubmit={(e) => handleNewMessage(e)}>

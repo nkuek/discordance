@@ -23,9 +23,9 @@ function ConfirmDeleteMessage({
         }
     };
 
-  const channel = useSelector((state) => state.channel);
-  const server = useSelector((state) => state.server);
-  const message = useSelector((state) => state.message);
+    const channel = useSelector((state) => state.channel);
+    const server = useSelector((state) => state.server);
+    const message = useSelector((state) => state.message);
 
     useEffect(() => {
         if (deleteMessage) dispatch(findExistingChannel(channel.id));
@@ -62,31 +62,33 @@ function ConfirmDeleteMessage({
         history.push(`/servers/${server.id}/${channel.id}`);
     };
 
-  return showDeleteMessageModal ? (
-    <div
-      className="serverModalWrapper"
-      ref={deleteModalRef}
-      onClick={closeDeleteMessageModal}
-    >
-      <animated.div style={animation}>
-        <div className="deleteModalContainer">
-          <div className="deleteModalHeader">
-            {`Are you sure you want to delete this message?`}
-          </div>
-          <div className="deleteModalButtons">
-            <button
-              onClick={() => handleDeleteMessage(message.id)}
-              className="confirmDeleteModalButtonYes"
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => setShowDeleteMessageModal(false)}
-              className="confirmDeleteModalButtonNo"
-            >
-              No
-            </button>
-          </div>
+    return showDeleteMessageModal ? (
+        <div
+            className="serverModalWrapper"
+            ref={deleteModalRef}
+            onClick={closeDeleteMessageModal}
+        >
+            <animated.div style={animation}>
+                <div className="deleteModalContainer">
+                    <div className="deleteModalHeader">
+                        {`Are you sure you want to delete this message?`}
+                    </div>
+                    <div className="deleteModalButtons">
+                        <button
+                            onClick={() => handleDeleteMessage(message.id)}
+                            className="confirmDeleteModalButtonYes"
+                        >
+                            Yes
+                        </button>
+                        <button
+                            onClick={() => setShowDeleteMessageModal(false)}
+                            className="confirmDeleteModalButtonNo"
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+            </animated.div>
         </div>
     ) : null;
 }
