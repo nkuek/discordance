@@ -12,11 +12,6 @@ import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
-import { IconButton } from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MessageDropdown from '../../MessageDropdown';
 import { saveMessageToState } from '../../../store/message';
 import { Picker } from 'emoji-mart';
@@ -48,9 +43,9 @@ function Chat() {
 
     const closeEmoji = (event) => {
         console.log(event.target, ref.current);
-        if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
-
-    }
+        if (ref.current !== event.target && emojiPickerState)
+            SetEmojiPicker(false);
+    };
 
     let emojiPicker;
     if (emojiPickerState) {
@@ -68,7 +63,7 @@ function Chat() {
                 onSelect={(emoji) => {
                     setMessageInput(messageInput + emoji.native);
                     SetEmojiPicker(false);
-                    document.querySelector('.chat__message--input').focus()
+                    document.querySelector('.chat__message--input').focus();
                 }}
             />
         );
@@ -77,21 +72,11 @@ function Chat() {
     function triggerPicker(event) {
         event.preventDefault();
         SetEmojiPicker(!emojiPickerState);
-        // if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
     }
-
-    // const handleClick = (event) => {
-    //   event.preventDefault();
-    //   setAnchorEl(event.currentTarget);
-    // };
 
     const handleDropdown = (messageId) => {
         dispatch(saveMessageToState(messageId));
     };
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
-
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
@@ -124,7 +109,7 @@ function Chat() {
     useEffect(() => {
         dispatch(findExistingChannel(channelId));
         setNewMessage(false);
-    }, [channelId, newMessage, channel.name]);
+    }, [channelId, newMessage, channel.name, user?.profile_URL]);
 
     useEffect(() => {
         if (channel) {
