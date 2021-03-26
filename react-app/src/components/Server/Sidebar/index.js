@@ -141,8 +141,8 @@ function Sidebar() {
   const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    if (user && server) setIsLoaded(true);
-  }, [server, user]);
+    if (Object.keys(server).length > 0) setIsLoaded(true);
+  }, [server]);
 
   const openDeleteModal = () => {
     setShowDeleteModal((prev) => !prev);
