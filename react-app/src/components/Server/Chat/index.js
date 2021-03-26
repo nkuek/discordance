@@ -163,10 +163,12 @@ function Chat() {
                                     onClick={() => handleDropdown(message)}
                                     className="messageButtons"
                                 >
-                                    <MessageDropdown
-                                        newMessage={newMessage}
-                                        setNewMessage={setNewMessage}
-                                    />
+                                    {message.user_id === user.id && (
+                                        <MessageDropdown
+                                            newMessage={newMessage}
+                                            setNewMessage={setNewMessage}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         ))}

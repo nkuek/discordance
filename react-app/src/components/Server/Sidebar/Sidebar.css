@@ -11,7 +11,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
     background-color: #2f3135;
     color: white;
     border-bottom: 3px solid #26282c;
@@ -117,7 +116,7 @@
 .profile__image--container{
     position: relative;
     text-align: center;
-    
+
 }
 
 .profile__image:hover {
@@ -126,7 +125,7 @@
     cursor: pointer;
     opacity: 10%;
     background-color: white;
-    
+
 }
 
 .label:after{
@@ -141,5 +140,31 @@
     color: rgb(11, 245, 11);
     font-weight: bolder;
     cursor: pointer;
-    
+
+}
+
+.serverNameAndDropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.serverHeader {
+    display: flex;
+    width: 100%;
+    padding: 0px 5px 0px 20px;
+    flex-direction: column;
+}
+
+.joinNowButtonContainer {
+    padding-bottom: 20px;
+}
+
+.joinNowButton {
+    border: none;
+    font: inherit;
+    background-color: #7289da;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
