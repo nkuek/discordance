@@ -85,7 +85,7 @@ function Chat() {
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
-        socket.emit('new message');
+        socket.emit('new message', { user: user.username, room: channel.id });
         createNewMessage(messageInput, user, channel);
         setMessageInput('');
         setNewMessage(true);
