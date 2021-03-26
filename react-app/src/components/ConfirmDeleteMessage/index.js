@@ -25,7 +25,7 @@ function ConfirmDeleteMessage({
 
   const channel = useSelector((state) => state.channel);
   const server = useSelector((state) => state.server);
-  const messageId = useSelector((state) => state.message);
+  const message = useSelector((state) => state.message);
 
   useEffect(() => {
     if (deleteMessage) dispatch(findExistingChannel(channel.id));
@@ -75,7 +75,7 @@ function ConfirmDeleteMessage({
           </div>
           <div className="deleteModalButtons">
             <button
-              onClick={() => handleDeleteMessage(messageId)}
+              onClick={() => handleDeleteMessage(message.id)}
               className="confirmDeleteModalButtonYes"
             >
               Yes

@@ -1,13 +1,19 @@
 const DELETE_MESSAGE = "message/deleteMessage";
 const SAVE_MESSAGE = "message/saveMessage";
+const EDIT_MESSAGE = "message/editMessage";
 
 const deleteMessage = () => ({
   type: DELETE_MESSAGE,
 });
 
-const saveMessage = (messageId) => ({
+const saveMessage = (message) => ({
   type: SAVE_MESSAGE,
-  messageId,
+  message,
+});
+
+const editMessage = (updatedMessage) => ({
+  type: EDIT_MESSAGE,
+  updatedMessage,
 });
 
 // Delete existing message
@@ -22,8 +28,23 @@ export const deleteExistingMessage = (messageId) => async (dispatch) => {
   dispatch(deleteMessage());
 };
 
-export const saveMessageToState = (messageId) => (dispatch) => {
-  dispatch(saveMessage(messageId));
+export const saveMessageToState = (message) => (dispatch) => {
+  console.log(message);
+  dispatch(saveMessage(message));
+};
+
+// Edit existing message
+export const updateExistingMessage = (updatedMessage) => async (dispatch) => {
+  const response = await fetch("/api/chat/edit/", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedMessage),
+  });
+  const data = await response.json();
+  dispatch(editMessage);
+  return data;
 };
 
 const initialState = {};
@@ -32,8 +53,10 @@ const messageReducer = (state = initialState, action) => {
     case DELETE_MESSAGE:
       state = {};
       return state;
+    case EDIT_MESSAGE:
+      return action.updatedMessage;
     case SAVE_MESSAGE:
-      return action.messageId;
+      return action.message;
     default:
       return state;
   }
