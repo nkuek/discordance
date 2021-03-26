@@ -1,0 +1,49 @@
+
+.developer__title {
+  display: flex;
+  justify-content: center;
+}
+
+
+.developers__page--container {
+  display: flex;
+  align-items: center;
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+.developer__image--outerContainer {
+
+}
+
+.developer__image--container > img {
+  border-style: solid;
+  border-color: white;
+  border-radius: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+h2, h5 {
+  color: white;
+  text-align: center;
+}
+
+
+.link__logo {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.link__logo1 {
+  margin-right: 10px;
+}
+
+.link__logo2 {
+  margin-left: 10px;
+}
+
