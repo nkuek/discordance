@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
@@ -10,7 +10,7 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import { Avatar } from '@material-ui/core';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import { SocketContext } from '../../../context/socket';
+import io from 'socket.io-client';
 import createNewMessage from '../../../store/chat';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,23 +18,31 @@ import Fade from '@material-ui/core/Fade';
 import { IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MessageDropdown from '../../MessageDropdown';
-import { IconButton } from '@material-ui/core';
 import { saveMessageToState } from '../../../store/message';
 import { Picker } from 'emoji-mart';
 
+const url =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/'
+        : 'https://discordanc3.herokuapp.com/';
+
+const socket = io.connect(url, {
+    secure: true,
+});
+
 function Chat() {
-    const socket = useContext(SocketContext);
-    const prevRoomRef = useRef();
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
     const [messageInput, setMessageInput] = useState('');
     const [emojiPickerState, SetEmojiPicker] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [newMessage, setNewMessage] = useState(false);
+
     const { channelId } = useParams();
 
     const user = useSelector((state) => state.session.user);
     const channel = useSelector((state) => state.channel);
+    const message = useSelector((state) => state.message);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -65,8 +73,8 @@ function Chat() {
     }
 
     // const handleClick = (event) => {
-    //     event.preventDefault();
-    //     setAnchorEl(event.currentTarget);
+    //   event.preventDefault();
+    //   setAnchorEl(event.currentTarget);
     // };
 
     const handleDropdown = (messageId) => {
@@ -78,30 +86,18 @@ function Chat() {
     const handleNewMessage = (e) => {
         e.preventDefault();
         if (!messageInput) return;
-        socket.emit('new message', { room: channel.id });
+        socket.emit('new message');
         createNewMessage(messageInput, user, channel);
         setMessageInput('');
         setNewMessage(true);
     };
-
-    const handleDropdown = (message) => {
-        dispatch(saveMessageToState(message));
-    };
-
-    useEffect(() => {
-        socket.on('new user', (message) => {
-            console.log(message.message);
-        });
-        return () => socket.disconnect();
-    }, []);
 
     useEffect(() => {
         socket.on('load message', () => {
             console.log('received message');
             setNewMessage(true);
         });
-        return () => socket.disconnect();
-    }, [createNewMessage]);
+    }, []);
 
     useEffect(() => {
         dispatch(findExistingChannel(channelId));
@@ -182,16 +178,25 @@ function Chat() {
                             Send Message
                         </button>
                     </form>
+                </div>
+                <div className="chat__inputIcons">
+                    <CardGiftcardIcon fontSize="large" />
+                    <GifIcon fontSize="large" />
+                    <EmojiEmotionsIcon
+                        className="emoji-icon"
+                        onClick={triggerPicker}
+                        fontSize="large"
+                    />
+                </div>
 
-                    <div className="chat__inputIcons">
-                        <CardGiftcardIcon fontSize="large" />
-                        <GifIcon fontSize="large" />
-                        <EmojiEmotionsIcon
-                            className="emoji-icon"
-                            onClick={triggerPicker}
-                            fontSize="large"
-                        />
-                    </div>
+                <div
+                    onClick={() => handleDropdown(message)}
+                    className="messageButtons"
+                >
+                    <MessageDropdown
+                        newMessage={newMessage}
+                        setNewMessage={setNewMessage}
+                    />
                 </div>
             </div>
         )
