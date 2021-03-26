@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { findExistingChannel } from '../../../store/channel';
@@ -9,32 +9,22 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import { Avatar } from '@material-ui/core';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import io from 'socket.io-client';
+import { SocketContext } from '../../../context/socket';
 import createNewMessage from '../../../store/chat';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import Emoji from '../../Emojis/Emojis';
 
-const url =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:5000/'
-        : 'https://discordanc3.herokuapp.com/';
-
-const socket = io(url, { transports: ['websocket', 'polling'] });
-
-socket.on('new user', (message) => {
-    console.log(message.message);
-});
-
 function Chat() {
+    const socket = useContext(SocketContext);
+    const prevRoomRef = useRef();
+
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
     const [messageInput, setMessageInput] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
     const [newMessage, setNewMessage] = useState(false);
-    const [messages, setMessages] = useState([]);
-
     const { channelId } = useParams();
 
     const user = useSelector((state) => state.session.user);
@@ -45,11 +35,6 @@ function Chat() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    // useEffect(() => {
-    //     socket.on('message', msg => {
-    //         setMessages(messages => [...messages, msg])
-    //     })
-    // })
 
     useEffect(() => {
         if (isLoaded && user && channel)
@@ -69,11 +54,19 @@ function Chat() {
     };
 
     useEffect(() => {
+        socket.on('new user', (message) => {
+            console.log(message.message);
+        });
+        return () => socket.disconnect();
+    }, []);
+
+    useEffect(() => {
         socket.on('load message', () => {
             console.log('received message');
             setNewMessage(true);
         });
-    }, []);
+        return () => socket.disconnect();
+    }, [createNewMessage]);
 
     useEffect(() => {
         dispatch(findExistingChannel(channelId));

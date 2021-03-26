@@ -93,7 +93,7 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    emit('new user', {"message": f"{username} has joined the room"}, include_self=False, room=room)
+    emit('new user', {"message": f"{username} has joined the room"}, include_self=False, room=room )
 
 
 # @socketio.on('my event')
