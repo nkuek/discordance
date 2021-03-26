@@ -32,8 +32,9 @@ def find_channel():
                          message in channelSearch.messages]
 
     for formattedMessage in formattedMessages:
-        messageUsername = User.query.get(formattedMessage['user_id']).username
-        formattedMessage['username'] = messageUsername
+        messageUsername = User.query.get(formattedMessage['user_id'])
+        formattedMessage['profile_URL'] = messageUsername.profile_URL
+        formattedMessage['username'] = messageUsername.username
 
     existingChannel['messages'] = formattedMessages
     return existingChannel
