@@ -1,5 +1,7 @@
 from flask import Blueprint, request
 from app.models import Server, db, User, Channel
+from sqlalchemy import desc
+
 
 channel_routes = Blueprint('channels', __name__)
 
