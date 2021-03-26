@@ -11,10 +11,13 @@ import BlurCircularRoundedIcon from "@material-ui/icons/BlurCircularRounded";
 import ServerForm from "../../ServerForm";
 import "./ServerSidebar.css";
 import { fetchUserServers } from "../../../store/userInfo";
-import { findExistingServer } from "../../../store/server";
-import Modal from "react-modal";
+import { findExistingServer, clearServerState } from "../../../store/server";
 import LoginForm from "../../auth/LoginForm/index.js";
 import SignUpForm from "../../auth/SignUpForm/index.js";
+
+
+
+
 const CustomBlurCircularRoundedIcon = withStyles({
   root: {
     borderRadius: "100%",
@@ -26,56 +29,6 @@ const CustomBlurCircularRoundedIcon = withStyles({
     },
   },
 })(BlurCircularRoundedIcon);
-
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
-  },
-  content: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "10px",
-    padding: "20px",
-    backgroundColor: "#2c2f33",
-    border: "none",
-  },
-};
-
-const customStyles1 = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.0)",
-  },
-  content: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "10px",
-    padding: "20px",
-    backgroundColor: "#2c2f33",
-    border: "none",
-  },
-};
-
-Modal.setAppElement("#root");
 
 function ServerSidebar({ authenticated, setAuthenticated }) {
   const dispatch = useDispatch();
@@ -96,29 +49,6 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   const userServers = useSelector((state) => state?.userServers);
   const loggedInUser = useSelector((state) => state?.session.user);
 
-  const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
-  const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
-
-  function openModalLogin() {
-    setIsOpenLogin(true);
-  }
-
-  function openModalSignUp() {
-    setIsOpenSignUp(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = '#f00';
-  }
-
-  function closeModalLogin() {
-    setIsOpenLogin(false);
-  }
-
-  function closeModalSignUp() {
-    setIsOpenSignUp(false);
-  }
 
   useEffect(() => {
     if (serverId) dispatch(findExistingServer(serverId));
@@ -130,16 +60,14 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   }, [server]);
 
   function homeButton() {
+    dispatch(clearServerState());
     history.push("/");
   }
 
   function discover() {
+    dispatch(clearServerState());
     history.push("/discover");
   }
-
-  const openServerModal = () => {
-    setShowServerModal((prev) => !prev);
-  };
 
   const handleServerClick = (e, serverId) => {
     e.preventDefault();
@@ -215,45 +143,11 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
             arrow={true}
           >
             <div>
-              <IconButton
+              {loggedInUser && <IconButton
                 className="server-icon"
-                onClick={loggedInUser ? openServerModal : openModalLogin}
               >
-                {modalIsOpenLogin && (
-                  <Modal
-                    isOpen={modalIsOpenLogin}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModalLogin}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                  >
-                    <LoginForm
-                      setIsOpenLogin={setIsOpenLogin}
-                      authenticated={authenticated}
-                      setAuthenticated={setAuthenticated}
-                      openModalSignUp={openModalSignUp}
-                      closeModalLogin={closeModalLogin}
-                    />
-                  </Modal>
-                )}
-                {modalIsOpenLogin && (
-                  <Modal
-                    isOpen={authenticated === true ? false : modalIsOpenSignUp}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModalSignUp}
-                    style={customStyles1}
-                    contentLabel="Example Modal"
-                  >
-                    <SignUpForm
-                      authenticated={authenticated}
-                      setAuthenticated={setAuthenticated}
-                      closeModalSignUp={closeModalSignUp}
-                      openModalLogin={openModalLogin}
-                    />
-                  </Modal>
-                )}
                 <AddCircleOutlineIcon />
-              </IconButton>
+              </IconButton>}
               <ServerForm
                 showServerModal={showServerModal}
                 setShowServerModal={setShowServerModal}

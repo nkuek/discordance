@@ -3,7 +3,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import LoginForm from "./components/auth/LoginForm/index";
+import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
 
 import HomePage from "./components/HomePage/index";
@@ -114,9 +114,9 @@ function App() {
             <Route path="/science&tech" exact={true}>
               <Science></Science>
             </Route>
-            <Route path="/servers/:serverId(\d+)">
+            {authenticated ? <Route path="/servers/:serverId(\d+)">
               <Server />
-            </Route>
+            </Route> : ''}
             <Route path="/developers">
               <Developers />
             </Route>

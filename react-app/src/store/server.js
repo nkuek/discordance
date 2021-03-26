@@ -2,6 +2,7 @@ const ADD_SERVER = "server/addServer";
 const FIND_SERVER = "server/findServer";
 const DELETE_SERVER = "server/deleteServer";
 const EDIT_SERVER = "server/editServer";
+const CLEAR_SERVER = "server/clearServer";
 
 const addServer = (newServer) => ({
   type: ADD_SERVER,
@@ -20,6 +21,10 @@ const deleteServer = () => ({
 const editServer = (updatedServer) => ({
   type: EDIT_SERVER,
   updatedServer,
+});
+
+const clearServer = () => ({
+  type: CLEAR_SERVER,
 });
 // check this out
 // const SET_USER = "aws/setImg";
@@ -134,6 +139,10 @@ export const updateExistingServer = (server) => async (dispatch) => {
   dispatch(editServer(updatedServer));
 };
 
+export const clearServerState = () => (dispatch) => {
+  dispatch(clearServer());
+}
+
 const initialState = {};
 const serverReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -150,6 +159,9 @@ const serverReducer = (state = initialState, action) => {
 
     case EDIT_SERVER:
       return action.updatedServer;
+
+    case CLEAR_SERVER:
+      return initialState;
 
     default:
       return state;

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-
 // import Discover from "./discover";
 
 import * as serverActions from "../../store/publicServer";
@@ -14,6 +13,7 @@ function Home() {
     dispatch(serverActions.findPublicServers());
   }, [dispatch]);
 
+  const user = useSelector((state) => state?.session.user)
   const publicServers = useSelector((state) => state?.publicServer);
 
   return (
