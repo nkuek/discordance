@@ -122,14 +122,14 @@ function Chat() {
                             <div key={idx} className="chatMessageContainer">
                                 <div className="chatImageAndBody">
                                     <div className="chatImageAndName">
-                                        {!user ||
-                                        user.profile_URL === undefined ? (
+                                        {!message ||
+                                        message.profile_URL === undefined ? (
                                             <Avatar />
                                         ) : (
                                             <div>
                                                 <img
                                                     className="profile__image"
-                                                    src={`${user.profile_URL}`}
+                                                    src={`${message.profile_URL}`}
                                                 />
                                             </div>
                                         )}
