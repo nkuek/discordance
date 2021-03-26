@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { findExistingChannel } from "../../../store/channel";
-import "./Chat.css";
-import ChatHeader from "./ChatHeader";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
-import { Avatar } from "@material-ui/core";
-import GifIcon from "@material-ui/icons/Gif";
-import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
-import io from "socket.io-client";
-import createNewMessage from "../../../store/chat";
+
+
+import React, { Children, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { findExistingChannel } from '../../../store/channel';
+import './Chat.css';
+import ChatHeader from './ChatHeader';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import { Avatar } from '@material-ui/core';
+import GifIcon from '@material-ui/icons/Gif';
+import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import io from 'socket.io-client';
+import createNewMessage from '../../../store/chat';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
+import Emoji from '../../Emojis/Emojis';
 
 const url =
-  process.env.NODE_ENV === "development" ? "http://localhost:5000/" : "/";
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/'
+        : 'https://discordanc3.herokuapp.com/';
+
 
 const socket = io.connect(url, {
   secure: true,
@@ -28,28 +37,40 @@ function Chat() {
 
   const { channelId } = useParams();
 
-  const user = useSelector((state) => state.session.user);
-  const channel = useSelector((state) => state.channel);
 
-  const handleNewMessage = (e) => {
-    e.preventDefault();
-    if (!messageInput) return;
-    setMessageInput("");
-    socket.emit("new message");
-    createNewMessage(messageInput, user, channel);
-    setNewMessage(true);
-  };
+    const user = useSelector((state) => state.session.user);
+    const channel = useSelector((state) => state.channel);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
 
-  useEffect(() => {
-    socket.on("load message", () => {
-      setNewMessage(true);
-    });
-  }, []);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  useEffect(() => {
-    dispatch(findExistingChannel(channelId));
-    setNewMessage(false);
-  }, [channelId, newMessage, dispatch]);
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleNewMessage = (e) => {
+        e.preventDefault();
+        if (!messageInput) return;
+        socket.emit('new message');
+        createNewMessage(messageInput, user, channel);
+        setMessageInput('');
+        setNewMessage(true);
+    };
+
+    useEffect(() => {
+        socket.on('load message', () => {
+            console.log('received message');
+            setNewMessage(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        dispatch(findExistingChannel(channelId));
+        setNewMessage(false);
+    }, [channelId, newMessage, channel.name]);
+
 
   useEffect(() => {
     if (channel) {
@@ -90,28 +111,38 @@ function Chat() {
             ))}
         </div>
 
-        <div className="chat__input">
-          <AddCircleIcon fontSize="large" />
-          <form onSubmit={(e) => handleNewMessage(e)}>
-            <input
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              placeholder={`message #TEST`}
-            />
-            <button className="chat__inputButton" type="submit">
-              Send Message
-            </button>
-          </form>
 
-          <div className="chat__inputIcons">
-            <CardGiftcardIcon fontSize="large" />
-            <GifIcon fontSize="large" />
-            <EmojiEmotionsIcon fontSize="large" />
-          </div>
-        </div>
-      </div>
-    )
-  );
+                <div className="chat__input">
+                    <AddCircleIcon fontSize="large" />
+                    <form onSubmit={(e) => handleNewMessage(e)}>
+                        <input
+                            value={messageInput}
+                            onChange={(e) => setMessageInput(e.target.value)}
+                            placeholder={`message #TEST`}
+                        />
+                        <button className="chat__inputButton" type="submit">
+                            Send Message
+                        </button>
+                    </form>
+                    <div className="chat__inputIcons">
+                        <CardGiftcardIcon fontSize="large" />
+                        <GifIcon fontSize="large" />
+                        <EmojiEmotionsIcon className="emoji-icon" onClick={handleClick} fontSize="large" />
+                        <Menu
+                            id="fade-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                            TransitionComponent={Fade}
+                        >
+                            <MenuItem onClick={handleClose}><Emoji setMessageInput={setMessageInput} /></MenuItem>
+                        </Menu>
+                    </div>
+                </div>
+            </div>
+        )
+    );
 }
 
 export default Chat;

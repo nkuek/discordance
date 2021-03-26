@@ -1,5 +1,5 @@
-from flask import Blueprint, json, request, jsonify, flash, request
-from app.models import Server, db, User, Channel
+from flask import Blueprint, json, request, jsonify, flash
+from app.models import Server, db, User
 
 from flask_login import current_user, login_required
 from app.s3_helpers import (
@@ -90,7 +90,7 @@ def delete_server():
 
 @server_routes.route('/edit/', methods=['PUT'])
 def edit_server():
-    
+
     matched_server = Server.query.get(request.form['id'])
     url = None
     if "image" in request.files:
@@ -112,57 +112,3 @@ def edit_server():
     data['channels'] = formattedChannels
 
     return data
-
-
-# CHANNELS
-@server_routes.route('/:id/:channel_id/', methods=['POST'])
-def add_channel():
-    channel = request.json
-    new_channel = Channel(
-        name=channel['name'],
-        server_id=channel['serverId'],
-    )
-    server = Server.query.get(channel['serverId'])
-
-    db.session.add(new_channel)
-    db.session.commit()
-    return new_channel.to_dict()
-
-
-@server_routes.route('/:id/:channel_id/', methods=['PUT'])
-def find_channel():
-    channelId = request.json
-    channelSearch = Channel.query.get(channelId)
-    channel = Channel(
-        id=channelSearch.id,
-        name=channelSearch.name,
-        server_id=channelSearch.server_id,
-    )
-
-    existingChannel = channel.to_dict()
-    formattedMessages = [message.to_dict() for
-                         message in channelSearch.messages]
-
-    for formattedMessage in formattedMessages:
-        messageUsername = User.query.get(formattedMessage['user_id']).username
-        formattedMessage['username'] = messageUsername
-
-    existingChannel['messages'] = formattedMessages
-    return existingChannel
-
-
-@server_routes.route('/:id/:channel_id/edit/', methods=['PUT'])
-def edit_channel():
-    channel = request.json
-    matched_channel = Channel.query.get(channel['channelId'])
-    matched_channel.name = channel['updatedName']
-    db.session.commit()
-    return matched_channel.to_dict()
-
-
-@server_routes.route('/:id/:channel_id/', methods=['DELETE'])
-def delete_channel():
-    channelId = request.json
-    channel = Channel.query.get(channelId)
-    db.session.delete(channel)
-    db.session.commit()
