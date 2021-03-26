@@ -6,10 +6,11 @@ import "./EditMessageForm.css";
 
 function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
   const dispatch = useDispatch();
-  const [messageName, setMessageName] = useState("");
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState("");
 
   const channel = useSelector((state) => state.channel);
+  const messageData = useSelector((state) => state.message);
 
   const editMessageModalRef = useRef();
   // close modal when clicking anywhere else
@@ -55,19 +56,19 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
     transform: showEditMessageModal ? `scale(1)` : `scale(0.8)`,
   });
 
-  //   const handleEditChannel = async (e, updatedName, channelId) => {
-  //     if (!channelName) {
-  //       setErrors("Channel name cannot be empty!");
-  //       return;
-  //     }
+  const handleEditMessage = async (e, updatedMessage, messageId) => {
+    if (!message) {
+      setErrors("Message cannot be empty!");
+      return;
+    }
 
-  //     setErrors("");
-  //     setChannelName("");
-  //     setShowEditChannelModal(false);
+    setErrors("");
+    setMessage("");
+    setShowEditMessageModal(false);
 
-  //     dispatch(updateExistingChannel({ updatedName, channelId }));
-  //     // history.push(`/servers/${server.id}/${newChannel.id}`);
-  //   };
+    dispatch(updateExistingMessage({ updatedMessage, messageId }));
+    // history.push(`/servers/${server.id}/${newChannel.id}`);
+  };
 
   return showEditMessageModal ? (
     <div
@@ -79,7 +80,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
       <animated.div style={animation}>
         <div className="messageModalContainer">
           <form
-            // onSubmit={(e) => handleEditChannel(e, channelName, channel.id)}
+            onSubmit={(e) => handleEditMessage(e, message, messageData.id)}
             className="messageModalForm"
           >
             <div className="messageModalFormTitleContainer">
@@ -92,8 +93,8 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
                 name="messageName"
                 type="text"
                 placeholder="Message"
-                value={messageName}
-                onChange={(e) => setMessageName(e.target.value)}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               ></input>
               <div className="messageModalButtonContainer">
                 <button className="messageModalSubmit" type="submit">
