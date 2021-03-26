@@ -1,87 +1,96 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import { useSpring, animated } from 'react-spring';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { deleteExistingChannel } from '../../store/channel';
-import '../ConfirmDelete/ConfirmDelete.css';
+import React, { useRef, useEffect, useCallback, useState } from "react";
+import { useSpring, animated } from "react-spring";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { deleteExistingMessage } from "../../store/message";
+import { findExistingChannel } from "../../store/channel";
+import "../ConfirmDelete/ConfirmDelete.css";
 
-function ConfirmDeleteChannel({
-    showDeleteChannelModal,
-    setShowDeleteChannelModal,
+function ConfirmDeleteMessage({
+  showDeleteMessageModal,
+  setShowDeleteMessageModal,
 }) {
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const [deleteMessage, setDeleteMessage] = useState(false);
 
-    const deleteModalRef = useRef();
-    // close modal when clicking anywhere else
-    const closeDeleteChannelModal = (e) => {
-        if (deleteModalRef.current === e.target) {
-            setShowDeleteChannelModal(false);
-        }
-    };
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const channel = useSelector((state) => state.channel);
-    const server = useSelector((state) => state.server);
+  const deleteModalRef = useRef();
+  // close modal when clicking anywhere else
+  const closeDeleteMessageModal = (e) => {
+    if (deleteModalRef.current === e.target) {
+      setShowDeleteMessageModal(false);
+    }
+  };
 
-    // close modal when pressing escape key
-    const keyPress = useCallback(
-        (e) => {
-            if (e.key === 'Escape' && showDeleteChannelModal) {
-                setShowDeleteChannelModal(false);
-            }
-        },
-        [showDeleteChannelModal, setShowDeleteChannelModal]
-    );
+  const channel = useSelector((state) => state.channel);
+  const server = useSelector((state) => state.server);
+  const message = useSelector((state) => state.message);
 
-    useEffect(() => {
-        document.addEventListener('keydown', keyPress);
-        return () => document.removeEventListener('keydown', keyPress);
-    }, [keyPress]);
+  useEffect(() => {
+    if (deleteMessage) dispatch(findExistingChannel(channel.id));
+  }, [deleteMessage]);
 
-    // Modal animations from react-spring
-    const animation = useSpring({
-        config: {
-            duration: 150,
-        },
-        opacity: showDeleteChannelModal ? 1 : 0,
-        transform: showDeleteChannelModal ? `scale(1)` : `scale(0.8)`,
-    });
+  // close modal when pressing escape key
+  const keyPress = useCallback(
+    (e) => {
+      if (e.key === "Escape" && showDeleteMessageModal) {
+        setShowDeleteMessageModal(false);
+      }
+    },
+    [showDeleteMessageModal, setShowDeleteMessageModal]
+  );
 
-    const handleDeleteChannel = (channelId) => {
-        dispatch(deleteExistingChannel(channelId));
-        setShowDeleteChannelModal(false);
-        history.push(`/servers/${server.id}`);
-    };
+  useEffect(() => {
+    document.addEventListener("keydown", keyPress);
+    return () => document.removeEventListener("keydown", keyPress);
+  }, [keyPress]);
 
-    return showDeleteChannelModal ? (
-        <div
-            className="serverModalWrapper"
-            ref={deleteModalRef}
-            onClick={closeDeleteChannelModal}
-        >
-            <animated.div style={animation}>
-                <div className="deleteModalContainer">
-                    <div className="deleteModalHeader">
-                        {`Are you sure you want to delete ${channel.name}?`}
-                    </div>
-                    <div className="deleteModalButtons">
-                        <button
-                            onClick={() => handleDeleteChannel(channel.id)}
-                            className="confirmDeleteModalButtonYes"
-                        >
-                            Yes
-                        </button>
-                        <button
-                            onClick={() => setShowDeleteChannelModal(false)}
-                            className="confirmDeleteModalButtonNo"
-                        >
-                            No
-                        </button>
-                    </div>
-                </div>
-            </animated.div>
+  // Modal animations from react-spring
+  const animation = useSpring({
+    config: {
+      duration: 150,
+    },
+    opacity: showDeleteMessageModal ? 1 : 0,
+    transform: showDeleteMessageModal ? `scale(1)` : `scale(0.8)`,
+  });
+
+  const handleDeleteMessage = (messageId) => {
+    dispatch(deleteExistingMessage(messageId));
+    setShowDeleteMessageModal(false);
+    setDeleteMessage(true);
+    history.push(`/servers/${server.id}/${channel.id}`);
+  };
+
+  return showDeleteMessageModal ? (
+    <div
+      className="serverModalWrapper"
+      ref={deleteModalRef}
+      onClick={closeDeleteMessageModal}
+    >
+      <animated.div style={animation}>
+        <div className="deleteModalContainer">
+          <div className="deleteModalHeader">
+            {`Are you sure you want to delete this message?`}
+          </div>
+          <div className="deleteModalButtons">
+            <button
+              onClick={() => handleDeleteMessage(message.id)}
+              className="confirmDeleteModalButtonYes"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setShowDeleteMessageModal(false)}
+              className="confirmDeleteModalButtonNo"
+            >
+              No
+            </button>
+          </div>
         </div>
-    ) : null;
+      </animated.div>
+    </div>
+  ) : null;
 }
 
-export default ConfirmDeleteChannel;
+export default ConfirmDeleteMessage;
