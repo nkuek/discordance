@@ -27,10 +27,6 @@
     display: flex;
     width: auto;
 }
-
-.SignUpModalSubmit {
-}
-
 .LoginModalSubmit:hover, .SignUpModalSubmit:hover {
     background-color: #6476b9;
 }
@@ -40,7 +36,7 @@
     padding-top: 10px;
     border-style: solid;
     border-radius: 10px;
-    border-color: white;
+    border: none;
     background-color: #7289da;
     cursor: pointer;
 }
