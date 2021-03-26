@@ -6,9 +6,9 @@ const deleteMessage = () => ({
   type: DELETE_MESSAGE,
 });
 
-const saveMessage = (messageId) => ({
+const saveMessage = (message) => ({
   type: SAVE_MESSAGE,
-  messageId,
+  message,
 });
 
 const editMessage = (updatedMessage) => ({
@@ -28,8 +28,9 @@ export const deleteExistingMessage = (messageId) => async (dispatch) => {
   dispatch(deleteMessage());
 };
 
-export const saveMessageToState = (messageId) => (dispatch) => {
-  dispatch(saveMessage(messageId));
+export const saveMessageToState = (message) => (dispatch) => {
+  console.log(message);
+  dispatch(saveMessage(message));
 };
 
 // Edit existing message
@@ -55,7 +56,7 @@ const messageReducer = (state = initialState, action) => {
     case EDIT_MESSAGE:
       return action.updatedMessage;
     case SAVE_MESSAGE:
-      return action.messageId;
+      return action.message;
     default:
       return state;
   }

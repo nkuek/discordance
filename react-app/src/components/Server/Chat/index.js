@@ -47,8 +47,8 @@ function Chat() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleDropdown = (messageId) => {
-    dispatch(saveMessageToState(messageId));
+  const handleDropdown = (message) => {
+    dispatch(saveMessageToState(message));
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -115,7 +115,7 @@ function Chat() {
                   </div>
                 </div>
                 <div
-                  onClick={() => handleDropdown(message.id)}
+                  onClick={() => handleDropdown(message)}
                   className="messageButtons"
                 >
                   <MessageDropdown
