@@ -1,3 +1,5 @@
+
+
 import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -21,18 +23,20 @@ const url =
         ? 'http://localhost:5000/'
         : 'https://discordanc3.herokuapp.com/';
 
+
 const socket = io.connect(url, {
-    secure: true,
+  secure: true,
 });
 
 function Chat() {
-    const chatBox = document.querySelector('.chat__messages');
-    const dispatch = useDispatch();
-    const [messageInput, setMessageInput] = useState('');
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [newMessage, setNewMessage] = useState(false);
+  const chatBox = document.querySelector(".chat__messages");
+  const dispatch = useDispatch();
+  const [messageInput, setMessageInput] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [newMessage, setNewMessage] = useState(false);
 
-    const { channelId } = useParams();
+  const { channelId } = useParams();
+
 
     const user = useSelector((state) => state.session.user);
     const channel = useSelector((state) => state.channel);
@@ -67,47 +71,46 @@ function Chat() {
         setNewMessage(false);
     }, [channelId, newMessage, channel.name]);
 
-    useEffect(() => {
-        if (channel) {
-            setIsLoaded(true);
-            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    }, [channel]);
 
-    return (
-        isLoaded && (
-            <div className="chat">
-                <ChatHeader />
+  useEffect(() => {
+    if (channel) {
+      setIsLoaded(true);
+      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }, [channel, chatBox]);
 
-                <div className="chat__messages">
-                    {channel.messages &&
-                        channel.messages.length > 0 &&
-                        channel.messages.map((message, idx) => (
-                            <div key={idx} className="chatMessageContainer">
-                                <div className="chatImageAndName">
-                                    {!user || user.profile_URL === undefined ? (
-                                        <Avatar />
-                                    ) : (
-                                        <div>
-                                            <img
-                                                className="profile__image"
-                                                src={`${user.profile_URL}`}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="messageBody">
-                                    <p className="chatUsername">
-                                        {message.username}
-                                    </p>
-                                    <p className="chatMessage">
-                                        {message.message}
-                                    </p>
-                                    {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
-                                </div>
-                            </div>
-                        ))}
+  return (
+    isLoaded && (
+      <div className="chat">
+        <ChatHeader />
+
+        <div className="chat__messages">
+          {channel.messages &&
+            channel.messages.length > 0 &&
+            channel.messages.map((message, idx) => (
+              <div key={idx} className="chatMessageContainer">
+                <div className="chatImageAndName">
+                  {!user || user.profile_URL === undefined ? (
+                    <Avatar />
+                  ) : (
+                    <div>
+                      <img
+                        className="profile__image"
+                        src={`${user.profile_URL}`}
+                        alt="profile-pic"
+                      />
+                    </div>
+                  )}
                 </div>
+                <div className="messageBody">
+                  <p className="chatUsername">{message.username}</p>
+                  <p className="chatMessage">{message.message}</p>
+                  {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
+                </div>
+              </div>
+            ))}
+        </div>
+
 
                 <div className="chat__input">
                     <AddCircleIcon fontSize="large" />
