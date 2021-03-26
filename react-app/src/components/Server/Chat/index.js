@@ -42,7 +42,6 @@ function Chat() {
   const open = Boolean(anchorEl);
 
   const closeEmoji = (event) => {
-    console.log(event.target, ref.current);
     if (ref.current !== event.target && emojiPickerState) SetEmojiPicker(false);
   };
 
