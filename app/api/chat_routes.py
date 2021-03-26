@@ -21,6 +21,9 @@ def live_chat():
 @chat_routes.route('/delete/', methods=['DELETE'])
 def delete_message():
     messageId = request.json
+    print('===========')
+    print('messageId')
+    print('===========')
     message = Message.query.get(messageId)
     db.session.delete(message)
     db.session.commit()
