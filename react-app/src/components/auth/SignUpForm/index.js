@@ -5,6 +5,9 @@ import "./SignUpForm.css";
 import * as sessionActions from "../../../store/session";
 import { useDispatch } from "react-redux";
 import { fetchUserServers } from "../../../store/userInfo";
+
+import { usePasswordValidation } from "./usePasswordValitation";
+
 const SignUpForm = ({
   authenticated,
   setAuthenticated,
@@ -22,6 +25,30 @@ const SignUpForm = ({
 
   const history = useHistory();
 
+  // const [password, setPassword] = useState({
+  //   firstPassword: "",
+  //   secondPassword: "",
+  // });
+
+  const [
+    validLength,
+    hasNumber,
+    upperCase,
+    lowerCase,
+    match,
+    specialChar,
+  ] = usePasswordValidation({
+    firstPassword: password.firstPassword,
+    secondPassword: password.secondPassword,
+  });
+
+  const setFirst = (event) => {
+    setPassword({ ...password, firstPassword: event.target.value });
+  };
+  const setSecond = (event) => {
+    setPassword({ ...password, secondPassword: event.target.value });
+  };
+
   const onSignUp = async (e) => {
     e.preventDefault();
     setImageLoading(true);
@@ -29,23 +56,36 @@ const SignUpForm = ({
     const formData1 = new FormData();
     formData1.append("username", username);
     formData1.append("email", email);
+
     formData1.append("password", password);
+
     formData1.append("image", image);
     console.log(formData1);
-    if (password === repeatPassword) {
-      const user = await dispatch(sessionActions.signup(formData1));
 
-      if (!user.payload.errors) {
-        setImageLoading(false);
-        setAuthenticated(true);
-        dispatch(fetchUserServers(user.payload.id));
+    // validLength &&
+    // hasNumber &&
+    // upperCase &&
+    // lowerCase &&
+    // match &&
+    // specialChar
 
-        return history.push("/discover");
-      } else {
-        setErrors(user.payload.errors);
-      }
+    const user = await dispatch(sessionActions.signup(formData1));
+    if (!user.payload.errors) {
+      setImageLoading(false);
+      setAuthenticated(true);
+      dispatch(fetchUserServers(user.payload.id));
+
+      return history.push("/discover");
+    } else {
+      setErrors(user.payload.errors);
     }
   };
+
+  // let passwordValidation = "";
+
+  // if (password !== repeatPassword) {
+  //   passwordValidation = "password most match";
+  // }
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -87,6 +127,8 @@ const SignUpForm = ({
         </div>
         <form onSubmit={onSignUp}>
           <div className="LoginErrorModalContainer">
+            {/* {validLength ? <span>True</span> : <span>False</span>} */}
+
             {errors.map((error) => (
               <div className="login-errors__container">{error}</div>
             ))}
@@ -115,7 +157,9 @@ const SignUpForm = ({
               type="password"
               name="password"
               onChange={updatePassword}
+              // onChange={setFirst}
               value={password}
+              required={true}
             ></input>
           </div>
           <div className="SignUpModalInputContainer">
@@ -124,6 +168,7 @@ const SignUpForm = ({
               type="password"
               name="repeat_password"
               onChange={updateRepeatPassword}
+              // onChange={setSecond}
               value={repeatPassword}
               required={true}
             ></input>
