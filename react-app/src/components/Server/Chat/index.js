@@ -42,7 +42,6 @@ function Chat() {
 
     const user = useSelector((state) => state.session.user);
     const channel = useSelector((state) => state.channel);
-    const message = useSelector((state) => state.message);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -153,7 +152,7 @@ function Chat() {
                                     </div>
                                 </div>
                                 <div
-                                    onClick={() => handleDropdown(message.id)}
+                                    onClick={() => handleDropdown(message)}
                                     className="messageButtons"
                                 >
                                     <MessageDropdown
