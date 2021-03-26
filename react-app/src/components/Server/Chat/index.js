@@ -15,11 +15,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import Emoji from '../../Emojis/Emojis';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import MessageDropdown from '../../MessageDropdown';
+import { IconButton } from '@material-ui/core';
+import { saveMessageToState } from '../../../store/message';
 
 function Chat() {
     const socket = useContext(SocketContext);
     const prevRoomRef = useRef();
-
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
     const [messageInput, setMessageInput] = useState('');
@@ -90,27 +93,45 @@ function Chat() {
                         channel.messages.length > 0 &&
                         channel.messages.map((message, idx) => (
                             <div key={idx} className="chatMessageContainer">
-                                <div className="chatImageAndName">
-                                    {!user || user.profile_URL === undefined ? (
-                                        <Avatar />
-                                    ) : (
-                                        <div>
-                                            <img
-                                                className="profile__image"
-                                                src={`${user.profile_URL}`}
-                                                alt="profile-pic"
-                                            />
+                                <div className="chatImageAndBody">
+                                    <div className="chatImageAndName">
+                                        {!user ||
+                                        user.profile_URL === undefined ? (
+                                            <Avatar />
+                                        ) : (
+                                            <div>
+                                                <img
+                                                    className="profile__image"
+                                                    src={`${user.profile_URL}`}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="messageBodyAndButtons">
+                                        <div className="messageBody">
+                                            <p className="chatUsername">
+                                                {message.username}
+                                            </p>
+                                            <p className="chatMessage">
+                                                {message.message}
+                                            </p>
+                                            <button
+                                                className="chat__inputButton"
+                                                type="submit"
+                                            >
+                                                Send Message
+                                            </button>
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
-                                <div className="messageBody">
-                                    <p className="chatUsername">
-                                        {message.username}
-                                    </p>
-                                    <p className="chatMessage">
-                                        {message.message}
-                                    </p>
-                                    {/* <button onClick={(e) => deleteMessage(e)}>X</button> */}
+                                <div
+                                    onClick={() => handleDropdown(message.id)}
+                                    className="messageButtons"
+                                >
+                                    <MessageDropdown
+                                        newMessage={newMessage}
+                                        setNewMessage={setNewMessage}
+                                    />
                                 </div>
                             </div>
                         ))}
@@ -128,6 +149,7 @@ function Chat() {
                             Send Message
                         </button>
                     </form>
+
                     <div className="chat__inputIcons">
                         <CardGiftcardIcon fontSize="large" />
                         <GifIcon fontSize="large" />
