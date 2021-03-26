@@ -1,5 +1,3 @@
-
-
 import React, { Children, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -17,6 +15,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import Emoji from '../../Emojis/Emojis';
+import { IconButton } from "@material-ui/core";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import MessageDropdown from "../../MessageDropdown";
+import { saveMessageToState } from "../../../store/message";
 
 const url =
     process.env.NODE_ENV === 'development'
@@ -28,12 +30,14 @@ const socket = io.connect(url, {
   secure: true,
 });
 
+
 function Chat() {
   const chatBox = document.querySelector(".chat__messages");
   const dispatch = useDispatch();
   const [messageInput, setMessageInput] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [newMessage, setNewMessage] = useState(false);
+
 
   const { channelId } = useParams();
 
@@ -47,6 +51,9 @@ function Chat() {
         setAnchorEl(event.currentTarget);
     };
 
+  const handleDropdown = (messageId) => {
+    dispatch(saveMessageToState(messageId));
+  };
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -71,7 +78,6 @@ function Chat() {
         setNewMessage(false);
     }, [channelId, newMessage, channel.name]);
 
-
   useEffect(() => {
     if (channel) {
       setIsLoaded(true);
@@ -79,11 +85,11 @@ function Chat() {
     }
   }, [channel, chatBox]);
 
+
   return (
     isLoaded && (
       <div className="chat">
         <ChatHeader />
-
         <div className="chat__messages">
           {channel.messages &&
             channel.messages.length > 0 &&
@@ -112,14 +118,28 @@ function Chat() {
         </div>
 
 
-                <div className="chat__input">
-                    <AddCircleIcon fontSize="large" />
-                    <form onSubmit={(e) => handleNewMessage(e)}>
-                        <input
-                            value={messageInput}
-                            onChange={(e) => setMessageInput(e.target.value)}
-                            placeholder={`message #TEST`}
+        <div className="chat__messages">
+          {channel.messages &&
+            channel.messages.length > 0 &&
+            channel.messages.map((message, idx) => (
+              <div key={idx} className="chatMessageContainer">
+                <div className="chatImageAndBody">
+                  <div className="chatImageAndName">
+                    {!user || user.profile_URL === undefined ? (
+                      <Avatar />
+                    ) : (
+                      <div>
+                        <img
+                          className="profile__image"
+                          src={`${user.profile_URL}`}
                         />
+                      </div>
+                    )}
+                  </div>
+                  <div className="messageBodyAndButtons">
+                    <div className="messageBody">
+                      <p className="chatUsername">{message.username}</p>
+                      <p className="chatMessage">{message.message}</p>
                         <button className="chat__inputButton" type="submit">
                             Send Message
                         </button>
@@ -138,11 +158,45 @@ function Chat() {
                         >
                             <MenuItem onClick={handleClose}><Emoji setMessageInput={setMessageInput} /></MenuItem>
                         </Menu>
+
                     </div>
+                  </div>
                 </div>
-            </div>
-        )
-    );
+                <div
+                  onClick={() => handleDropdown(message.id)}
+                  className="messageButtons"
+                >
+                  <MessageDropdown
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}
+                  />
+                </div>
+              </div>
+            ))}
+        </div>
+
+        <div className="chat__input">
+          <AddCircleIcon fontSize="large" />
+          <form onSubmit={(e) => handleNewMessage(e)}>
+            <input
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder={`message #TEST`}
+            />
+            <button className="chat__inputButton" type="submit">
+              Send Message
+            </button>
+          </form>
+
+          <div className="chat__inputIcons">
+            <CardGiftcardIcon fontSize="large" />
+            <GifIcon fontSize="large" />
+            <EmojiEmotionsIcon fontSize="large" />
+          </div>
+        </div>
+      </div>
+    )
+  );
 }
 
 export default Chat;

@@ -8,11 +8,11 @@ import {
   ClickAwayListener,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
-import SettingsIcon from "@material-ui/icons/Settings";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ConfirmDeleteChannel from "../ConfirmDeleteChannel";
-import EditChannelForm from "../EditChannelForm";
+import ConfirmDeleteMessage from "../ConfirmDeleteMessage";
+import EditMessageForm from "../EditMessageForm";
 
 const CustomMenuList = withStyles({
   root: {
@@ -42,7 +42,6 @@ const CustomMenuItem = withStyles({
 
 const CustomIconButton = withStyles({
   root: {
-    display: "none",
     padding: "6px",
     position: "relative",
     zIndex: 0,
@@ -50,18 +49,18 @@ const CustomIconButton = withStyles({
   },
 })(IconButton);
 
-const ChannelDropdown = () => {
+const MessageDropdown = ({ newMessage, setNewMessage }) => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [showDeleteChannelModal, setShowDeleteChannelModal] = useState(false);
-  const [showEditChannelModal, setShowEditChannelModal] = useState(false);
+  const [showDeleteMessageModal, setShowDeleteMessageModal] = useState(false);
+  const [showEditMessageModal, setShowEditMessageModal] = useState(false);
 
-  const openEditChannelModal = (e) => {
-    setShowEditChannelModal((prev) => !prev);
+  const openEditMessageModal = (e) => {
+    setShowEditMessageModal((prev) => !prev);
     setOpen(false);
   };
-  const openDeleteChannelModal = (e) => {
-    setShowDeleteChannelModal((prev) => !prev);
+  const openDeleteMessageModal = (e) => {
+    setShowDeleteMessageModal((prev) => !prev);
     setOpen(false);
   };
 
@@ -87,7 +86,7 @@ const ChannelDropdown = () => {
         onClick={(e) => handleToggle(e)}
         ref={anchorRef}
       >
-        <SettingsIcon style={{ color: "white" }} />
+        <MoreHorizIcon style={{ color: "white" }} />
       </CustomIconButton>
       <Popper
         open={open}
@@ -110,11 +109,11 @@ const ChannelDropdown = () => {
         >
           <ClickAwayListener onClickAway={handleClose}>
             <CustomMenuList style={{ color: "white" }}>
-              <CustomMenuItem onClick={(e) => openEditChannelModal(e)}>
+              <CustomMenuItem onClick={(e) => openEditMessageModal(e)}>
                 <div className="serverModalCategory">Edit</div>
                 <EditIcon style={{ color: "white" }} />
               </CustomMenuItem>
-              <CustomMenuItem onClick={(e) => openDeleteChannelModal(e)}>
+              <CustomMenuItem onClick={(e) => openDeleteMessageModal(e)}>
                 <div className="serverModalCategory">Delete</div>
                 <DeleteIcon style={{ color: "white" }} />
               </CustomMenuItem>
@@ -122,16 +121,18 @@ const ChannelDropdown = () => {
           </ClickAwayListener>
         </Paper>
       </Popper>
-      <ConfirmDeleteChannel
-        showDeleteChannelModal={showDeleteChannelModal}
-        setShowDeleteChannelModal={setShowDeleteChannelModal}
+      <ConfirmDeleteMessage
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+        showDeleteMessageModal={showDeleteMessageModal}
+        setShowDeleteMessageModal={setShowDeleteMessageModal}
       />
-      <EditChannelForm
-        showEditChannelModal={showEditChannelModal}
-        setShowEditChannelModal={setShowEditChannelModal}
+      <EditMessageForm
+        showEditMessageModal={showEditMessageModal}
+        setShowEditMessageModal={setShowEditMessageModal}
       />
     </>
   );
 };
 
-export default ChannelDropdown;
+export default MessageDropdown;
