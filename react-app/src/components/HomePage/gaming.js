@@ -7,7 +7,7 @@ import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
-function Entertainment() {
+function GamePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function Entertainment() {
           <h1>Featured communities</h1>
           <div className="servers-containers">
             {Object.values(publicServers).map((el) => {
-              if (el.category.includes("entertainment")) {
+              if (el.category.includes("gaming")) {
                 return (
                   <div className="server-div__container" key={el?.id}>
                     <NavLink to={`servers/${el?.id}`}>
@@ -64,4 +64,4 @@ function Entertainment() {
   );
 }
 
-export default Entertainment;
+export default GamePage;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, NavLink, Redirect, useLocation } from 'react-router-dom';
+import { useHistory, NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,7 +7,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import ExploreIcon from '@material-ui/icons/Explore';
 import { withStyles } from '@material-ui/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import GroupWorkRoundedIcon from '@material-ui/icons/GroupWorkRounded';
 import BlurCircularRoundedIcon from '@material-ui/icons/BlurCircularRounded';
 import ServerForm from '../../ServerForm';
 import './ServerSidebar.css';
@@ -83,14 +82,11 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const location = useLocation();
-    console.log(location.pathname);
     // debugger;
     const classNames = ['ServerSidebar'];
     if (location.pathname === '/' || location.pathname === '/discover') {
         classNames.push('homepage');
     }
-
-    const server = useSelector((state) => state?.server);
 
     const userServers = useSelector((state) => state?.userServers);
     const loggedInUser = useSelector((state) => state?.session.user);
@@ -121,12 +117,12 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
 
     useEffect(() => {
         if (serverId) dispatch(findExistingServer(serverId));
-    }, [serverId]);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(fetchUserServers(loggedInUser?.id));
         setIsLoaded(true);
-    }, [server]);
+    }, [dispatch, loggedInUser]);
 
     function homeButton() {
         history.push('/');
@@ -206,6 +202,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                                                         src={
                                                             userServer?.image_url
                                                         }
+                                                        alt="profile-pic"
                                                     />
                                                 </div>
                                             )}
@@ -268,7 +265,6 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                                         />
                                     </Modal>
                                 )}
-                                {console.log(modalIsOpenLogin)}
                                 <AddCircleOutlineIcon />
                             </IconButton>
                             <ServerForm

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
-import ImageUploading from "react-images-uploading";
+// import ImageUploading from 'react-images-uploading';
 import { createServer } from "../../store/server";
 import "./ServerForm.css";
 
@@ -61,7 +61,7 @@ function ServerForm({ showServerModal, setShowServerModal }) {
 
     setShowServerModal(false);
 
-    history.push(`servers/${newServer.id}`);
+    history.push(`/servers/${newServer.id}`);
   };
 
   // close modal when clicking anywhere else

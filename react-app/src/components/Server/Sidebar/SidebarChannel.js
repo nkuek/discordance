@@ -11,9 +11,9 @@ function SidebarChannel() {
     const server = useSelector((state) => state.server);
     const channel = useSelector((state) => state.channel);
 
-    useEffect(() => {
-        dispatch(findExistingServer(server.id));
-    }, [dispatch, channel, server.id]);
+    // useEffect(() => {
+    //     dispatch(findExistingServer(server.id));
+    // }, [dispatch, channel, server.id]);
 
     useEffect(() => {
         if (Object.keys(server).length > 0) setIsLoaded(true);

@@ -24,7 +24,7 @@ const deleteChannel = () => ({
 
 //add a channel
 export const createChannel = (name, serverId) => async (dispatch) => {
-    const response = await fetch('/api/servers/:id/:channel_id/', {
+    const response = await fetch(`/api/channels/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const createChannel = (name, serverId) => async (dispatch) => {
 };
 
 export const findExistingChannel = (channelId) => async (dispatch) => {
-    const response = await fetch('/api/servers/:id/:channel_id/', {
+    const response = await fetch('/api/channels/', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const findExistingChannel = (channelId) => async (dispatch) => {
 };
 
 export const updateExistingChannel = (updatedChannel) => async (dispatch) => {
-    const response = await fetch('/api/servers/:id/:channel_id/edit/', {
+    const response = await fetch('/api/channels/edit/', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

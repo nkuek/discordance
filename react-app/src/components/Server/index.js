@@ -18,7 +18,7 @@ function Server() {
 
     useEffect(() => {
         dispatch(findExistingServer(serverId));
-    }, [dispatch, serverId]);
+    }, [dispatch]);
 
     useEffect(() => {
         setIsLoaded(true);
@@ -32,7 +32,7 @@ function Server() {
     useEffect(() => {
         if (server.channels && server.channels.length > 0 && firstLoadedRender)
             history.push(`/servers/${server.id}/${server.channels[0].id}`);
-    }, [firstLoadedRender]);
+    }, [firstLoadedRender, history]);
 
     return (
         isLoaded && (

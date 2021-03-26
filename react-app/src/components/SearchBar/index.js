@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./SearchBar.css";
@@ -8,22 +8,17 @@ function SearchBar() {
 
   let [use, setUse] = useState([]);
 
-  const test = () => {
-    return <div></div>;
-  };
-
   let filter = [];
   let searchTitles;
-  let searchResult;
-  let filteredServers;
+
   let res;
-  let res1 = {};
+
   const searchBar = () => {
     window.addEventListener("keyup", (e) => {
       const searchString = e.target.value.toLowerCase();
       if (!searchString.length || searchString.length < 3) {
       } else {
-        filteredServers = servers.filter((server) => {
+        servers.filter((server) => {
           searchTitles =
             server.name.toLowerCase().includes(searchString) ||
             server.description.toLowerCase().includes(searchString);
@@ -31,14 +26,14 @@ function SearchBar() {
           filter = [searchTitles, server];
           // console.log(filter);
 
-          searchResult = filter.map((real) => {
+          return filter.map((real) => {
             // console.log(deal, true);
             // console.log(real);
             if (searchTitles === true) {
               let deal = real?.name;
               // let description = real?.description;
               // console.log(deal);
-              res = (
+              return (res = (
                 <>
                   <div className="dropdown__search-bar" id="serverSearch">
                     <li id="searchText">
@@ -58,11 +53,11 @@ function SearchBar() {
                     </li>
                   </div>
                 </>
-              );
+              ));
             }
             use = res;
 
-            setUse(use);
+            return setUse(use);
           });
         });
       }

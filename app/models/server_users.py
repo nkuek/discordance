@@ -32,8 +32,7 @@ class User(db.Model, UserMixin):
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
 
-  # aws
-    profile_url = db.relationship("Image", back_populates="user")
+
 # --------------------------------------------------------------------
     server_admin = db.relationship('Server', back_populates='admin')
     messages = db.relationship('Message', back_populates='user')
@@ -79,8 +78,7 @@ class Server(db.Model):
     updated_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
-# aws
-    profile_url = db.relationship("Image", back_populates="server")
+
 
     admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship(

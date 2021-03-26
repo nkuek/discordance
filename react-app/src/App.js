@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 // import LoginForm from "./components/auth/LoginForm/index";
 // import SignUpForm from "./components/auth/SignUpForm/index";
@@ -29,10 +28,9 @@ import Home from "./components/HomePage/home.js";
 // aws
 import UploadPicture from "./components/FileUpload/UploadPicture";
 import ViewImages from "./components/FileUpload/ViewImages";
+
 // --------------------------
 import * as sessionActions from "./store/session";
-
-import TestSocket from "./components/TestSocket";
 
 import Sidebar from "./components/Server/Sidebar";
 
@@ -86,14 +84,14 @@ function App() {
               exact={true}
               authenticated={authenticated}
             >
-              <UsersList />
+//               <UsersList />
             </ProtectedRoute>
             <ProtectedRoute
               path="/users/:userId"
               exact={true}
               authenticated={authenticated}
             >
-              <User />
+//               <User />
             </ProtectedRoute>
             <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
               <Home></Home>
@@ -129,9 +127,6 @@ function App() {
             </Route>
             <Route path="/servers/:serverId(\d+)">
               <Server />
-            </Route>
-            <Route path="/chat">
-              <TestSocket />
             </Route>
           </Switch>
         </div>
