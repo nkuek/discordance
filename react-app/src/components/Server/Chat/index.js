@@ -72,75 +72,134 @@ function Chat() {
     SetEmojiPicker(!emojiPickerState);
   }
 
-  // useEffect(() => {
-  //   socket.on("load message", () => {
-  //     console.log("received message");
-  //     setNewMessage(true);
-  //   });
-  // }, []);
+    // useEffect(() => {
+    //   socket.on("load message", () => {
+    //     console.log("received message");
+    //     setNewMessage(true);
+    //   });
+    // }, []);
 
-  const handleDropdown = (messageId) => {
-    dispatch(saveMessageToState(messageId));
-  };
-  const handleNewMessage = (e) => {
-    e.preventDefault();
-    if (!messageInput) return;
-    socket.emit("new message", { user: user.username, room: channel.id });
-    createNewMessage(messageInput, user, channel);
-    setMessageInput("");
-    setNewMessage(true);
-  };
+    const handleDropdown = (messageId) => {
+        dispatch(saveMessageToState(messageId));
+    };
+    const handleNewMessage = (e) => {
+        e.preventDefault();
+        if (!messageInput) return;
+        socket.emit('new message', { user: user.username, room: channel.id });
+        createNewMessage(messageInput, user, channel);
+        setMessageInput('');
+        setNewMessage(true);
+    };
 
-  useEffect(() => {
-    if (isLoaded && user && channel)
-      socket.emit("join", { username: user.username, room: channel.id });
-  }, [isLoaded, user, channel]);
+    useEffect(() => {
+        if (isLoaded && user && channel)
+            socket.emit('join', { username: user.username, room: channel.id });
+    }, [isLoaded, user, channel]);
 
-  useEffect(() => {
-    socket.on("load message", () => {
-      if (process.env.NODE_ENV === "production")
-        console.log("received message");
-      setNewMessage(true);
-    });
-  }, []);
+    useEffect(() => {
+        socket.on('load message', () => {
+            if (process.env.NODE_ENV === 'production')
+                console.log('received message');
+            setNewMessage(true);
+        });
+    }, []);
 
-  useEffect(() => {
-    socket.on("new user", (message) => {
-      console.log(message.message);
-    });
-    return () => socket.disconnect();
-  }, []);
+    useEffect(() => {
+        socket.on('new user', (message) => {
+            console.log(message.message);
+        });
+        return () => socket.disconnect();
+    }, []);
 
-  useEffect(() => {
-    dispatch(findExistingChannel(channelId));
-    setNewMessage(false);
-  }, [channelId, newMessage, channel.name, user?.profile_URL]);
+    useEffect(() => {
+        dispatch(findExistingChannel(channelId));
+        setNewMessage(false);
+    }, [channelId, newMessage, channel.name, user?.profile_URL]);
 
-  useEffect(() => {
-    if (channel) {
-      setIsLoaded(true);
-      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-    }
-  }, [channel, chatBox]);
+    useEffect(() => {
+        if (channel) {
+            setIsLoaded(true);
+            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }, [channel, chatBox]);
 
-  return (
-    isLoaded && (
-      <div onClick={closeEmoji} className="chat">
-        <ChatHeader />
-        <div className="chat__messages">
-          {channel.messages &&
-            channel.messages.length > 0 &&
-            channel.messages.map((message, idx) => (
-              <div key={idx} className="chatMessageContainer">
-                <div className="chatImageAndBody">
-                  <div className="chatImageAndName">
-                    {!message || !message.profile_URL ? (
-                      <Avatar />
-                    ) : (
-                      <div>
-                        <img
-                          className="profile__image"
-                          src={`${message.profile_URL}`}
+    return (
+        isLoaded && (
+            <div onClick={closeEmoji} className="chat">
+                <ChatHeader />
+                <div className="chat__messages">
+                    {channel.messages &&
+                        channel.messages.length > 0 &&
+                        channel.messages.map((message, idx) => (
+                            <div key={idx} className="chatMessageContainer">
+                                <div className="chatImageAndBody">
+                                    <div className="chatImageAndName">
+                                        {!message || !message.profile_URL ? (
+                                            <Avatar />
+                                        ) : (
+                                            <div>
+                                                <img
+                                                    className="profile__image"
+                                                    src={`${message.profile_URL}`}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="messageBodyAndButtons">
+                                        <div className="messageBody">
+                                            <p className="chatUsername">
+                                                {message.username}
+                                            </p>
+                                            <p className="chatMessage">
+                                                {message.message}
+                                            </p>
+                                            <button
+                                                className="chat__inputButton"
+                                                type="submit"
+                                            >
+                                                Send Message
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    onClick={() => handleDropdown(message)}
+                                    className="messageButtons"
+                                >
+                                    {user && message.user_id === user.id ? (
+                                        <MessageDropdown
+                                            newMessage={newMessage}
+                                            setNewMessage={setNewMessage}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                </div>
+                <div className="chat__input">
+                    <AddCircleIcon fontSize="large" />
+                    <form onSubmit={(e) => handleNewMessage(e)}>
+                        <input
+                            className="chat__message--input"
+                            value={messageInput}
+                            onChange={(e) => setMessageInput(e.target.value)}
+                            placeholder={`message #TEST`}
+                        />
+                        <div className="emoji-container">{emojiPicker}</div>
+                        <button className="chat__inputButton" type="submit">
+                            Send Message
+                        </button>
+                    </form>
+                    <div className="chat__inputIcons">
+                        <CardGiftcardIcon fontSize="large" />
+                        <GifIcon fontSize="large" />
+                        <EmojiEmotionsIcon
+                            className="emoji-icon"
+                            onClick={triggerPicker}
+                            fontSize="large"
+
                         />
                       </div>
                     )}

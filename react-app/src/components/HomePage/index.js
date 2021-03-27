@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import Discover from "./discover";
+import Discover from './discover';
 
-import * as serverActions from "../../store/publicServer";
-import "./Homepage.css";
-import SearchBar from "../SearchBar";
+import * as serverActions from '../../store/publicServer';
+import './Homepage.css';
+import SearchBar from '../SearchBar';
 
 import modalAuth from "./modalAuth.js";
 
 function HomePage() {
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,6 +61,7 @@ function HomePage() {
       {/*ends home page */}
     </>
   );
+
 }
 
 export default HomePage;

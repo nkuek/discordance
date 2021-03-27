@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route,Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from "react-modal";
 import LoginForm from './components/auth/LoginForm/index';
-// import SignUpForm from "./components/auth/SignUpForm/index";
+import SignUpForm from "./components/auth/SignUpForm/index";
+import LogoutButton from "./components/auth/LogoutButton/index";
 
 import HomePage from './components/HomePage/index';
 import NavBar from './components/NavBar/index';
@@ -35,11 +37,90 @@ import * as sessionActions from './store/session';
 
 import Sidebar from './components/Server/Sidebar';
 
-function App() {
-    const dispatch = useDispatch();
 
+const customStyles = {
+    overlay: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        zIndex: 5,
+    },
+    content: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        borderRadius: "10px",
+        padding: "20px",
+        backgroundColor: "#2c2f33",
+        border: "none",
+    },
+};
+
+Modal.setAppElement("#root");
+
+const theme = createMuiTheme({
+    overrides: {
+        MuiTooltip: {
+            tooltip: {
+                fontSize: '14px',
+                backgroundColor: 'rgb(24, 25, 28)',
+            },
+            arrow: {
+                color: 'rgb(24, 25, 28)',
+            },
+        },
+    },
+    typography: {
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontSize: 14,
+        fontWeightLight: 400,
+        fontWeightRegular: 500,
+        fontWeightMedium: 600,
+    },
+});
+
+
+export default function App() {
+    const dispatch = useDispatch();
     const [authenticated, setAuthenticated] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const [modalIsOpenLogin, setIsOpenLogin] = useState(true);
+    const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
+    // const [state, setState] = useState(false);
+
+    function openModalLogin() {
+        setIsOpenLogin(true);
+    }
+
+    function openModalSignUp() {
+        setIsOpenSignUp(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = '#f00';
+    }
+    
+    function closeModalSignUp() {
+        setIsOpenSignUp(false);
+    }
+    
+    function closeModalLogin() {
+        setIsOpenLogin(false);
+        // setState(true);
+        
+    }
+
+    // useEffect(() => {
+    //     setState(false);
+    // }, [state])
 
     useEffect(async () => {
         const user = await authenticate();
@@ -47,6 +128,7 @@ function App() {
             dispatch(sessionActions.restoreUser());
             setAuthenticated(true);
             dispatch(fetchUserServers(user.id));
+            setIsOpenLogin(false);
         }
         setLoaded(true);
     }, [dispatch]);
@@ -122,7 +204,38 @@ function App() {
                             <Route path="/servers/:serverId(\d+)">
                                 <Server />
                             </Route>
-                        ) : null}
+                        ) :
+                        <NavLink to="/">
+                        <Modal
+                            isOpen={modalIsOpenLogin}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModalLogin}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <LoginForm
+                                setIsOpenLogin={setIsOpenLogin}
+                                authenticated={authenticated}
+                                setAuthenticated={setAuthenticated}
+                                openModalSignUp={openModalSignUp}
+                                closeModalLogin={closeModalLogin}
+                            />
+                        </Modal>
+                        <Modal
+                            isOpen={modalIsOpenSignUp}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModalSignUp}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <SignUpForm
+                                authenticated={authenticated}
+                                setAuthenticated={setAuthenticated}
+                                closeModalSignUp={closeModalSignUp}
+                                openModalLogin={openModalLogin}
+                            />
+                        </Modal>
+                        </NavLink>}
                         <Route path="/developers">
                             <Developers />
                         </Route>
@@ -132,26 +245,3 @@ function App() {
         </ThemeProvider>
     );
 }
-
-export default App;
-
-const theme = createMuiTheme({
-    overrides: {
-        MuiTooltip: {
-            tooltip: {
-                fontSize: '14px',
-                backgroundColor: 'rgb(24, 25, 28)',
-            },
-            arrow: {
-                color: 'rgb(24, 25, 28)',
-            },
-        },
-    },
-    typography: {
-        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-        fontSize: 14,
-        fontWeightLight: 400,
-        fontWeightRegular: 500,
-        fontWeightMedium: 600,
-    },
-});
