@@ -13,10 +13,10 @@ class Message(db.Model):
         db.Integer, db.ForeignKey('channels.id'), nullable=False
     )
     created_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
     updated_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
 
     user = db.relationship('User', back_populates='messages')
@@ -29,5 +29,6 @@ class Message(db.Model):
             'likes': self.likes,
             'message': self.message,
             'user_id': self.user_id,
-            'channel_id': self.channel_id
+            'channel_id': self.channel_id,
+            "created_at": self.created_at
         }

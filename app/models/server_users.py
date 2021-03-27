@@ -56,7 +56,7 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "profile_URL":self.profile_URL
+            "profile_URL": self.profile_URL
         }
 
 
@@ -73,10 +73,10 @@ class Server(db.Model):
 
     category = db.Column(db.String(50), nullable=False)
     created_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
     updated_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
 
 

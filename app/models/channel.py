@@ -11,10 +11,10 @@ class Channel(db.Model):
     )
     name = db.Column(db.String(50), nullable=False)
     created_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
     updated_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow
     )
 
     servers = db.relationship('Server', back_populates='channels')
@@ -25,5 +25,5 @@ class Channel(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "server_id": self.server_id
+            "server_id": self.server_id,
         }

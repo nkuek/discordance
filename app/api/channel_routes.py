@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from app.models import Server, db, User, Channel
 from sqlalchemy import desc
+from datetime import datetime
 
 
 channel_routes = Blueprint('channels', __name__)
@@ -12,6 +13,7 @@ def add_channel():
     new_channel = Channel(
         name=channel['name'],
         server_id=channel['serverId'],
+        created_at=datetime.utcnow()
     )
 
     db.session.add(new_channel)
@@ -37,7 +39,10 @@ def find_channel():
         messageUsername = User.query.get(formattedMessage['user_id'])
         formattedMessage['profile_URL'] = messageUsername.profile_URL
         formattedMessage['username'] = messageUsername.username
-
+    formattedMessages.sort(key=lambda x: x['created_at'])
+    print('==========')
+    print(formattedMessages)
+    print('==========')
     existingChannel['messages'] = formattedMessages
     return existingChannel
 
