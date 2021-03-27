@@ -58,6 +58,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "10px",
     padding: "20px",
+    backgroundColor: "#2f3135",
+    borderColor: "#2f3135",
   },
 };
 
