@@ -60,7 +60,8 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   const [showServerModal, setShowServerModal] = useState(false);
   const [serverId, setServerId] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
+  const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
   const location = useLocation();
   // debugger;
   const classNames = ["ServerSidebar"];
@@ -71,9 +72,6 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   const userServers = useSelector((state) => state?.userServers);
   const loggedInUser = useSelector((state) => state?.session.user);
   const server = useSelector((state) => state.server);
-
-  const [modalIsOpenLogin, setIsOpenLogin] = useState(false);
-  const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
 
   function openModalLogin() {
     setIsOpenLogin(true);
@@ -206,6 +204,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                   contentLabel="Example Modal"
                 >
                   <LoginForm
+                    setIsOpenLogin={setIsOpenLogin}
                     authenticated={authenticated}
                     setAuthenticated={setAuthenticated}
                     closeModalLogin={closeModalLogin}
