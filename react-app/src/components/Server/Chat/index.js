@@ -206,28 +206,6 @@ function Chat() {
                         />
                       </div>
                   </div>
-                  <div className="messageBodyAndButtons">
-                    <div className="messageBody">
-                      <p className="chatUsername">{message.username}</p>
-                      <p className="chatMessage">{message.message}</p>
-                      <button className="chat__inputButton" type="submit">
-                        Send Message
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  onClick={() => handleDropdown(message)}
-                  className="messageButtons"
-                >
-                  {user && message.user_id === user.id ? (
-                    <MessageDropdown
-                      newMessage={newMessage}
-                      setNewMessage={setNewMessage}
-                    />
-                  ) : (
-                    ""
-                  )}
                 </div>
               </div>
         </div>
