@@ -1,139 +1,145 @@
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  min-width: 240px;
-  max-width: 240px;
-  height: calc(100vh - 58px);
-  background-color: #2f3135;
+    display: flex;
+    flex-direction: column;
+    min-width: 240px;
+    max-width: 240px;
+    height: calc(100vh - 58px);
+    background-color: #2f3135;
 }
 
 .sidebar__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #2f3135;
-  color: white;
-  border-bottom: 3px solid #26282c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2f3135;
+    color: white;
+    border-bottom: 3px solid #26282c;
 }
 
 .sidebar__description {
-  position: relative;
-  z-index: 0;
+    position: relative;
+    z-index: 0;
 }
 
 .sidebar__channels {
-  flex: 1;
+    flex: 1;
 }
 
 .sidebar__addChannel {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .sidebar__addChannel:hover {
-  color: white;
+    color: white;
 }
 
 .sidebar__channelsHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #2f3135;
-  color: gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #2f3135;
+    color: gray;
 }
 
 .sidebar__header {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar__voice,
 .sidebar__profile {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: gray;
-  background-color: #2f3135;
-  padding: 10px;
-  border-top: 1px solid gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+    background-color: #2f3135;
+    padding: 10px;
+    border-top: 1px solid gray;
+    height: 56px;
 }
 
 .sidebar__profile {
-  background-color: #202225;
+    background-color: #202225;
 }
 
 .sidebar__voiceInfo {
-  flex: 1;
-  padding: 10px;
+    flex: 1;
+    padding: 10px;
 }
 
 .sidebar__voiceIcon {
-  color: #4fb185;
+    color: #4fb185;
 }
 
-.sidebar__voiceInfo > h3 {
-  color: #4fb185;
+.sidebar__voiceInfo>h3 {
+    color: #4fb185;
+    line-height: 20px;
+    font-size: 20px;
 }
 
-.sidebar__voiceInfo > p {
-  font-size: smaller;
+.sidebar__voiceInfo>p {
+    font-size: smaller;
 }
 
-.sidebar__voiceIcons > .MuiSvgIcon-root {
-  padding: 10px;
+.sidebar__voiceIcons>.MuiSvgIcon-root {
+    padding: 0px 4px 0px 4px;
+    height: 21px;
 }
 
 .sidebar__profileInfo {
-  flex: 1;
-  padding: 10px;
+    flex: 1;
+    padding: 10px;
 }
 
-.sidebar__profileInfo > h3 {
-  color: white;
+.sidebar__profileInfo>h3 {
+    color: white;
+    line-height: 20px;
+    font-size: 20px;
 }
 
-.sidebar__profileIcons > .MuiSvgIcon-root {
-  padding: 10px;
+.sidebar__profileIcons>.MuiSvgIcon-root {
+    padding: 0px 4px 0px 4px;
 }
 
 .MuiList-root {
-  padding: 10px;
+    padding: 10px;
 }
 
 .descriptionContent {
-  font-size: 0.9em;
+    font-size: 0.9em;
 }
 
 .profile__image {
-  border-style: solid;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 0.9em;
+    border-style: solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 0.9em;
 }
 
 .profile__image--container {
-  position: relative;
-  text-align: center;
+    position: relative;
+    text-align: center;
 }
 
 .profile__image:hover {
-  display: block;
-
-  opacity: 10%;
+    display: block;
+    opacity: 10%;
 }
 
 .label:after {
-  content: "";
+    content: "";
 }
+
 .profile__image--container:hover:after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  content: "Edit";
-  color: #4fb185;
-  font-weight: bolder;
-  cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: "Edit";
+    color: #4fb185;
+    font-weight: bolder;
+    cursor: pointer;
 }
