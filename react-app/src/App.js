@@ -118,9 +118,11 @@ function App() {
                         <Route path="/science&tech" exact={true}>
                             <Science></Science>
                         </Route>
-                        <ProtectedRoute path="/servers/:serverId(\d+)">
-                            <Server />
-                        </ProtectedRoute>
+                        {authenticated ? (
+                            <Route path="/servers/:serverId(\d+)">
+                                <Server />
+                            </Route>
+                        ) : null}
                         <Route path="/developers">
                             <Developers />
                         </Route>
