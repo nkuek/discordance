@@ -8,6 +8,8 @@ import * as serverActions from "../../store/publicServer";
 import "./Homepage.css";
 import SearchBar from "../SearchBar";
 
+import modalAuth from "./modalAuth.js";
+
 function HomePage() {
   const dispatch = useDispatch();
 
@@ -19,6 +21,7 @@ function HomePage() {
 
   return (
     <>
+      <modalAuth></modalAuth>
       <Discover />
       {/* home page */}
       <div className="homePage-div__container">
