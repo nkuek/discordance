@@ -40,9 +40,6 @@ def find_channel():
         formattedMessage['profile_URL'] = messageUsername.profile_URL
         formattedMessage['username'] = messageUsername.username
     formattedMessages.sort(key=lambda x: x['created_at'])
-    print('==========')
-    print(formattedMessages)
-    print('==========')
     existingChannel['messages'] = formattedMessages
     return existingChannel
 

@@ -79,7 +79,6 @@ class Server(db.Model):
         db.DateTime, nullable=False, default=datetime.utcnow
     )
 
-
     admin = db.relationship('User', back_populates='server_admin')
     channels = db.relationship(
         'Channel', back_populates='servers', cascade='all, delete-orphan')

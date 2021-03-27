@@ -65,6 +65,8 @@
   padding: 5px;
   border: 1px solid rgb(170, 170, 170);
   font-size: 1em;
+  background-color: #fff;
+  color: black;
 }
 
 .serverModalSubmit {
