@@ -1,8 +1,3 @@
-.SignUpModalWrapper {
-  position: relative;
-  z-index: 5;
-}
-
 .ServerSidebar {
   display: flex;
   flex-direction: column;

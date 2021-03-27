@@ -135,14 +135,20 @@ function ServerForm({ showServerModal, setShowServerModal }) {
             </div>
             <div className="serverModalInputContainer">
               <label htmlFor="public">Privacy</label>
-              <select onChange={(e) => setIsPublic(e.target.value)}>
+              <select
+                className="select-class__container"
+                onChange={(e) => setIsPublic(e.target.value)}
+              >
                 <option value="true">Public</option>
                 <option value="">Private</option>
               </select>
             </div>
             <div className="serverModalInputContainer">
               <label htmlFor="serverCategory">Category</label>
-              <select onChange={(e) => setServerCategory(e.target.value)}>
+              <select
+                className="select-class__container"
+                onChange={(e) => setServerCategory(e.target.value)}
+              >
                 <option value="gaming">Gaming</option>
                 <option value="music">Music</option>
                 <option value="education">Education</option>

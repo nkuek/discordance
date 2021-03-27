@@ -3,6 +3,7 @@
   box-sizing: border-box;
   padding: 20px;
   color: #fff;
+  background-color: #2c2f33;
 }
 
 .SignUpModalFormTitleContainer {
@@ -14,7 +15,6 @@
 
 .SignUpErrorModalContainer {
   border-radius: 10px;
-  background-color: rgb(237, 210, 210);
   margin-left: 10px;
   color: #f04747;
 }
@@ -46,7 +46,7 @@
   font: inherit;
   background-color: #7289da;
   border: none;
-  color: white;
+  /* color: white; */
   padding: 10px;
   margin-left: 10px;
   cursor: pointer;

@@ -58,6 +58,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "10px",
     padding: "20px",
+    backgroundColor: "#2f3135",
+    borderColor: "#2f3135",
   },
 };
 
@@ -192,15 +194,19 @@ function Sidebar() {
       <div className="sidebar">
         <div className="sidebar__top">
           <h3>{server.name}</h3>
-          {user && server.admin_id === user.id ? <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleToggle}
-            ref={anchorRef}
-          >
-            <ExpandMoreIcon style={{ color: "white" }} />
-          </IconButton> : ''}
+          {user && server.admin_id === user.id ? (
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleToggle}
+              ref={anchorRef}
+            >
+              <ExpandMoreIcon style={{ color: "white" }} />
+            </IconButton>
+          ) : (
+            ""
+          )}
           <Popper
             open={open}
             anchorEl={anchorRef.current}
