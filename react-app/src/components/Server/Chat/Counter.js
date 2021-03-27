@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./Chat.css";
+import { addMessageLike } from "../../../store/message";
+
 function Counter({ authenticated, setAuthenticated }) {
-  // Set the initial count state to zero, 0
-  const [count, setCount] = useState(0);
+  const message = useSelector((state) => state?.message);
+  const dispatch = useDispatch();
+
+  const [count, setCount] = useState(message.likes);
+  const [status, setStatus] = useState(false);
+
+  console.log(message?.id);
+
+  useEffect(() => {
+    dispatch(addMessageLike(message?.id));
+  }, [count, dispatch]);
 
   // Create handleIncrement event handler
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
   };
-  const [status, setStatus] = useState(false);
 
-  function changeStatus() {
-    setStatus(true);
-  }
+  //   function changeStatus() {
+  //     setStatus(true);
+  //   }
 
   //Create handleDecrement event handler
   const handleDecrement = () => {
@@ -26,7 +37,7 @@ function Counter({ authenticated, setAuthenticated }) {
     <div>
       <div>
         {/* <button onClick={handleDecrement}>-</button> */}
-        <h5>{count}</h5>
+        <h5>{message?.likes}</h5>
         <button id="heart-like__btn" onClick={handleIncrement}>
           ❤️
         </button>

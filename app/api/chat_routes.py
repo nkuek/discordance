@@ -34,3 +34,14 @@ def edit_message():
     matched_message.message = message['updatedMessage']
     db.session.commit()
     return matched_message.to_dict()
+
+
+@chat_routes.route('/like/', methods=['PUT'])
+def add_like():
+    message = request.json
+    print("XXXXXXXXXXXXXXXXXXXXXX")
+    print(message)
+    matched_message = Message.query.get(message['messageId'])
+    matched_message.likes = message['newNumber']
+    db.session.commit()
+    return matched_message.to_dict()
