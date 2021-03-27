@@ -15,6 +15,8 @@ import createNewMessage from "../../../store/chat";
 import MessageDropdown from "../../MessageDropdown";
 import { saveMessageToState } from "../../../store/message";
 import { Picker } from "emoji-mart";
+import { addMessageLike } from "../../../store/message";
+
 import Counter from "./Counter";
 
 const url =
@@ -27,6 +29,8 @@ const socket = io.connect(url, {
 });
 
 function Chat() {
+  const message = useSelector((state) => state.message);
+
   const chatBox = document.querySelector(".chat__messages");
   const dispatch = useDispatch();
   const ref = useRef();
@@ -34,13 +38,13 @@ function Chat() {
   const [emojiPickerState, SetEmojiPicker] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [newMessage, setNewMessage] = useState(false);
+  //   const [count, setCount] = useState(message.likes);
 
   const { channelId } = useParams();
 
   const user = useSelector((state) => state.session.user);
   const channel = useSelector((state) => state.channel);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const message = useSelector((state) => state.message);
   const open = Boolean(anchorEl);
 
   const closeEmoji = (event) => {
@@ -74,13 +78,6 @@ function Chat() {
     SetEmojiPicker(!emojiPickerState);
   }
 
-  // useEffect(() => {
-  //   socket.on("load message", () => {
-  //     console.log("received message");
-  //     setNewMessage(true);
-  //   });
-  // }, []);
-
   const handleDropdown = (messageId) => {
     dispatch(saveMessageToState(messageId));
   };
@@ -91,6 +88,11 @@ function Chat() {
     createNewMessage(messageInput, user, channel);
     setMessageInput("");
     setNewMessage(true);
+  };
+
+  const handleIncrement = (messageId) => {
+    dispatch(saveMessageToState(messageId));
+    // setCount((prevCount) => prevCount + 1);
   };
 
   useEffect(() => {
@@ -112,6 +114,10 @@ function Chat() {
     });
     return () => socket.disconnect();
   }, []);
+
+  useEffect(() => {
+    dispatch(addMessageLike(message?.id));
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(findExistingChannel(channelId));
@@ -157,7 +163,9 @@ function Chat() {
                     </div>
                   </div>
                 </div>
-                <Counter />
+                <a id="heart-like__btn" onClick={handleIncrement}>
+                  ❤️
+                </a>
                 <div
                   onClick={() => handleDropdown(message)}
                   className="messageButtons"
