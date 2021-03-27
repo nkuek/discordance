@@ -25,30 +25,6 @@ const SignUpForm = ({
 
   const history = useHistory();
 
-  // const [password, setPassword] = useState({
-  //   firstPassword: "",
-  //   secondPassword: "",
-  // });
-
-  const [
-    validLength,
-    hasNumber,
-    upperCase,
-    lowerCase,
-    match,
-    specialChar,
-  ] = usePasswordValidation({
-    firstPassword: password.firstPassword,
-    secondPassword: password.secondPassword,
-  });
-
-  const setFirst = (event) => {
-    setPassword({ ...password, firstPassword: event.target.value });
-  };
-  const setSecond = (event) => {
-    setPassword({ ...password, secondPassword: event.target.value });
-  };
-
   const onSignUp = async (e) => {
     e.preventDefault();
     setImageLoading(true);
@@ -62,30 +38,26 @@ const SignUpForm = ({
     formData1.append("image", image);
     console.log(formData1);
 
-    // validLength &&
-    // hasNumber &&
-    // upperCase &&
-    // lowerCase &&
-    // match &&
-    // specialChar
-
     const user = await dispatch(sessionActions.signup(formData1));
-    if (!user.payload.errors) {
-      setImageLoading(false);
-      setAuthenticated(true);
-      dispatch(fetchUserServers(user.payload.id));
 
-      return history.push("/discover");
-    } else {
-      setErrors(user.payload.errors);
+    if (password === repeatPassword) {
+      if (!user.payload.errors) {
+        setImageLoading(false);
+        setAuthenticated(true);
+        dispatch(fetchUserServers(user.payload.id));
+
+        return history.push("/discover");
+      } else {
+        setErrors(user.payload.errors);
+      }
     }
   };
 
-  // let passwordValidation = "";
+  let passwordValidation = "";
 
-  // if (password !== repeatPassword) {
-  //   passwordValidation = "password most match";
-  // }
+  if (password !== repeatPassword) {
+    passwordValidation = "Password must match!";
+  }
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -128,7 +100,7 @@ const SignUpForm = ({
         <form onSubmit={onSignUp}>
           <div className="LoginErrorModalContainer">
             {/* {validLength ? <span>True</span> : <span>False</span>} */}
-
+            <div className="login-errors__container"> {passwordValidation}</div>
             {errors.map((error) => (
               <div className="login-errors__container">{error}</div>
             ))}
