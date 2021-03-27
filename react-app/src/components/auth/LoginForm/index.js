@@ -56,7 +56,7 @@ const LoginForm = ({
     setPassword(e.target.value);
   };
 
-  console.log(authenticated);
+  // console.log(authenticated);
   if (authenticated) {
     return <Redirect to="/" />;
   }

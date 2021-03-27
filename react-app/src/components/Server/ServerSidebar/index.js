@@ -46,31 +46,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: "10px",
     padding: "20px",
-    backgroundColor: "#2f3135",
-    borderColor: "#2f3135",
-  },
-};
-
-const customStyles1 = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.0)",
-  },
-  content: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "10px",
-    padding: "20px",
-    backgroundColor: "#2f3135",
+    backgroundColor: "#2c2f33",
     borderColor: "#2f3135",
   },
 };
@@ -219,41 +195,40 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
                 className="server-icon"
                 onClick={loggedInUser ? openServerModal : openModalLogin}
               >
-                {modalIsOpenLogin && (
-                  <Modal
-                    isOpen={modalIsOpenLogin}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModalLogin}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                  >
-                    <LoginForm
-                      setIsOpenLogin={setIsOpenLogin}
-                      authenticated={authenticated}
-                      setAuthenticated={setAuthenticated}
-                      openModalSignUp={openModalSignUp}
-                      closeModalLogin={closeModalLogin}
-                    />
-                  </Modal>
-                )}
-                {modalIsOpenLogin && (
-                  <Modal
-                    isOpen={authenticated === true ? false : modalIsOpenSignUp}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModalSignUp}
-                    style={customStyles1}
-                    contentLabel="Example Modal"
-                  >
-                    <SignUpForm
-                      authenticated={authenticated}
-                      setAuthenticated={setAuthenticated}
-                      closeModalSignUp={closeModalSignUp}
-                      openModalLogin={openModalLogin}
-                    />
-                  </Modal>
-                )}
                 <AddCircleOutlineIcon />
               </IconButton>
+              {modalIsOpenLogin && (
+                <Modal
+                  isOpen={modalIsOpenLogin}
+                  // onAfterOpen={afterOpenModal}
+                  onRequestClose={closeModalLogin}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                >
+                  <LoginForm
+                    authenticated={authenticated}
+                    setAuthenticated={setAuthenticated}
+                    closeModalLogin={closeModalLogin}
+                    openModalSignUp={openModalSignUp}
+                  />
+                </Modal>
+              )}
+              {modalIsOpenSignUp && (
+                <Modal
+                  isOpen={authenticated === true ? false : modalIsOpenSignUp}
+                  // onAfterOpen={afterOpenModal}
+                  onRequestClose={closeModalSignUp}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                >
+                  <SignUpForm
+                    authenticated={authenticated}
+                    setAuthenticated={setAuthenticated}
+                    closeModalSignUp={closeModalSignUp}
+                    openModalLogin={openModalLogin}
+                  />
+                </Modal>
+              )}
               <ServerForm
                 showServerModal={showServerModal}
                 setShowServerModal={setShowServerModal}
