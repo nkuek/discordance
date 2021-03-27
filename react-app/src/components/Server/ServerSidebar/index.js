@@ -124,7 +124,7 @@ function ServerSidebar({ authenticated, setAuthenticated }) {
   return (
     isLoaded && (
       <div className={classNames.join(" ")}>
-        <div>
+        <div className="outerServerContainer">
           <Tooltip
             title="Home"
             key="home"
