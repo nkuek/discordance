@@ -15,6 +15,9 @@ import createNewMessage from "../../../store/chat";
 import MessageDropdown from "../../MessageDropdown";
 import { saveMessageToState } from "../../../store/message";
 import { Picker } from "emoji-mart";
+import { addMessageLike } from "../../../store/message";
+
+import Counter from "./Counter";
 
 const url =
   process.env.NODE_ENV === "development"
@@ -26,6 +29,8 @@ const socket = io.connect(url, {
 });
 
 function Chat() {
+  const message = useSelector((state) => state.message);
+
   const chatBox = document.querySelector(".chat__messages");
   const dispatch = useDispatch();
   const ref = useRef();
@@ -33,13 +38,14 @@ function Chat() {
   const [emojiPickerState, SetEmojiPicker] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [newMessage, setNewMessage] = useState(false);
+    // const [count, setCount] = useState(message.likes);
+  const [newLikedMessage, setNewLikedMessage] = useState(false);
 
   const { channelId } = useParams();
 
   const user = useSelector((state) => state.session.user);
   const channel = useSelector((state) => state.channel);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const message = useSelector((state) => state.message);
   const open = Boolean(anchorEl);
 
   const closeEmoji = (event) => {
@@ -73,141 +79,139 @@ function Chat() {
     SetEmojiPicker(!emojiPickerState);
   }
 
-    // useEffect(() => {
-    //   socket.on("load message", () => {
-    //     console.log("received message");
-    //     setNewMessage(true);
-    //   });
-    // }, []);
+  const handleDropdown = (messageId) => {
+    dispatch(saveMessageToState(messageId));
+  };
+  const handleNewMessage = (e) => {
+    e.preventDefault();
+    if (!messageInput) return;
+    socket.emit("new message", { user: user.username, room: channel.id });
+    createNewMessage(messageInput, user, channel);
+    setMessageInput("");
+    setNewMessage(true);
+  };
 
-    const handleDropdown = (messageId) => {
-        dispatch(saveMessageToState(messageId));
-    };
-    const handleNewMessage = (e) => {
-        e.preventDefault();
-        if (!messageInput) return;
-        socket.emit('new message', { user: user.username, room: channel.id });
-        createNewMessage(messageInput, user, channel);
-        setMessageInput('');
-        setNewMessage(true);
-    };
+  const handleIncrement = (messageId) => {
+    setNewLikedMessage(true);
+    dispatch(addMessageLike(messageId));
+    // dispatch(saveMessageToState(messageId));
+    // setCount((prevCount) => prevCount + 1);
+  };
 
-    useEffect(() => {
-        if (isLoaded && user && channel)
-            socket.emit('join', { username: user.username, room: channel.id });
-    }, [isLoaded, user, channel]);
+  useEffect(()=> {
+    if(newLikedMessage) {
+      dispatch(findExistingChannel(channelId));
+      setNewLikedMessage(false)
+    }
+  }, [dispatch, newLikedMessage]);
 
-    useEffect(() => {
-        socket.on('load message', () => {
-            if (process.env.NODE_ENV === 'production')
-                console.log('received message');
-            setNewMessage(true);
-        });
-    }, []);
+  useEffect(() => {
+    if (isLoaded && user && channel)
+      socket.emit("join", { username: user.username, room: channel.id });
+  }, [isLoaded, user, channel]);
 
-    useEffect(() => {
-        socket.on('new user', (message) => {
-            console.log(message.message);
-        });
-        return () => socket.disconnect();
-    }, []);
+  useEffect(() => {
+    socket.on("load message", () => {
+      if (process.env.NODE_ENV === "production")
+        console.log("received message");
+      setNewMessage(true);
+    });
+  }, []);
 
-    useEffect(() => {
-        dispatch(findExistingChannel(channelId));
-        setNewMessage(false);
-    }, [channelId, newMessage, channel.name, user?.profile_URL]);
+  useEffect(() => {
+    socket.on("new user", (message) => {
+      console.log(message.message);
+    });
+    return () => socket.disconnect();
+  }, []);
 
-    useEffect(() => {
-        if (channel) {
-            setIsLoaded(true);
-            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    }, [channel, chatBox]);
+  useEffect(() => {
+    dispatch(findExistingChannel(channelId));
+    setNewMessage(false);
+  }, [channelId, newMessage, channel.name, user?.profile_URL]);
 
-    return (
-        isLoaded && (
-          <div>
-          <div>
-          <div>
-            <div onClick={closeEmoji} className="chat">
-                <ChatHeader />
-                <div className="chat__messages">
-                    {channel.messages &&
-                        channel.messages.length > 0 &&
-                        channel.messages.map((message, idx) => (
-                            <div key={idx} className="chatMessageContainer">
-                                <div className="chatImageAndBody">
-                                    <div className="chatImageAndName">
-                                        {!message || !message.profile_URL ? (
-                                            <Avatar />
-                                        ) : (
-                                            <div>
-                                                <img
-                                                    className="profile__image"
-                                                    src={`${message.profile_URL}`}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="messageBodyAndButtons">
-                                        <div className="messageBody">
-                                            <p className="chatUsername">
-                                                {message.username}
-                                            </p>
-                                            <p className="chatMessage">
-                                                {message.message}
-                                            </p>
-                                            <button
-                                                className="chat__inputButton"
-                                                type="submit"
-                                            >
-                                                Send Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    onClick={() => handleDropdown(message)}
-                                    className="messageButtons"
-                                >
-                                    {user && message.user_id === user.id ? (
-                                        <MessageDropdown
-                                            newMessage={newMessage}
-                                            setNewMessage={setNewMessage}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                </div>
-                <div className="chat__input">
-                    <AddCircleIcon fontSize="large" />
-                    <form onSubmit={(e) => handleNewMessage(e)}>
-                        <input
-                            className="chat__message--input"
-                            value={messageInput}
-                            onChange={(e) => setMessageInput(e.target.value)}
-                            placeholder={`message #TEST`}
-                        />
-                        <div className="emoji-container">{emojiPicker}</div>
-                        <button className="chat__inputButton" type="submit">
-                            Send Message
-                        </button>
-                    </form>
-                    <div className="chat__inputIcons">
-                        <CardGiftcardIcon fontSize="large" />
-                        <GifIcon fontSize="large" />
-                        <EmojiEmotionsIcon
-                            className="emoji-icon"
-                            onClick={triggerPicker}
-                            fontSize="large"
+  useEffect(() => {
+    if (channel) {
+      setIsLoaded(true);
+      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }, [channel, chatBox]);
+
+  return (
+    isLoaded && (
+      <div onClick={closeEmoji} className="chat">
+        <ChatHeader />
+        <div className="chat__messages">
+          {channel.messages &&
+            channel.messages.length > 0 &&
+            channel.messages.map((message, idx) => (
+              <div key={idx} className="chatMessageContainer">
+                <div className="chatImageAndBody">
+                  <div className="chatImageAndName">
+                    {!message || !message.profile_URL ? (
+                      <Avatar />
+                    ) : (
+                      <div>
+                        <img
+                          className="profile__image"
+                          src={`${message.profile_URL}`}
                         />
                       </div>
+                    )}
+                  </div>
+                  <div className="messageBodyAndButtons">
+                    <div className="messageBody">
+                      <p className="chatUsername">{message.username}</p>
+                      <p className="chatMessage">{message.message}</p>
+                      <button className="chat__inputButton" type="submit">
+                        Send Message
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <div id="heart-like__btn" onClick={() => handleIncrement(message.id)}>
+                  <h5>{message?.likes}</h5>
+                  ❤️
+                </div>
+                <div
+                  onClick={() => handleDropdown(message)}
+                  className="messageButtons"
+                >
+                  {user && message.user_id === user.id ? (
+                    <MessageDropdown
+                      newMessage={newMessage}
+                      setNewMessage={setNewMessage}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
+            ))}
+        </div>
+        <div className="chat__input">
+          <AddCircleIcon fontSize="large" />
+          <form onSubmit={(e) => handleNewMessage(e)}>
+            <input
+              className="chat__message--input"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder={`message #TEST`}
+            />
+            <div className="emoji-container">{emojiPicker}</div>
+            <button className="chat__inputButton" type="submit">
+              Send Message
+            </button>
+          </form>
+          <div className="chat__inputIcons">
+            <CardGiftcardIcon fontSize="large" />
+            <GifIcon fontSize="large" />
+            <EmojiEmotionsIcon
+              className="emoji-icon"
+              onClick={triggerPicker}
+              fontSize="large"
+            />
+          </div>
         </div>
       </div>
     )
