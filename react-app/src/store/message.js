@@ -56,6 +56,9 @@ export const updateExistingMessage = (updatedMessage) => async (dispatch) => {
 export const addMessageLike = (messageId) => async (dispatch) => {
   const response = await fetch("/api/chat/like/", {
     method: "PUT",
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
     body: JSON.stringify(messageId),
   });
   const data = await response.json();

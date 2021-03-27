@@ -10,7 +10,7 @@ function Counter({ authenticated, setAuthenticated }) {
   const [count, setCount] = useState(message.likes);
   const [status, setStatus] = useState(false);
 
-  console.log(message?.id);
+  console.log(message);
 
   useEffect(() => {
     dispatch(addMessageLike(message?.id));
@@ -38,9 +38,9 @@ function Counter({ authenticated, setAuthenticated }) {
       <div>
         {/* <button onClick={handleDecrement}>-</button> */}
         <h5>{message?.likes}</h5>
-        <button id="heart-like__btn" onClick={handleIncrement}>
+        <a id="heart-like__btn" onClick={handleIncrement}>
           ❤️
-        </button>
+        </a>
       </div>
       {/* <button onClick={() => setCount(0)}>Reset</button> */}
     </div>
