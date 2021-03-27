@@ -39,6 +39,7 @@ function Chat() {
   const user = useSelector((state) => state.session.user);
   const channel = useSelector((state) => state.channel);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const message = useSelector((state) => state.message);
   const open = Boolean(anchorEl);
 
   const closeEmoji = (event) => {
@@ -125,6 +126,9 @@ function Chat() {
 
     return (
         isLoaded && (
+          <div>
+          <div>
+          <div>
             <div onClick={closeEmoji} className="chat">
                 <ChatHeader />
                 <div className="chat__messages">
@@ -199,10 +203,8 @@ function Chat() {
                             className="emoji-icon"
                             onClick={triggerPicker}
                             fontSize="large"
-
                         />
                       </div>
-                    )}
                   </div>
                   <div className="messageBodyAndButtons">
                     <div className="messageBody">
@@ -228,30 +230,6 @@ function Chat() {
                   )}
                 </div>
               </div>
-            ))}
-        </div>
-        <div className="chat__input">
-          <AddCircleIcon fontSize="large" />
-          <form onSubmit={(e) => handleNewMessage(e)}>
-            <input
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              placeholder={`message #TEST`}
-            />
-            <div className="emoji-container">{emojiPicker}</div>
-            <button className="chat__inputButton" type="submit">
-              Send Message
-            </button>
-          </form>
-          <div className="chat__inputIcons">
-            <CardGiftcardIcon fontSize="large" />
-            <GifIcon fontSize="large" />
-            <EmojiEmotionsIcon
-              className="emoji-icon"
-              onClick={triggerPicker}
-              fontSize="large"
-            />
-          </div>
         </div>
       </div>
     )
