@@ -99,6 +99,7 @@ td:hover {
   text-align: center;
   color: white;
   padding: 25px;
+  
 }
 
 .banner-div__container > img {
@@ -183,4 +184,8 @@ a,
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 320px;
+}
+
+.homePage-div__container {
+    background-color: #36393f;
 }
