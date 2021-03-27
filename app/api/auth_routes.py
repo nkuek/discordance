@@ -98,12 +98,13 @@ def edit_user():
     """
     user = request.form['id']
     matched_user = User.query.get(user)
-    url = None
     if "image" in request.files:
         image = request.files["image"]
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         url = upload["url"]
-        matched_user.profile_URL=url
-        db.session.commit()
-        return matched_user.to_dict()
+    else:
+        url = None    
+    matched_user.profile_URL=url
+    db.session.commit()
+    return matched_user.to_dict()

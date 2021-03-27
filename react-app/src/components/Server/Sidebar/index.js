@@ -140,7 +140,7 @@ function Sidebar() {
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
-    const user = useSelector((state) => state.session.user);
+    const user = useSelector((state) => state?.session.user);
 
     useEffect(() => {
         if (Object.keys(server).length > 0) setIsLoaded(true);
@@ -316,7 +316,11 @@ function Sidebar() {
                 <div className="sidebar__profile">
                     <div onClick={openModalSignUp}>
                         {!user || !user.profile_URL ? (
-                            <Avatar />
+                            <div className="profile__image--container">
+                                <div className="label">
+                                    <Avatar className="profile__image"/>
+                                </div>
+                            </div>
                         ) : (
                             <div className="profile__image--container">
                                 <div className="label">
