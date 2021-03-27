@@ -42,6 +42,6 @@ def add_like():
     print("XXXXXXXXXXXXXXXXXXXXXX")
     print(message)
     matched_message = Message.query.get(message['messageId'])
-    matched_message.likes = message['newNumber']
+    matched_message.likes = matched_message.likes + 1
     db.session.commit()
     return matched_message.to_dict()

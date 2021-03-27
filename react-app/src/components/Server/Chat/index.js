@@ -38,7 +38,8 @@ function Chat() {
   const [emojiPickerState, SetEmojiPicker] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [newMessage, setNewMessage] = useState(false);
-  //   const [count, setCount] = useState(message.likes);
+    // const [count, setCount] = useState(message.likes);
+  const [newLikedMessage, setNewLikedMessage] = useState(false);
 
   const { channelId } = useParams();
 
@@ -91,9 +92,18 @@ function Chat() {
   };
 
   const handleIncrement = (messageId) => {
-    dispatch(saveMessageToState(messageId));
+    setNewLikedMessage(true);
+    dispatch(addMessageLike(messageId));
+    // dispatch(saveMessageToState(messageId));
     // setCount((prevCount) => prevCount + 1);
   };
+
+  useEffect(()=> {
+    if(newLikedMessage) {
+      dispatch(findExistingChannel(channelId));
+      setNewLikedMessage(false)
+    }
+  }, [dispatch, newLikedMessage]);
 
   useEffect(() => {
     if (isLoaded && user && channel)
@@ -114,10 +124,6 @@ function Chat() {
     });
     return () => socket.disconnect();
   }, []);
-
-  useEffect(() => {
-    dispatch(addMessageLike(message?.id));
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(findExistingChannel(channelId));
@@ -163,9 +169,10 @@ function Chat() {
                     </div>
                   </div>
                 </div>
-                <a id="heart-like__btn" onClick={handleIncrement}>
+                <div id="heart-like__btn" onClick={() => handleIncrement(message.id)}>
+                  <h5>{message?.likes}</h5>
                   ❤️
-                </a>
+                </div>
                 <div
                   onClick={() => handleDropdown(message)}
                   className="messageButtons"
