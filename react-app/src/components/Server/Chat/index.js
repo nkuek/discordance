@@ -183,6 +183,7 @@ function Chat() {
                     <AddCircleIcon fontSize="large" />
                     <form onSubmit={(e) => handleNewMessage(e)}>
                         <input
+                            className="chat__message--input"
                             value={messageInput}
                             onChange={(e) => setMessageInput(e.target.value)}
                             placeholder={`message #TEST`}
