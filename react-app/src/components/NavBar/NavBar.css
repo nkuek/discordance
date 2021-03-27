@@ -1,18 +1,19 @@
 .mainNavBar {
     background-color: #292b2f;
-    width:auto;
-    height: 60px;
+    width: auto;
+    height: 58px;
 }
 
 .navbarContainer {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    height: 60px;
+    height: 58px;
     box-sizing: border-box;
 }
 
-.LoginModalSubmit, .SignUpModalSubmit {
+.LoginModalSubmit,
+.SignUpModalSubmit {
     font: inherit;
     background-color: #7289da;
     border: none;
@@ -27,7 +28,9 @@
     display: flex;
     width: auto;
 }
-.LoginModalSubmit:hover, .SignUpModalSubmit:hover {
+
+.LoginModalSubmit:hover,
+.SignUpModalSubmit:hover {
     background-color: #6476b9;
 }
 
