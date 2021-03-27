@@ -38,6 +38,7 @@ import EditServerForm from '../../EditServerForm';
 import SidebarChannel from './SidebarChannel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
+import { findExistingServer } from '../../../store/server';
 
 const customStyles = {
     overlay: {
@@ -141,6 +142,7 @@ function Sidebar() {
     const user = useSelector((state) => state.session.user);
     const server = useSelector((state) => state.server);
     const userServers = useSelector((state) => state.userServers);
+    const channel = useSelector((state) => state.channel);
 
     useEffect(() => {
         if (Object.keys(server).length > 0) {

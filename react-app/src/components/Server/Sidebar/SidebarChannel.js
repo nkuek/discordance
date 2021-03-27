@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './SidebarChannel.css';
 import ChannelDropdown from '../../ChannelDropdown';
+import { findExistingServer } from '../../../store/server';
 
 function SidebarChannel() {
     const [isLoaded, setIsLoaded] = useState(false);
+    const dispatch = useDispatch();
     const server = useSelector((state) => state.server);
+    const channel = useSelector((state) => state.channel);
 
     useEffect(() => {
         if (Object.keys(server).length > 0) setIsLoaded(true);
     }, [server]);
+
+    useEffect(() => {
+        if (isLoaded) dispatch(findExistingServer(server.id));
+    }, [channel]);
 
     return isLoaded ? (
         <>

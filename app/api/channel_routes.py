@@ -55,3 +55,4 @@ def delete_channel():
     channel = Channel.query.get(channelId)
     db.session.delete(channel)
     db.session.commit()
+    return channel.to_dict()
