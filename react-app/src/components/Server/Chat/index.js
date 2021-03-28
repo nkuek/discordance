@@ -167,14 +167,16 @@ function Chat() {
                         Send Message
                       </button>
                     </div>
+                    <div className="heartButtonContainer">
+                      <div
+                        id="heart-like__btn"
+                        onClick={() => handleIncrement(message.id)}
+                      >
+                        <h5>{message?.likes}</h5>
+                        <div className="heartButton">❤️</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  id="heart-like__btn"
-                  onClick={() => handleIncrement(message.id)}
-                >
-                  <h5>{message?.likes}</h5>
-                  ❤️
                 </div>
                 <div
                   onClick={() => handleDropdown(message)}
