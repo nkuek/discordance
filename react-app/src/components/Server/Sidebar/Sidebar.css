@@ -36,12 +36,13 @@
 }
 
 .joinButton {
-    padding: 10px 20px;
+    padding: 5px 10px;
     font: inherit;
     background-color: #7289da;
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
+    font-size: 0.8em
 }
 
 .joinButton:hover {
