@@ -68,10 +68,12 @@ const NavBar = ({ authenticated, setAuthenticated }) => {
                         </NavLink>
                     </div>
                 </div>
-                <div className="mainLogoContainer">
-                    <div className="mainLogo">D3</div>
-                    <div className="mainLogoText">Discordance</div>
-                </div>
+                <NavLink className="mainLogoLink" to="/">
+                    <div className="mainLogoContainer">
+                        <div className="mainLogo">D3</div>
+                        <div className="mainLogoText">Discordance</div>
+                    </div>
+                </NavLink>
                 <div className="LoginSignupLogout">
                     <div>
                         {authenticated === true ? (

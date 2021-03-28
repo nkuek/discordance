@@ -50,6 +50,17 @@
     background-color: #6476b9;
 }
 
+.mainLogoLink {
+    display: inline-block;
+    height: fit-content;
+    position: relative;
+    top: -2px;
+}
+
+.mainLogoLink:hover > div > div + div {
+    text-decoration: underline;
+}
+
 .mainLogoContainer {
     display: flex;
     align-items: center;
