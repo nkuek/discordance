@@ -155,7 +155,7 @@ Here is everything we need you to do to get started with Discordanc3.
 ### Edit or Delete Channels.
 ![My Channels](site-images/editChannel.png)
 ### Edit Profile Image.
-![My Profile Image](site-images/editProfileImage.png)
+![My Profile Image](site-images/editprofileimage.png)
 ### Edit or Delete chat messages.
 ![Chat](site-images/editChat.png)
 ### Like chat messages.
