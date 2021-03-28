@@ -79,8 +79,8 @@
     align-items: center;
 }
 
-.sidebar__profile {
-    display: flex;
+.sidebar__voice {
+    display: none;
     justify-content: space-between;
     align-items: center;
     color: gray;
@@ -88,10 +88,11 @@
     padding: 10px;
     border-top: 1px solid gray;
     height: 56px;
-}
 
-.sidebar__voice {
-    display: none;
+
+
+.sidebar__profile {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     color: gray;
@@ -141,6 +142,7 @@
 }
 
 .sidebar__profileIcons>.MuiSvgIcon-root {
+    display: none;
     padding: 0px 4px 0px 4px;
     display: none;
 }
