@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Catamaran&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 .mainNavBar {
     background-color: #292b2f;
     width: auto;
@@ -46,4 +48,26 @@
 
 .developers__link--container:hover {
     background-color: #6476b9;
+}
+
+.mainLogoContainer {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.5em;
+}
+
+.mainLogoText {
+    font-family: 'Catamaran', sans-serif;
+}
+
+.mainLogo {
+    font-family: 'Pacifico', cursive;
+    background-color:white;
+    border-radius: 100%;
+    padding: 0px 6px;
+    margin-right: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #292b2F;
 }
