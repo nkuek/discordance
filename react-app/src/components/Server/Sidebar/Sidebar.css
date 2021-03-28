@@ -38,7 +38,7 @@
 .joinButton {
     padding: 10px 20px;
     font: inherit;
-    background-color: #7289DA;
+    background-color: #7289da;
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
@@ -79,7 +79,17 @@
     align-items: center;
 }
 
-.sidebar__voice,
+.sidebar__voice {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+    background-color: #2f3135;
+    padding: 10px;
+    border-top: 1px solid gray;
+    height: 56px;
+}
+
 .sidebar__profile {
     display: flex;
     justify-content: space-between;
@@ -131,6 +141,7 @@
 }
 
 .sidebar__profileIcons>.MuiSvgIcon-root {
+    display: none;
     padding: 0px 4px 0px 4px;
 }
 
