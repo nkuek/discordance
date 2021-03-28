@@ -88,7 +88,8 @@
     padding: 10px;
     border-top: 1px solid gray;
     height: 56px;
-}
+
+
 
 .sidebar__profile {
     display: flex;
@@ -143,6 +144,7 @@
 .sidebar__profileIcons>.MuiSvgIcon-root {
     display: none;
     padding: 0px 4px 0px 4px;
+    display: none;
 }
 
 .MuiList-root {

@@ -182,7 +182,8 @@ function Chat() {
               className="chat__message--input"
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
-              placeholder={`message #TEST`}
+              placeholder={`Message #` + channel.name}
+
             />
             <div className="emoji-container">{emojiPicker}</div>
             <button className="chat__inputButton" type="submit">
@@ -191,7 +192,9 @@ function Chat() {
           </form>
           <div className="chat__inputIcons">
             {/* <CardGiftcardIcon fontSize="large" />
-                        <GifIcon fontSize="large" /> */}
+            <GifIcon fontSize="large" /> */}
+              <GifIcon fontSize="large" /> */}
+
             <EmojiEmotionsIcon
               className="emoji-icon"
               onClick={triggerPicker}
