@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateExistingMessage } from '../../store/message';
 import { findExistingChannel } from '../../store/channel';
 import './EditMessageForm.css';
+import { socket } from '../Server/Chat';
 
 function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
     const dispatch = useDispatch();
@@ -85,6 +86,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
         setUpdatedMessage(true);
 
         dispatch(updateExistingMessage({ updatedMessage, messageId }));
+        socket.emit('new message', { room: channel.id });
         history.push(`/servers/${server.id}/${channel.id}`);
     };
 

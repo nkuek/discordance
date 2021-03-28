@@ -17,14 +17,12 @@ import { saveMessageToState } from '../../../store/message';
 import { Picker } from 'emoji-mart';
 import { addMessageLike } from '../../../store/message';
 
-import Counter from './Counter';
-
 const url =
     process.env.NODE_ENV === 'development'
         ? 'http://localhost:5000/'
         : 'https://discordanc3.herokuapp.com/';
 
-const socket = io.connect(url, {
+export const socket = io.connect(url, {
     secure: true,
 });
 
@@ -89,7 +87,7 @@ function Chat() {
 
     const handleIncrement = (messageId) => {
         dispatch(addMessageLike(messageId));
-        socket.emit('new like', { room: channel.id });
+        socket.emit('new message', { room: channel.id });
     };
 
     useEffect(() => {
