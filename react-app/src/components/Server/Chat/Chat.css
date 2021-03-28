@@ -15,28 +15,32 @@
     align-items: center;
 }
 
+p.chatMessage {
+    padding: 3px 0px 2px 0px;
+}
+
 .heartButton {
     cursor: pointer;
     margin-right: 5px;
 }
 
 .heartButtonContainer {
-    border: 1px solid gray;
-    border-radius: 5px;
+    /* border: 1px solid gray; */
+    /* border-radius: 5px; */
     cursor: pointer;
     margin-left: 10px;
     opacity: 0.6;
 }
 
 .heartButtonContainer:hover {
-    border: 1px solid white;
-    border-radius: 5px;
+    /* border: 1px solid white; */
+    /* border-radius: 5px; */
     opacity: 1;
 }
 
 div#heart-like__btn {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     flex-direction: row-reverse;
     padding: 0px 2px 0px 2px;
 }
