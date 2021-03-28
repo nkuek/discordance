@@ -63,11 +63,9 @@ td:hover {
 
 .discover-title {
   color: #e4e8ee;
-  padding-top: 15px;
-  font-size: 25px;
-  width: 150px;
-  height: 61px;
-  /* background-color: red; */
+  font-size: 1.7em;
+  padding: 20px;
+  display: flex;
 }
 
 .home-div__container {

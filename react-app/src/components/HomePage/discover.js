@@ -42,7 +42,9 @@ function Discover() {
     return (
         <>
             <div className="categories-main-container">
-                <h1 className="discover-title"> Discover </h1>
+                <div className="discover-title-container">
+                    <h1 className="discover-title"> Discover </h1>
+                </div>
                 <Divider light />
                 <div className="categories-button__home">
                     <IconButton
