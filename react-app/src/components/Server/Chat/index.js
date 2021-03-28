@@ -27,8 +27,6 @@ export const socket = io.connect(url, {
 });
 
 function Chat() {
-    const message = useSelector((state) => state.message);
-
     const chatBox = document.querySelector('.chat__messages');
     const dispatch = useDispatch();
     const ref = useRef();
@@ -74,8 +72,8 @@ function Chat() {
         SetEmojiPicker(!emojiPickerState);
     }
 
-    const handleDropdown = (messageId) => {
-        dispatch(saveMessageToState(messageId));
+    const handleDropdown = (message) => {
+        dispatch(saveMessageToState(message));
     };
     const handleNewMessage = (e) => {
         e.preventDefault();
@@ -174,14 +172,13 @@ function Chat() {
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    onClick={() => handleDropdown(message)}
-                                    className="messageButtons"
-                                >
+                                <div className="messageButtons">
                                     {user && message.user_id === user.id ? (
                                         <MessageDropdown
                                             newMessage={newMessage}
                                             setNewMessage={setNewMessage}
+                                            handleDropdown={handleDropdown}
+                                            message={message}
                                         />
                                     ) : (
                                         ''

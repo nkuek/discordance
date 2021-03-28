@@ -30,7 +30,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
 
     useEffect(() => {
         if (isLoaded) setMessage(messageData.message);
-    }, [isLoaded]);
+    }, [messageData, isLoaded]);
 
     const editMessageModalRef = useRef();
     // close modal when clicking anywhere else
