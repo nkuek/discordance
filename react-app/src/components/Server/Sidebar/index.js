@@ -235,7 +235,8 @@ function Sidebar() {
                         </div>
                         {userServers
                             .map((server) => server.name)
-                            .includes(server.name) ? (
+                            .includes(server.name) &&
+                        user.id !== server.admin_id ? (
                             <div className="leaveButtonContainer">
                                 <button
                                     onClick={() => handleLeaveServer(server.id)}
@@ -244,7 +245,9 @@ function Sidebar() {
                                     Leave Server
                                 </button>
                             </div>
-                        ) : (
+                        ) : !userServers
+                              .map((server) => server.name)
+                              .includes(server.name) ? (
                             <div className="joinButtonContainer">
                                 <button
                                     onClick={() => handleJoinServer(server.id)}
@@ -253,7 +256,7 @@ function Sidebar() {
                                     Join Server
                                 </button>
                             </div>
-                        )}
+                        ) : null}
                     </div>
                     <Popper
                         open={open}
