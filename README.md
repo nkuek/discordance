@@ -160,7 +160,7 @@ Here is everything we need you to do to get started with Discordanc3.
 ### Add Emojies.
 ![Chat](site-images/emojies.png)
 ### Edit Profile Image.
-![My Profile Image](site-images/editProfileImage.png)
+![My Profile Image](site-images/editProfileImage.jpg)
 
 
 ## Obstacles
