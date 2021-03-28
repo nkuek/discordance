@@ -110,6 +110,11 @@ def new_message(data):
     room = data["room"]
     emit('load message', room=room)
 
+@socketio.on('new like')
+def new_like(data):
+    room = data["room"]
+    emit('load message', room=room)
+
 
 # @socketio.on('message delete')
 # def delete_message(message):

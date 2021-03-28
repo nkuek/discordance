@@ -12,6 +12,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState('');
     const [updatedMessage, setUpdatedMessage] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const channel = useSelector((state) => state.channel);
     const server = useSelector((state) => state.server);
@@ -19,11 +20,16 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
 
     useEffect(() => {
         if (updatedMessage) dispatch(findExistingChannel(channel.id));
+        setIsLoaded(true);
     }, [updatedMessage]);
 
     useEffect(() => {
         setUpdatedMessage(false);
     }, [channel]);
+
+    useEffect(() => {
+        if (isLoaded) setMessage(messageData.message);
+    }, [isLoaded]);
 
     const editMessageModalRef = useRef();
     // close modal when clicking anywhere else
@@ -44,7 +50,7 @@ function EditMessageForm({ showEditMessageModal, setShowEditMessageModal }) {
         (e) => {
             if (e.key === 'Escape' && showEditMessageModal) {
                 setShowEditMessageModal(false);
-                // setMessageName(message.name);
+                setMessage(messageData.message);
                 setErrors('');
             }
         },

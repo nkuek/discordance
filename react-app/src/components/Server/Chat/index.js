@@ -38,7 +38,6 @@ function Chat() {
     const [emojiPickerState, SetEmojiPicker] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [newMessage, setNewMessage] = useState(false);
-    const [newLikedMessage, setNewLikedMessage] = useState(false);
 
     const { channelId } = useParams();
 
@@ -86,20 +85,12 @@ function Chat() {
         socket.emit('new message', { user: user.username, room: channel.id });
         createNewMessage(messageInput, user, channel);
         setMessageInput('');
-        setNewMessage(true);
     };
 
     const handleIncrement = (messageId) => {
-        setNewLikedMessage(true);
         dispatch(addMessageLike(messageId));
+        socket.emit('new like', { room: channel.id });
     };
-
-    useEffect(() => {
-        if (newLikedMessage) {
-            dispatch(findExistingChannel(channelId));
-            setNewLikedMessage(false);
-        }
-    }, [dispatch, message]);
 
     useEffect(() => {
         if (isLoaded && user && channel)
