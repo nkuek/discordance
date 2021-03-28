@@ -143,6 +143,18 @@ td:hover {
   padding-bottom: 10px;
 }
 
+.main-servers__header {
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.main-servers__header svg {
+    height: 35px;
+    width: 35px;
+    position: relative;
+    top: 3px;
+}
 .server-div__container {
   display: inline-flex;
   height: 320px;
@@ -189,4 +201,5 @@ a,
 
 .homePage-div__container {
     background-color: #36393f;
+    width: 100%;
 }

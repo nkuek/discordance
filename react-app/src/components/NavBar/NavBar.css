@@ -53,8 +53,10 @@
 .mainLogoLink {
     display: inline-block;
     height: fit-content;
-    position: relative;
-    top: -2px;
+    position: absolute;
+    top: 5px;
+    right: 50%;
+    left: 50%;
 }
 
 .mainLogoLink:hover > div > div + div {
