@@ -88,7 +88,6 @@ The front end is built with React and Javascript while utilizing Redux architect
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 * [SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
 * [PostgreSQL](https://www.postgresql.org/docs/current/)
-bcryptjs)
 * [SocketIO](https://python-socketio.readthedocs.io/en/latest/)
 * [CSS](http://www.css3.info/)
 
