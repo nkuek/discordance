@@ -38,7 +38,7 @@ function Chat() {
   const [emojiPickerState, SetEmojiPicker] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [newMessage, setNewMessage] = useState(false);
-    // const [count, setCount] = useState(message.likes);
+  // const [count, setCount] = useState(message.likes);
   const [newLikedMessage, setNewLikedMessage] = useState(false);
 
   const { channelId } = useParams();
@@ -98,10 +98,10 @@ function Chat() {
     // setCount((prevCount) => prevCount + 1);
   };
 
-  useEffect(()=> {
-    if(newLikedMessage) {
+  useEffect(() => {
+    if (newLikedMessage) {
       dispatch(findExistingChannel(channelId));
-      setNewLikedMessage(false)
+      setNewLikedMessage(false);
     }
   }, [dispatch, newLikedMessage]);
 
@@ -169,7 +169,10 @@ function Chat() {
                     </div>
                   </div>
                 </div>
-                <div id="heart-like__btn" onClick={() => handleIncrement(message.id)}>
+                <div
+                  id="heart-like__btn"
+                  onClick={() => handleIncrement(message.id)}
+                >
                   <h5>{message?.likes}</h5>
                   ❤️
                 </div>
