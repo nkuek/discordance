@@ -205,7 +205,7 @@ Contributions are what make the open source community such an amazing place to b
 
 Project Link: [https://github.com/nkuek/discordance](https://github.com/nkuek/discordance)
 
-
+![My Channels](site-images/developers.png)
 <!-- ACKNOWLEDGEMENTS -->
 
 <!-- test -->
