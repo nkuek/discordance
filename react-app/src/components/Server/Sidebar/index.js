@@ -141,10 +141,16 @@ function Sidebar() {
 
     const server = useSelector((state) => state.server);
     const user = useSelector((state) => state?.session.user);
+    const userServers = useSelector((state) => state.userServers);
 
     useEffect(() => {
         if (Object.keys(server).length > 0) setIsLoaded(true);
+        console.log(userServers);
     }, [server, user]);
+
+    // useEffect(() => {
+    //     if (isLoaded && Object.keys(userServers).length > 0)
+    //  }, [userServers]);
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
@@ -193,20 +199,35 @@ function Sidebar() {
         isLoaded && (
             <div className="sidebar">
                 <div className="sidebar__top">
-                    <h3>{server.name}</h3>
-                    {user && server.admin_id === user.id ? (
-                        <IconButton
-                            aria-label="more"
-                            aria-controls="long-menu"
-                            aria-haspopup="true"
-                            onClick={handleToggle}
-                            ref={anchorRef}
-                        >
-                            <ExpandMoreIcon style={{ color: 'white' }} />
-                        </IconButton>
-                    ) : (
-                        ''
-                    )}
+                    <div className="serverHeaderContainer">
+                        <div className="serverNameAndDropDown">
+                            <h3>{server.name}</h3>
+                            {user &&
+                            userServers &&
+                            server.admin_id === user.id ? (
+                                <IconButton
+                                    aria-label="more"
+                                    aria-controls="long-menu"
+                                    aria-haspopup="true"
+                                    onClick={handleToggle}
+                                    ref={anchorRef}
+                                >
+                                    <ExpandMoreIcon
+                                        style={{ color: 'white' }}
+                                    />
+                                </IconButton>
+                            ) : null}
+                        </div>
+                        {userServers
+                            .map((server) => server.name)
+                            .includes(server.name) ? null : (
+                            <div className="joinButtonContainer">
+                                <button className="joinButton">
+                                    Join Server
+                                </button>
+                            </div>
+                        )}
+                    </div>
                     <Popper
                         open={open}
                         anchorEl={anchorRef.current}
@@ -318,7 +339,7 @@ function Sidebar() {
                         {!user || !user.profile_URL ? (
                             <div className="profile__image--container">
                                 <div className="label">
-                                    <Avatar className="profile__image"/>
+                                    <Avatar className="profile__image" />
                                 </div>
                             </div>
                         ) : (

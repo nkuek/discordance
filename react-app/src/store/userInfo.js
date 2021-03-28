@@ -27,6 +27,18 @@ export const resetUserServers = () => async (dispatch) => {
     dispatch(removeUserServers());
 };
 
+export const joinServer = (serverId) => async (dispatch) => {
+    const response = await fetch('/api/users/servers/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(serverId),
+    });
+    const userServers = await response.json();
+    return dispatch(findUserServers(userServers));
+};
+
 const userInfoReducer = (state = {}, action) => {
     switch (action.type) {
         case FIND_USER_SERVERS:

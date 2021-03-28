@@ -12,9 +12,40 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    padding-top: 10px;
     background-color: #2f3135;
     color: white;
     border-bottom: 3px solid #26282c;
+}
+
+.serverHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.serverNameAndDropDown {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.joinButtonContainer {
+    margin-top: 10px;
+}
+
+.joinButton {
+    padding: 10px 20px;
+    font: inherit;
+    background-color: #7289DA;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.joinButton:hover {
+    background-color: #6476b9;
 }
 
 .sidebar__description {
