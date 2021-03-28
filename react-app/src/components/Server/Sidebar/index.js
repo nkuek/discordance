@@ -4,7 +4,7 @@ import './Sidebar.css';
 import { useSelector } from 'react-redux';
 import EditProfileImageForm from '../../auth/EditProfileImageForm/EditProfileImageForm';
 import Modal from 'react-modal';
-import { joinServer } from '../../../store/userInfo';
+import { joinServer, leaveServer } from '../../../store/userInfo';
 // Mui Icons
 import {
     ExpandMore as ExpandMoreIcon,
@@ -157,7 +157,7 @@ function Sidebar() {
     //  }, [userServers]);
 
     useEffect(() => {
-        if (newServer) dispatch(findExistingServer(server.id));
+        dispatch(findExistingServer(server.id));
     }, [newServer]);
 
     const openDeleteModal = () => {
@@ -192,7 +192,8 @@ function Sidebar() {
     };
 
     const handleLeaveServer = (serverId) => {
-        return;
+        dispatch(leaveServer(serverId, user.id));
+        setNewServer(false);
     };
 
     const openChannelModal = () => {

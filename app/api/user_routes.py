@@ -41,3 +41,17 @@ def joinServer():
     db.session.commit()
     user_servers = [server.to_dict() for server in user.servers]
     return jsonify(user_servers)
+
+
+@user_routes.route('/servers/', methods=['DELETE'])
+def deleteServer():
+    data = request.json
+    user = User.query.get(data['userId'])
+    server = Server.query.get(data['serverId'])
+
+    user.servers.remove(server)
+    server.users.remove(user)
+
+    db.session.commit()
+    user_servers = [server.to_dict() for server in user.servers]
+    return jsonify(user_servers)

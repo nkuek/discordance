@@ -39,6 +39,18 @@ export const joinServer = (serverId, userId) => async (dispatch) => {
     return dispatch(findUserServers(userServers));
 };
 
+export const leaveServer = (serverId, userId) => async (dispatch) => {
+    const response = await fetch('/api/users/servers/', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ serverId, userId }),
+    });
+    const userServers = await response.json();
+    return dispatch(findUserServers(userServers));
+};
+
 const userInfoReducer = (state = {}, action) => {
     switch (action.type) {
         case FIND_USER_SERVERS:
