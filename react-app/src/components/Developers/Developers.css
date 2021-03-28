@@ -35,7 +35,7 @@ h2, h5 {
 
 .link__logo {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -46,4 +46,3 @@ h2, h5 {
 .link__logo2 {
   margin-left: 10px;
 }
-
