@@ -10,6 +10,7 @@ function SidebarChannel() {
     const [isLoaded, setIsLoaded] = useState(false);
     const server = useSelector((state) => state.server);
     const channel = useSelector((state) => state.channel);
+    const user = useSelector((state) => state.session.user);
 
     useEffect(() => {
         if (isLoaded) dispatch(findExistingServer(server.id));
@@ -31,7 +32,12 @@ function SidebarChannel() {
                             <div className="channelName">{channel.name}</div>
                         </div>
                     </NavLink>
-                    <ChannelDropdown />
+                    {user &&
+                    server.users
+                        .map((serverUser) => serverUser.username)
+                        .includes(user.username) ? (
+                        <ChannelDropdown />
+                    ) : null}
                 </div>
             ))}
         </>

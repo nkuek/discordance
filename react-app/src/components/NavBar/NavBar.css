@@ -53,9 +53,9 @@
 .mainLogoLink {
     display: inline-block;
     height: fit-content;
-    position: absolute;
     top: 5px;
-    right: 50%;
+    position: absolute;
+    right: 45%;
     left: 50%;
 }
 

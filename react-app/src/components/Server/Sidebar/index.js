@@ -39,6 +39,7 @@ import EditServerForm from '../../EditServerForm';
 import SidebarChannel from './SidebarChannel';
 import ConfirmDelete from '../../ConfirmDelete';
 import ChannelForm from '../../ChannelForm';
+import { findExistingServer } from '../../../store/server';
 
 const customStyles = {
     overlay: {
@@ -139,6 +140,7 @@ function Sidebar() {
     const [showDescription, setShowDescription] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
     const [open, setOpen] = React.useState(false);
+    const [newServer, setNewServer] = useState(false);
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
@@ -153,6 +155,10 @@ function Sidebar() {
     // useEffect(() => {
     //     if (isLoaded && Object.keys(userServers).length > 0)
     //  }, [userServers]);
+
+    useEffect(() => {
+        if (newServer) dispatch(findExistingServer(server.id));
+    }, [newServer]);
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
@@ -182,6 +188,11 @@ function Sidebar() {
 
     const handleJoinServer = (serverId) => {
         dispatch(joinServer(serverId, user.id));
+        setNewServer(true);
+    };
+
+    const handleLeaveServer = (serverId) => {
+        return;
     };
 
     const openChannelModal = () => {
@@ -209,7 +220,7 @@ function Sidebar() {
                         <div className="serverNameAndDropDown">
                             <h3>{server.name}</h3>
                             {user &&
-                            userServers &&
+                            Object.keys(userServers).length > 0 &&
                             server.admin_id === user.id ? (
                                 <IconButton
                                     aria-label="more"
@@ -226,7 +237,16 @@ function Sidebar() {
                         </div>
                         {userServers
                             .map((server) => server.name)
-                            .includes(server.name) ? null : (
+                            .includes(server.name) ? (
+                            <div className="leaveButtonContainer">
+                                <button
+                                    onClick={() => handleLeaveServer(server.id)}
+                                    className="leaveButton"
+                                >
+                                    Leave Server
+                                </button>
+                            </div>
+                        ) : (
                             <div className="joinButtonContainer">
                                 <button
                                     onClick={() => handleJoinServer(server.id)}
@@ -316,11 +336,15 @@ function Sidebar() {
                             <ExpandMoreIcon />
                             <h4>Text Channels</h4>
                         </div>
-
-                        <AddIcon
-                            className="sidebar__addChannel"
-                            onClick={openChannelModal}
-                        />
+                        {user &&
+                        server.users
+                            .map((serverUser) => serverUser.username)
+                            .includes(user.username) ? (
+                            <AddIcon
+                                className="sidebar__addChannel"
+                                onClick={openChannelModal}
+                            />
+                        ) : null}
                     </div>
                     <div className="sidebar__channelsList">
                         <SidebarChannel />

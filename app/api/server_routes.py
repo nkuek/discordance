@@ -56,6 +56,7 @@ def find_server():
     formattedChannels = [channel.to_dict()
                          for channel in serverSearch.channels]
     data['channels'] = formattedChannels
+    data['users'] = [user.to_dict() for user in serverSearch.users]
 
     return data
 

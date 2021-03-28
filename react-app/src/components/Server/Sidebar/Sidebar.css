@@ -48,6 +48,24 @@
     background-color: #6476b9;
 }
 
+.leaveButtonContainer {
+    margin-top: 10px;
+}
+
+.leaveButton {
+    padding: 5px 10px;
+    font: inherit;
+    background-color: red;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: .8em;
+}
+
+.leaveButton:hover {
+    background-color: rgb(247, 78, 78);
+}
+
 .sidebar__description {
     position: relative;
     z-index: 0;
