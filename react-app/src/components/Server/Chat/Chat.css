@@ -1,136 +1,164 @@
 .chat {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  background-color: #363a3f;
-  height: calc(100vh - 58px);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #363a3f;
+    height: calc(100vh - 58px);
 }
 
 .chat__messages {
-  flex: 1;
-  overflow: scroll;
-  color: white;
+    flex: 1 1;
+    overflow: scroll;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heartButton {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.heartButtonContainer {
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    opacity: 0.6;
+}
+
+.heartButtonContainer:hover {
+    border: 1px solid white;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+div#heart-like__btn {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 0px 2px 0px 2px;
 }
 
 .chatImageAndBody {
-  display: flex;
+    display: flex;
 }
 
 .messageBodyAndButtons {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .chatMessageContainer {
-  justify-content: space-between;
-  padding: 20px;
-  display: flex;
+    padding: 11px 20px 11px 20px;
+    display: flex;
+    border-top: 2px solid #42454a;
+    width: 95%;
+    justify-content: space-between;
 }
 
 .chatMessageContainer:hover {
-  background-color: #32353b;
+    background-color: #32353b;
 }
 
 .chatUsername {
-  font-weight: bold;
-  font-size: 1.2em;
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
 .chat__messages::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .chat__messages {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .chat__input {
-  color: lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 2px 2px 3px #28292e;
-  border-radius: 17px;
-  margin: 20px;
-  /* border-top: 1px solid gray; */
-  background-color: #474b53;
+    color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 2px 3px #28292e;
+    border-radius: 17px;
+    margin: 20px;
+    /* border-top: 1px solid gray; */
+    background-color: #474b53;
 }
 
-.chat__input > form > input {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background: transparent;
-  border: none;
-  margin-left: 3px;
-  width: 100%;
-  outline-width: 0;
-  color: white;
-  font-size: large;
+.chat__input>form>input {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: transparent;
+    border: none;
+    margin-left: 3px;
+    width: 100%;
+    outline-width: 0;
+    color: white;
+    font-size: large;
 }
 
-.chat__input > form {
-  flex: 1;
+.chat__input>form {
+    flex: 1;
 }
 
-.chat__input > svg {
-  margin-left: 6px;
+.chat__input>svg {
+    margin-left: 6px;
 }
 
 .chat__inputButton {
-  display: none;
+    display: none;
 }
 
-.chat__inputIcons > .MuiSvgIcon-root {
-  margin-right: 8px;
+.chat__inputIcons>.MuiSvgIcon-root {
+    margin-right: 8px;
 }
 
-.chat__inputIcons > .MuiSvgIcon-root > path {
-  margin-left: 10px;
+.chat__inputIcons>.MuiSvgIcon-root>path {
+    margin-left: 10px;
 }
+
 .chatImageAndName {
-  display: flex;
+    display: flex;
 }
 
 .messageBody {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .emoji-icon {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.emoji-container > section > .emoji-mart-search > input {
-  background-color: #2f3135;
-  border-radius: 25px;
-  box-shadow: 2px 2px 3px #28292e;
+.emoji-container>section>.emoji-mart-search>input {
+    background-color: #2f3135;
+    border-radius: 25px;
+    box-shadow: 2px 2px 3px #28292e;
 }
 
-.emoji-container > section > .emoji-mart-search > input::placeholder {
-  color: gray;
+.emoji-container>section>.emoji-mart-search>input::placeholder {
+    color: gray;
 }
 
-.emoji-container
-  > section
-  > .emoji-mart-scroll
-  > .emoji-mart-category
-  > .emoji-mart-category-label
-  > span {
-  background-color: #2f3135;
-  color: gray;
-  text-align: center;
-  border-radius: 25px;
-  width: fit-content;
-  margin-left: 100px;
-  padding-bottom: 3px;
-  padding-top: 3px;
-  margin-top: 4px;
-  font-size: 15px;
-  margin-bottom: 4px;
-  box-shadow: 3px 3px 3px #28292e;
+.emoji-container>section>.emoji-mart-scroll>.emoji-mart-category>.emoji-mart-category-label>span {
+    background-color: #2f3135;
+    color: gray;
+    text-align: center;
+    border-radius: 25px;
+    width: fit-content;
+    margin-left: 100px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin-top: 4px;
+    font-size: 15px;
+    margin-bottom: 4px;
+    box-shadow: 3px 3px 3px #28292e;
 }
 
 .profile__image {
-  border-color: #27292e;
-  box-shadow: -2px 2px 3px #28292e9c;
+    border-color: #27292e;
+    box-shadow: -2px 2px 3px #28292e9c;
 }
