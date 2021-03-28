@@ -140,7 +140,6 @@ function Sidebar() {
     const [showDescription, setShowDescription] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
     const [open, setOpen] = React.useState(false);
-    const [newServer, setNewServer] = useState(false);
     const anchorRef = React.useRef(null);
 
     const server = useSelector((state) => state.server);
@@ -156,9 +155,9 @@ function Sidebar() {
     //     if (isLoaded && Object.keys(userServers).length > 0)
     //  }, [userServers]);
 
-    useEffect(() => {
-        dispatch(findExistingServer(server.id));
-    }, [newServer]);
+    // useEffect(() => {
+    //     dispatch(findExistingServer(server.id));
+    // }, [newServer]);
 
     const openDeleteModal = () => {
         setShowDeleteModal((prev) => !prev);
@@ -188,12 +187,10 @@ function Sidebar() {
 
     const handleJoinServer = (serverId) => {
         dispatch(joinServer(serverId, user.id));
-        setNewServer(true);
     };
 
     const handleLeaveServer = (serverId) => {
         dispatch(leaveServer(serverId, user.id));
-        setNewServer(false);
     };
 
     const openChannelModal = () => {
@@ -337,10 +334,7 @@ function Sidebar() {
                             <ExpandMoreIcon />
                             <h4>Text Channels</h4>
                         </div>
-                        {user &&
-                        server.users
-                            .map((serverUser) => serverUser.username)
-                            .includes(user.username) ? (
+                        {user && server.admin_id === user.id ? (
                             <AddIcon
                                 className="sidebar__addChannel"
                                 onClick={openChannelModal}

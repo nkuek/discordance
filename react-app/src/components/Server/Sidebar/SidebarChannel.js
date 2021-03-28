@@ -32,10 +32,7 @@ function SidebarChannel() {
                             <div className="channelName">{channel.name}</div>
                         </div>
                     </NavLink>
-                    {user &&
-                    server.users
-                        .map((serverUser) => serverUser.username)
-                        .includes(user.username) ? (
+                    {user && server.admin_id === user.id ? (
                         <ChannelDropdown />
                     ) : null}
                 </div>
