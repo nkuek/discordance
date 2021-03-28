@@ -363,7 +363,6 @@ function Sidebar() {
               </div>
             ) : (
               <div className="profile__image--container">
-                Edit
                 <div className="label">
                   <img
                     className="profile__image"
