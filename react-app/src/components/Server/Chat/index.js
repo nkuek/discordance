@@ -135,7 +135,7 @@ function Chat() {
                     ) : (
                       <div>
                         <img
-                          className="profile__image"
+                          className="profile__image--chat"
                           src={`${message.profile_URL}`}
                         />
                       </div>

@@ -162,7 +162,11 @@ div#heart-like__btn {
     box-shadow: 3px 3px 3px #28292e;
 }
 
-.profile__image {
-    border-color: #27292e;
-    box-shadow: -2px 2px 3px #28292e9c;
+.profile__image--chat {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 0.9em;
 }
+
+
