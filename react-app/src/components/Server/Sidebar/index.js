@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import './Sidebar.css';
 import { useSelector } from 'react-redux';
 import EditProfileImageForm from '../../auth/EditProfileImageForm/EditProfileImageForm';
 import Modal from 'react-modal';
-
+import { joinServer } from '../../../store/userInfo';
 // Mui Icons
 import {
     ExpandMore as ExpandMoreIcon,
@@ -130,6 +131,7 @@ const SimpleAccordionDetails = withStyles((theme) => ({
 }))(AccordionDetails);
 
 function Sidebar() {
+    const dispatch = useDispatch();
     const [openSignUpModal, setIsOpenSignUpModal] = useState(false);
     const [showServerModal, setShowServerModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -178,6 +180,10 @@ function Sidebar() {
         setShowDescription((prev) => !prev);
     };
 
+    const handleJoinServer = (serverId) => {
+        dispatch(joinServer(serverId, user.id));
+    };
+
     const openChannelModal = () => {
         setShowChannelModal((prev) => !prev);
     };
@@ -222,7 +228,10 @@ function Sidebar() {
                             .map((server) => server.name)
                             .includes(server.name) ? null : (
                             <div className="joinButtonContainer">
-                                <button className="joinButton">
+                                <button
+                                    onClick={() => handleJoinServer(server.id)}
+                                    className="joinButton"
+                                >
                                     Join Server
                                 </button>
                             </div>

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Server
+from app.models import User, Server, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -29,3 +29,15 @@ def userServers():
         serverList.append(server.to_dict())
 
     return jsonify(serverList)
+
+
+@user_routes.route('/servers/', methods=['POST'])
+def joinServer():
+    data = request.json
+    user = User.query.get(data['userId'])
+    server = Server.query.get(data['serverId'])
+    user.servers.append(server)
+    server.users.append(user)
+    db.session.commit()
+    user_servers = [server.to_dict() for server in user.servers]
+    return jsonify(user_servers)
