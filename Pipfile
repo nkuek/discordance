@@ -40,6 +40,7 @@ python-engineio = "==4.0.1"
 python-socketio = "==5.1.0"
 s3transfer = "==0.3.6"
 urllib3 = "==1.26.4"
+psycopg2 = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"
