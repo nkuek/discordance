@@ -15,7 +15,7 @@ const Developers = () => {
                         <div className="developer__image--container">
                             <img
                                 className="developer__image"
-                                src="https://discordance.s3.amazonaws.com/e900e53e5c504fc69df4c2ed3220fdc7.jpeg"
+                                src="images/nickpic.jpg"
                             />
                         </div>
                         <h2>Nick Kuek</h2>
@@ -45,7 +45,7 @@ const Developers = () => {
                         <div className="developer__image--container">
                             <img
                                 className="developer__image"
-                                src="https://discordance.s3.amazonaws.com/00dc996ee8384106907332019151024b.png"
+                                src="images/husseinpic.jpeg"
                             />
                         </div>
                         <h2>Hussein Eid</h2>
@@ -75,7 +75,7 @@ const Developers = () => {
                         <div className="developer__image--container">
                             <img
                                 className="developer__image"
-                                src="https://discordance.s3.amazonaws.com/8f1011ba09c645e0a2aac70e92831bef.jpeg"
+                                src="images/leopic.jpeg"
                             />
                         </div>
                         <h2>Leonardo Hernandez</h2>
@@ -105,7 +105,7 @@ const Developers = () => {
                         <div className="developer__image--container">
                             <img
                                 className="developer__image"
-                                src="https://discordance.s3.amazonaws.com/76fd8921297b4c05b0560b365495ee2f.jpeg"
+                                src="images/yassinepic.jpeg"
                             />
                         </div>
                         <h2>Yassine Cherradi</h2>
