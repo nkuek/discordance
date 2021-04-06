@@ -22,7 +22,7 @@
   <p align="center">
     Discordance is a clone of Discord. Whether you’re part of a school club, gaming group, worldwide art community, or just a handful of friends that want to spend time together, Discordance makes it easy to talk every day and hang out more often. Discordance servers are organized into topic-based channels where you can collaborate, share, and just talk about your day without clogging up a group chat.
     <br />
-    <a href="https://github.com/nkuek/discordance"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/nkuek/discordance/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="hhttps://discordanc3.herokuapp.com/discover">View Site</a>
@@ -195,11 +195,11 @@ Contributions are what make the open source community such an amazing place to b
 
 * Yassine Cherradi - [LinkedIn](https://www.linkedin.com/in/yassine-cherradi-035784101/) - [GitHub](https://github.com/ycherradi)
 
-* Nick Kuek - [LinkedIn]() - [GitHub](https://github.com/nkuek)
+* Nick Kuek - [LinkedIn](https://www.linkedin.com/in/nick-kuek) - [GitHub](https://github.com/nkuek)
 
-* Hussein Eid - [LinkedIn]() - [GitHub](https://github.com/husseineid-mocha)
+* Hussein Eid - [LinkedIn](https://www.linkedin.com/in/hussein-eid/) - [GitHub](https://github.com/husseineid-mocha)
 
-* Leonardo Hernandez - [LinkedIn]() - [GitHub](https://github.com/leoworkcp)
+* Leonardo Hernandez - [LinkedIn](https://www.linkedin.com/in/leorem/) - [GitHub](https://github.com/leoworkcp)
 
 
 Project Link: [https://github.com/nkuek/discordance](https://github.com/nkuek/discordance)
